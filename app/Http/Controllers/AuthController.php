@@ -12,8 +12,13 @@ class AuthController extends Controller
     public function login()
     {
         if(Auth::check()){
-            return redirect(route('home'))
-                ->with('error', 'You are already logged in!');
+            if(Auth::user()->role == 1){
+                return redirect(route('dashboard'))
+                 ->with('error', 'You are already logged in!');
+            }else{
+                return redirect(route('table'))
+                    ->with('error', 'You are already logged in!');
+            }
         }
         return view('auth.login');
     }
@@ -29,7 +34,11 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('layout.dashboard');
+        if(Auth::user()->role == 1){
+            return view('layout.dashboard');
+        }
+        return redirect(route('table'))
+            ->with('error', 'You are not authorized!');
     }
 
     function loginPost(Request $request)
@@ -41,6 +50,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials) && Auth::user()->role == 1){
+            $request->session()->put('loginId', Auth::user()->id);
             return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login successfully!');
         }elseif(Auth::user()->role == 0){
@@ -79,7 +89,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         $request->session()->invalidate();
-        return redirect(route('home'));
+        return redirect(route('login'));
     }
 
 }

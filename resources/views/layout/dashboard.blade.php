@@ -50,11 +50,7 @@
             <!-- Sidebar -->
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark text-white p-3">
                 <h2 class="text-center">
-                    @if (Auth::check() && Auth::user()->role == '0')
-                        User
-                    @else
-                        Admin
-                    @endif
+                        Admin Dashboard
                 </h2>
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -67,9 +63,6 @@
                                 <li><a href="{{route('logout')}}" class="dropdown-item">Logout</a></li>
                             </ul>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('home')}}" class="nav-link text-white link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Home</a>
                     </li>
                     <li class="nav-item">
                         @if (Auth::check() && Auth::user()->role == '1')
