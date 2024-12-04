@@ -15,14 +15,23 @@ Route::post('/register', [AuthController::class, 'registerPost'])->name('registe
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+
 Route::middleware(['auth'])->group(function(){
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::prefix('dashboard')->group(function(){
-        Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
-        Route::get('/users', [AdminController::class, 'users'])->name('users');
-        Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
-        Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
-        Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
+    Route::prefix('user')->group(function(){
+        Route::get('/table', [UserController::class, 'table'])->name('table');
+    });
+
+    Route::prefix('admin')->group(function(){
+        Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+        Route::prefix('dashboard')->group(function(){
+            Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
+            Route::get('/users', [AdminController::class, 'users'])->name('users');
+            Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
+            Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
+            Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
+        });
     });
 });
 

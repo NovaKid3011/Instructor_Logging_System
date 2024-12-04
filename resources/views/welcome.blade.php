@@ -35,7 +35,7 @@
 
 @include('nav')
 
-
+@yield('user')
 
 @include('footer')
 
