@@ -6,7 +6,7 @@
             </ul>
         </div>
         <div class="d-flex">
-            @if (session('loginId'))
+            @auth
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
@@ -15,7 +15,7 @@
                         <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                     </ul>
                 </div>
-            @endif
+            @endauth
         </div>
     </div>
 </nav>

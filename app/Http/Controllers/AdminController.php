@@ -11,7 +11,11 @@ class AdminController extends Controller
 {
     public function profile()
     {
-        return view('admin.profile');
+        if(Auth::user()->role == 1){
+            return view('admin.profile');
+        }
+        return redirect(route('table'))
+            ->with('error', 'You are not authorized');
     }
 
     public function users()
