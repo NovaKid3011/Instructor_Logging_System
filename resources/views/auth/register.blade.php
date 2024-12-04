@@ -50,10 +50,10 @@
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
-                                <div class="d-grid mx-auto">
+                                <div class="d-grid mx-auto mb-2">
                                     <button type="submit" class="btn btn-dark btn-block">Register</button>
                                 </div>
-                                <a href="{{route('login')}}">Already have an account?</a>
+                                <a href="{{route('login')}}" class="nav-link px-1 text-black link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Already have an account?</a>
                             </form>
                         </div>
                     </div>

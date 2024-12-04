@@ -44,10 +44,10 @@
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
-                                <div class="d-grid mx-auto">
+                                <div class="d-grid mx-auto mb-2">
                                     <button type="submit" class="btn btn-dark btn-block">Log In</button>
                                 </div>
-                                <a href="{{route('register')}}">Don't have any account yet?</a>
+                                <a href="{{route('register')}}" class="nav-link px-1 text-black link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Don't have any account yet?</a>
                             </form>
                         </div>
                     </div>

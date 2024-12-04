@@ -8,10 +8,10 @@
         <div class="d-flex">
             @guest
                 <div class="mx-2">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link text-black link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{ route('login') }}">Login</a>
                 </div>
                 <div class="mx-2">
-                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    <a class="nav-link text-black link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{ route('register') }}">Register</a>
                 </div>
             @endguest
             @auth
