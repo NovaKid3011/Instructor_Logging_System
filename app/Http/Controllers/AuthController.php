@@ -40,13 +40,16 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if(Auth::attempt($credentials)){
-            return redirect()->intended(route('home'))
+        if(Auth::attempt($credentials) && Auth::user()->role == 1){
+            return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login successfully!');
-
+        }elseif(Auth::user()->role == 0){
+            return redirect(route('table'))
+                ->with('success', 'Login successfully!');
+        }else{
+            return redirect(route('login'))
+                ->with('error', 'Login failed!');
         }
-        return redirect(route('login'))
-            ->with('error', 'Login failed!');
     }
 
     function registerPost(Request $request)
