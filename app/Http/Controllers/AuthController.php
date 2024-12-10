@@ -26,8 +26,13 @@ class AuthController extends Controller
     public function register()
     {
         if(Auth::check()){
-            return redirect(route('home'))
+            if(Auth::user()->role == 1){
+                return redirect(route('dashboard'))
                 ->with('error', 'You are already logged in!');
+            }else{
+                return redirect(route('table'))
+                ->with('error', 'You are already logged in!');
+            }
         }
         return view('auth.register');
     }
@@ -35,7 +40,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::user()->role == 1){
-            return view('layout.dashboard');
+            $countUser = User::count();
+            return view('layout.dashboard', compact('countUser'));
         }
         return redirect(route('table'))
             ->with('error', 'You are not authorized!');
