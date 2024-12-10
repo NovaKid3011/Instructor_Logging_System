@@ -6,7 +6,9 @@
         <div class="catImages"></div>
     </div>
 
-    <script>
+
+    {{-- api fetching practice --}}
+    {{-- <script>
         fetch(`https://api.thecatapi.com/v1/images/search?limit=10`, {
             headers: {
                 'x-api-key': '{{env("API_KEY")}}'
@@ -19,7 +21,7 @@
                 });
             }
         })
-    </script>
+    </script> --}}
 
 
 @endsection

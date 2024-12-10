@@ -55,16 +55,18 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if(Auth::attempt($credentials) && Auth::user()->role == 1){
-            $request->session()->put('loginId', Auth::user()->id);
-            return redirect()->intended(route('dashboard'))
+        if(Auth::attempt($credentials)){
+            if(Auth::user()->role == 1){
+                $request->session()->put('loginId', Auth::user()->id);
+                return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login successfully!');
-        }elseif(Auth::user()->role == 0){
-            return redirect(route('table'))
+            }elseif(Auth::user()->role == 0){
+                return redirect(route('table'))
                 ->with('success', 'Login successfully!');
+            }
         }else{
             return redirect(route('login'))
-                ->with('error', 'Login failed!');
+                ->with('error', 'Invalid credentials');
         }
     }
 
