@@ -17,6 +17,7 @@ body{
 }
 .sidebar{
     background-color: #4E73DF;
+    height: 100vh;
 }
 .nav_btns{
     display: flex;

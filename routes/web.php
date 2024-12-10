@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function(){
             Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
+            Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
         });
     });
 });

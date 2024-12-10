@@ -40,8 +40,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::user()->role == 1){
-            $countUser = User::count();
-            return view('layout.dashboard', compact('countUser'));
+            $user = User::count();
+            return view('layout.dashboard', compact('user'));
         }
         return redirect(route('table'))
             ->with('error', 'You are not authorized!');

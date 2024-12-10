@@ -14,6 +14,7 @@
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
 
+
 </head>
 <body>
     @if(session('success'))

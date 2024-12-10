@@ -83,43 +83,4 @@ class AdminController extends Controller
         return redirect(route('users'))->with('error', 'User has not updated successfully!');
     }
 
-
-
-
-    // function update(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     $request->validate([
-    //         'edit_fname' => '',
-    //         'edit_lname' => '',
-    //         'edit_role' => '',
-    //         // 'edit_email' => '',
-    //         // 'current_password' => 'required',
-    //         // 'edit_password' => 'required',
-    //         // 'confirm_password' => 'required',
-    //     ]);
-
-    //     // if(!Hash::check($request->current_password, $user->password)){
-    //     //     return back()->with('error', 'The current password is incorrect!');
-    //     // }
-
-    //     $user->first_name = $request->input('edit_fname', $user->first_name);
-    //     $user->last_name = $request->input('edit_lname', $user->last_name);
-    //     $user->role = $request->input('edit_role', $user->role);
-    //     // $user->email = $request->input('edit_email', $user->email);
-
-    //     // if($request->edit_password == $request->confirm_password){
-    //     //     $user->password = Hash::make($request->input('edit_password', $user->password));
-    //     // }else{
-    //     //     return back()->with('error', 'The password does not match!');
-    //     // }
-
-    //     if ($user->save())
-    //     {
-    //         return redirect(route('users'))->with('success', 'User updated successfully!');
-    //     }
-    //     return redirect(route('users'))->with('error', 'User has not updated successfully!');
-    // }
-
 }

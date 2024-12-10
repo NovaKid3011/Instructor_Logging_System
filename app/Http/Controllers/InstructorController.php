@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class InstructorController extends Controller
 {
-    //
+    public function index(){
+        if(Auth::user()->role == 1) {
+            return view('admin/instructor');
+        }
+        return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
+    }
 }
