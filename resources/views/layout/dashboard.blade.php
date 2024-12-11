@@ -32,7 +32,6 @@
             });
         </script>
     @endif
-
     <style>
         body {
             overflow-x: hidden;
@@ -68,6 +67,18 @@
                         @if (Auth::check() && Auth::user()->role == '1')
                             <a href="{{route('users')}}" class="nav-link text-white link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Users</a>
                         @endif
+                    </li>
+                    <li class="nav-item">
+                    <div class="dropdown">
+                            <button class="btn dropdown-toggle text-white px-3 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reports
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{route(name: 'reports.daily')}}" class="dropdown-item">Daily</a></li>
+                                <li><a href="{{route('reports.monthly')}}" class="dropdown-item">Monthly</a></li>
+                                <li><a href="{{route('reports.custom')}}" class="dropdown-item">Custom</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>
