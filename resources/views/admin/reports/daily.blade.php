@@ -2,9 +2,12 @@
 @section('content')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="resources/css/report-daily.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        .card-header {
+                .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -22,10 +25,25 @@
             border-radius: 4px;
         }
         @media print {
-            .no-print {
-                display: none;
-            }
-        }
+    #sidebar {
+        display: none !important;
+    }
+
+    .content {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .no-print, .navbar, .footer {
+        display: none !important;
+    }
+
+    body {
+        font-size: 11px;
+    }
+}
+
+
     </style>
 </head>
 <body class="bg-light">
@@ -49,7 +67,6 @@
                                 <th>Description</th>
                                 <th>Schedule</th>
                                 <th>Room</th>
-                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,7 +80,6 @@
                                      <br>
                                      04:00 PM - 05:30 PM at 103</td>
                                 <td>103<br>103</td>
-                                <td style="text-align: center; vertical-align: middle; color: green;" ><i class="fa-solid fa-circle-check" style="color:green"></i></td>
                             </tr>
 
                             <tr>
@@ -73,7 +89,6 @@
                                 <td>noteshere<br> anothernote</td>
                                 <td>03:00 PM - 04:30 PM at 401<br>06:30 PM - 08:00 PM at 402</td>
                                 <td>401<br>402</td>
-                                <td style="text-align: center; vertical-align: middle; color: green;"><i class="fa-solid fa-circle-check" style="color:green"></i></td>
                             </tr>
 
                             <tr>
@@ -94,7 +109,6 @@
                                 <td>loremipsumtext<br> samplenotes</td>
                                 <td>10:30 AM - 12:00 PM at 204<br>03:00 PM - 04:30 PM at 205</td>
                                 <td>204<br>205</td>
-                                <td style="text-align: center; vertical-align: middle; color: green;"><i class="fa-solid fa-circle-check" style="color:green"></i></td>
                             </tr>
                             <tr>
                                 <td>01:00 PM</td>
@@ -112,7 +126,6 @@
                                 <td>noteshere<br> anothernote</td>
                                 <td>03:00 PM - 04:30 PM at 401<br>06:30 PM - 08:00 PM at 402</td>
                                 <td>401<br>402</td>
-                                <td style="text-align: center; vertical-align: middle; color: green;"><i class="fa-solid fa-circle-check" style="color:green"></i></td>
                             </tr>
 
                         </tbody>
