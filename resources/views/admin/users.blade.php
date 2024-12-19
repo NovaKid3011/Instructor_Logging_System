@@ -1,4 +1,4 @@
-@extends('layout.dashboard')
+@extends('layout.partials._head')
 @section('content')
     @if (session('success'))
         <script>
@@ -31,6 +31,9 @@
             <div class="card-body">
                 <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#addUser">
                     Add user
+                </button>
+                <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#recipient">
+                    Email Report
                 </button>
                 <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl}" id="myTable">
                     <thead class="table-primary">
@@ -187,7 +190,7 @@
         </div>
       </div>
 
-      <script>
+    <script>
         const editModal = document.getElementById('editModal');
         editModal.addEventListener('show.bs.modal', function (event) {
             const button = event.relatedTarget; // Button that triggered the modal
@@ -214,9 +217,66 @@
         });
     </script>
 
+{{-- recipient modal --}}
+    <div id="recipient" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recipient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('getEmail')}}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email address</label>
+                            <input type="email" name="recipient" class="form-control" id="emailInput" placeholder="To: " required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="(optional)"></textarea>
+                        </div>
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{-- Email Preview Modal --}}
+    <div id="emailPreview" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title">Email Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('mail')}}" method="">
+                        @csrf
+                        @include('admin.mail')
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('showModal'))
+                const emailPreviewModal = new bootstrap.Modal(document.getElementById('emailPreview'));
+                emailPreviewModal.show();
+            @endif
+        });
+    </script>
+
 
 {{-- Delete Modal --}}
-
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
