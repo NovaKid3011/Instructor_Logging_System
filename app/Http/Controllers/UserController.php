@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,8 +14,11 @@ class UserController extends Controller
             if(Auth::user()->role == 1){
                 return redirect(route('dashboard'))
                     ->with('error', 'You are not authorized!');
+            }elseif(Auth::user()->role == 0){
+                $users = User::all();
+
+                return view('user.table', compact('users'));
             }
-            return view('user.table');
         }
     }
 }

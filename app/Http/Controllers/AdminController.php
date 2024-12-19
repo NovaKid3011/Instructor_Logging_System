@@ -65,26 +65,36 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'edit_fname' => '',
-            'edit_lname' => '',
-            'edit_email' => '',
-            'current_password' => 'required',
-            'edit_password' => 'required',
-            'confirm_password' => 'required',
+            'edit_fname' => 'nullable|string|max:255',
+            'edit_lname' => 'nullable|string|max:255',
+            'edit_email' => 'nullable|email|max:255|unique:users,email,' . $id,
+            'current_password' => '',
+            'edit_password' => '',
+            'confirm_password' => '',
         ]);
 
-        if(!Hash::check($request->current_password, $user->password)){
-            return back()->with('error', 'The current password is incorrect!');
+        if($request->edit_fname && $request->edit_fname !== $user->first_name){
+            $user->first_name = $request->first_name;
         }
 
-        $user->first_name = $request->input('edit_fname', $user->first_name);
-        $user->last_name = $request->input('edit_lname', $user->last_name);
-        $user->email = $request->input('edit_email', $user->email);
+        if($request->edit_lname && $request->edit_lname !== $user->last_name){
+            $user->last_name = $request->last_name;
+        }
 
-        if($request->edit_password == $request->confirm_password){
-            $user->password = Hash::make($request->input('edit_password', $user->password));
-        }else{
-            return back()->with('error', 'The password does not match!');
+        if($request->edit_email && $request->edit_email !== $user->email){
+            $user->email = $request->email;
+        }
+
+        if($request->current_password){
+            if(!Hash::check($request->current_password, $user->password)){
+                return back()->with('error', 'The current password is incorrect!');
+            }else{
+                if($request->edit_password == $request->confirm_password){
+                    $user->password = Hash::make($request->input('edit_password', $user->password));
+                }else{
+                    return back()->with('error', 'The password does not match!');
+                }
+            }
         }
 
         if ($user->save())

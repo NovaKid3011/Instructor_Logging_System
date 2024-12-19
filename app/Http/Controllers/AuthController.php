@@ -26,8 +26,13 @@ class AuthController extends Controller
     public function register()
     {
         if(Auth::check()){
-            return redirect(route('home'))
-                ->with('error', 'You are already logged in!');
+            if(Auth::user()->role == 1){
+                return redirect(route('dashboard'))
+                 ->with('error', 'You are already logged in!');
+            }else{
+                return redirect(route('table'))
+                    ->with('error', 'You are already logged in!');
+            }
         }
         return view('auth.register');
     }
@@ -53,7 +58,7 @@ class AuthController extends Controller
             $request->session()->put('loginId', Auth::user()->id);
             return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login successfully!');
-        }elseif(Auth::user()->role == 0){
+        }elseif(Auth::check() && Auth::user()->role == 0){
             return redirect(route('table'))
                 ->with('success', 'Login successfully!');
         }else{

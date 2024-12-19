@@ -25,7 +25,6 @@
     <div class="container mt-5">
         <h1 class="mb-4">Users</h1>
 
-        <!-- Users Table -->
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">User Management</h5>
@@ -177,15 +176,15 @@
                     </div>
                     <div class="form-group mb-3">
                         <input type="password" placeholder="Current Password" id="current_password" class="form-control"
-                            name="current_password" required autofocus>
+                            name="current_password" autofocus>
                     </div>
                     <div class="form-group mb-3">
                         <input type="password" placeholder="New Password" id="edit_password" class="form-control"
-                            name="edit_password" required autofocus>
+                            name="edit_password" autofocus>
                     </div>
                     <div class="form-group mb-3">
                         <input type="password" placeholder="Confirm New Password" id="confirm_password"
-                            class="form-control" name="confirm_password" required autofocus>
+                            class="form-control" name="confirm_password" autofocus>
                     </div>
                     <div class="d-grid mx-auto">
                         <button type="submit" class="btn btn-success btn-block" id="updateBtn">Update</button>
