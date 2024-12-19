@@ -28,10 +28,10 @@ class AuthController extends Controller
         if(Auth::check()){
             if(Auth::user()->role == 1){
                 return redirect(route('dashboard'))
-                 ->with('error', 'You are already logged in!');
+                ->with('error', 'You are already logged in!');
             }else{
                 return redirect(route('table'))
-                    ->with('error', 'You are already logged in!');
+                ->with('error', 'You are already logged in!');
             }
         }
         return view('auth.register');
@@ -40,7 +40,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::user()->role == 1){
-            return view('layout.dashboard');
+            $user = User::count();
+            return view('layout.dashboard', compact('user'));
         }
         return redirect(route('table'))
             ->with('error', 'You are not authorized!');
@@ -54,16 +55,18 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if(Auth::attempt($credentials) && Auth::user()->role == 1){
-            $request->session()->put('loginId', Auth::user()->id);
-            return redirect()->intended(route('dashboard'))
+        if(Auth::attempt($credentials)){
+            if(Auth::user()->role == 1){
+                $request->session()->put('loginId', Auth::user()->id);
+                return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login successfully!');
-        }elseif(Auth::check() && Auth::user()->role == 0){
-            return redirect(route('table'))
+            }elseif(Auth::user()->role == 0){
+                return redirect(route('table'))
                 ->with('success', 'Login successfully!');
+            }
         }else{
             return redirect(route('login'))
-                ->with('error', 'Login failed!');
+                ->with('error', 'Invalid credentials');
         }
     }
 

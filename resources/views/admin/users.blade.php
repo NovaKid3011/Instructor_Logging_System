@@ -1,4 +1,4 @@
-@extends('layout.dashboard')
+@extends('layout.partials._head')
 @section('content')
     @if (session('success'))
         <script>
@@ -23,18 +23,20 @@
     @endif
 
     <div class="container mt-5">
-        <h1 class="mb-4">Users</h1>
-
-        <div class="card">
-            <div class="card-header bg-primary text-white">
+        <!-- Users Table -->
+        <div class="">
+            {{-- <div class="text-primary">
                 <h5 class="mb-0">User Management</h5>
-            </div>
+            </div> --}}
             <div class="card-body">
-                <button id="createB" class="btn btn-success m-2">
-                    Create new user
+                <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#addUser">
+                    Add user
                 </button>
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
+                <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#recipient">
+                    Email Report
+                </button>
+                <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl}" id="myTable">
+                    <thead class="table-primary">
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
@@ -47,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($users as $user)
+                        @foreach ($users as $user)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->first_name }}</td>
@@ -55,7 +57,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @if ($user->role == 0)
-                                        User
+                                        Regular User
                                     @else
                                         Admin
                                     @endif
@@ -63,39 +65,39 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>
-                                    <button id="edit" class="btn btn-sm btn-warning edit"
-                                        data-editid="{{ $user->id }}" data-editfname="{{ $user->first_name }}"
-                                        data-editlname="{{ $user->last_name }}" data-editemail="{{ $user->email }}"
-                                        data-editpassword="{{ $user->password }}">Edit</button>
-                                    <button id="delete" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal" data-userid="{{ $user->id }}"
-                                        data-username="{{ $user->first_name }} {{ $user->last_name }}">Delete</button>
+                                    <button id="edit" class="btn btn-sm btn-primary edit" data-bs-toggle="modal" data-bs-target="#editModal" data-editid="{{ $user->id }}" data-editfname="{{ $user->first_name }}"
+                                        data-editlname="{{ $user->last_name }}" data-role="{{ $user->role }}">
+                                        Edit</button>
+                                    <button id="delete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}"
+                                        data-username="{{ $user->first_name }} {{ $user->last_name }}" data-role="{{ $user->role }}" >Delete</button>
                                 </td>
                             </tr>
-                        @empty
+                        {{-- @empty
                             <tr>
                                 <td colspan="4" class="text-center">No users found.</td>
-                            </tr>
-                        @endforelse
+                            </tr> --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <style>
-        .modal {
-            backdrop-filter: blur(8px);
-        }
-    </style>
+{{-- Add User --}}
 
-    <div id="userModal" class="modal justify-content-center align-items-center">
-        <div class="card w-25">
-            <div class="card-header bg-primary text-white">
-                Create User Form
-                <button id="closeCreate" class="btn btn-dark text-white">Close</button>
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add User</h5>
+              <lord-icon class="close" data-bs-dismiss="modal" aria-label="Close"
+                    src="https://cdn.lordicon.com/zxvuvcnc.json"
+                    trigger="hover"
+                    state="hover-cross-3"
+                    style="width:30px;height:30px">
+                </lord-icon>
             </div>
-            <div class="card-body">
+            <div class="modal-body">
                 <form action="{{ route('user.create') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
@@ -120,13 +122,186 @@
                             <span class="text-danger">{{ $errors->first('password') }}</span>
                         @endif
                     </div>
+
+                    <div class="btn-group-toggle my-3" data-toggle="buttons">
+                        <label class="btn btn-success active">
+                          <input type="radio" name="role" id="option1" autocomplete="off" checked value="0" required>Regular User
+                        </label>
+                        <label class="btn btn-primary mx-3">
+                          <input type="radio" name="role" id="option2" autocomplete="off" value="1" required>Admin
+                        </label>
+                    </div>
+
                     <div class="d-grid mx-auto">
-                        <button type="submit" class="btn btn-success btn-block">Create</button>
+                        <button type="submit" class="btn btn-primary btn-block">Create</button>
                     </div>
                 </form>
             </div>
+          </div>
+        </div>
+      </div>
+
+
+
+{{-- Edit Modal --}}
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit User</h5>
+              <lord-icon class="close" data-bs-dismiss="modal" aria-label="Close"
+                src="https://cdn.lordicon.com/zxvuvcnc.json"
+                trigger="hover"
+                state="hover-cross-3"
+                style="width:30px;height:30px">
+            </lord-icon>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('user.update', ['id' => '::id']) }}" method="POST" id="editForm">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="editId" name="editId">
+                    <div class="form-group mb-3">
+                        <input type="text" placeholder="{{$user->first_name}}" id="edit_fname" class="form-control"
+                            name="edit_fname" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" placeholder="{{$user->last_name}}" id="edit_lname" class="form-control" name="edit_lname"
+                            required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-secondary text-light" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select col-4" name="role" id="inputGroupSelect01">
+                          <option value="1">Admin</option>
+                          <option value="0">Regular user</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid mx-auto">
+                        <button type="submit" class="btn btn-primary btn-block" id="updateBtn">Update</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script>
+        const editModal = document.getElementById('editModal');
+        editModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Button that triggered the modal
+
+            // Extract data from data-* attributes
+            const userId = button.getAttribute('data-editid');
+            const firstName = button.getAttribute('data-editfname');
+            const lastName = button.getAttribute('data-editlname');
+            const role = button.getAttribute('data-role');
+
+            console.log(role);
+
+            // Update the modal's content
+            document.getElementById('editId').value = userId;
+            document.getElementById('edit_fname').value = firstName;
+            document.getElementById('edit_lname').value = lastName;
+            const roles = document.getElementById('inputGroupSelect01').value = role;
+
+            console.log(roles);
+
+            // Dynamically update form action
+            const formAction = "{{ route('user.update', ':id') }}".replace(':id', userId);
+            document.getElementById('editForm').action = formAction;
+        });
+    </script>
+
+{{-- recipient modal --}}
+    <div id="recipient" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recipient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('getEmail')}}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email address</label>
+                            <input type="email" name="recipient" class="form-control" id="emailInput" placeholder="To: " required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="(optional)"></textarea>
+                        </div>
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
+{{-- Email Preview Modal --}}
+    <div id="emailPreview" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title">Email Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('mail')}}" method="">
+                        @csrf
+                        @include('admin.mail')
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('showModal'))
+                const emailPreviewModal = new bootstrap.Modal(document.getElementById('emailPreview'));
+                emailPreviewModal.show();
+            @endif
+        });
+    </script>
+
+
+{{-- Delete Modal --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the user <strong id="userName"></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteUserForm" method="POST" action="{{ route('user.delete', $user->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        @php
+                            var_dump($user->id);
+                        @endphp
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         let createModal = document.getElementById('userModal');
@@ -151,130 +326,8 @@
         }
     </script>
 
-    <div id="editModal" class="modal justify-content-center align-items-center" tabindex="-1">
-        <div class="card w-25">
-            <div class="card-header bg-primary text-white">
-                Edit User Form
-                <button id="closeEdit" class="btn btn-dark text-white">Close</button>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('user.update', $user->id) }}" method="POST" id="editForm">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" id="editId" name="editId">
-                    <div class="form-group mb-3">
-                        <input type="text" placeholder="First Name" id="edit_fname" class="form-control"
-                            name="edit_fname" required autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="text" placeholder="Last Name" id="edit_lname" class="form-control" name="edit_lname"
-                            required autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="email" placeholder="Email" id="edit_email" class="form-control" name="edit_email"
-                            required autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="password" placeholder="Current Password" id="current_password" class="form-control"
-                            name="current_password" autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="password" placeholder="New Password" id="edit_password" class="form-control"
-                            name="edit_password" autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="password" placeholder="Confirm New Password" id="confirm_password"
-                            class="form-control" name="confirm_password" autofocus>
-                    </div>
-                    <div class="d-grid mx-auto">
-                        <button type="submit" class="btn btn-success btn-block" id="updateBtn">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const editButtons = document.querySelectorAll(".edit");
 
-            editButtons.forEach(button => {
-                button.addEventListener("click", function() {
-                    const editId = this.getAttribute("data-editId");
-                    const editFname = this.getAttribute("data-editfname");
-                    const editLname = this.getAttribute("data-editlname");
-                    const editEmail = this.getAttribute("data-editemail");
-                    const editPass = this.getAttribute("data-editpassword");
-
-                    document.getElementById("editId").value = editId;
-                    document.getElementById("edit_fname").value = editFname;
-                    document.getElementById("edit_lname").value = editLname;
-                    document.getElementById("edit_email").value = editEmail;
-
-                    const editModal = document.getElementById("editModal");
-                    editModal.style.display = "flex";
-
-                    let closebtn = document.getElementById("closeEdit");
-                    closebtn.onclick = function() {
-                        editModal.style.display = "none";
-                    }
-
-                    let form = document.getElementById("editForm");
-                    form.setAttribute("data-modified", "false");
-                    document.getElementById("updateBtn").disabled = true;
-
-                    form.addEventListener("input", function() {
-                        const originalData = {
-                            fname: editFname,
-                            lname: editLname,
-                            email: editEmail,
-                            pass: editPass
-                        };
-
-                        let modified = false;
-                        if (document.getElementById("edit_fname").value !== originalData
-                            .fname ||
-                            document.getElementById("edit_lname").value !== originalData
-                            .lname ||
-                            document.getElementById("edit_email").value !== originalData
-                            .email ||
-                            document.getElementById("edit_password").value !== originalData
-                            .pass ||
-                            document.getElementById("edit_password").value !== "" ||
-                            document.getElementById("confirm_password").value !== ""
-                        ) {
-                            modified = true;
-                        }
-
-                        form.setAttribute("data-modified", modified ? "true" : "false");
-                        document.getElementById("updateBtn").disabled = !modified;
-                    });
-                });
-            });
-        });
-    </script>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete the user <strong id="userName"></strong>?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form id="deleteUserForm" method="POST" action="{{ route('user.delete', $user->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         const deleteModal = document.getElementById('deleteModal');
@@ -288,3 +341,7 @@
         });
     </script>
 @endsection
+
+
+
+
