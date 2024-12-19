@@ -302,7 +302,6 @@
         </div>
     </div>
 
-
     <script>
         let createModal = document.getElementById('userModal');
         let createbtn = document.getElementById('createB');
@@ -325,9 +324,6 @@
             }
         }
     </script>
-
-
-
 
     <script>
         const deleteModal = document.getElementById('deleteModal');

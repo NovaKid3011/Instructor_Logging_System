@@ -47,6 +47,7 @@ class EmailController extends Controller
         $email = $request->input('email');
         $content = $request->input('content');
 
+        session(['content' => $content]);
 
        Mail::to($email)->send(new PostMail($email, $content));
 

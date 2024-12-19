@@ -33,6 +33,7 @@ class PostMail extends Mailable
     {
         return new Envelope(
             to: $this->email,
+            from: 'mark@mark.com',
             subject: $this->subject,
         );
     }
