@@ -3,8 +3,13 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+<<<<<<< HEAD
 use App\Http\Controllers\ReportController;
+=======
+use App\Http\Controllers\InstructorController;
+>>>>>>> efad4b039a4a96e2698db3fcc67b8b4ddbac82a3
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
 
 Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -31,6 +36,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
+<<<<<<< HEAD
 
             
         });
@@ -38,6 +44,11 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::get('/daily', [ReportController::class, 'dailyReport'])->name('reports.daily'); // Fetch daily report
             Route::get('/monthly', [ReportController::class, 'monthlyReport'])->name('reports.monthly'); // Fetch monthly report
             Route::get('/custom', [ReportController::class, 'customReport'])->name('reports.custom'); // Fetch custom report based on query parameters
+=======
+            Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
+            Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
+            Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
+>>>>>>> efad4b039a4a96e2698db3fcc67b8b4ddbac82a3
         });
     });
 });

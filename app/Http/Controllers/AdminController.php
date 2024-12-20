@@ -21,7 +21,7 @@ class AdminController extends Controller
     public function users()
     {
         if(Auth::user()->role == 1){
-            $users = User::all();
+            $users = User::where('id', '!=', Auth::user()->id)->get();
 
             return view('admin.users', compact('users'));
         }
@@ -36,6 +36,7 @@ class AdminController extends Controller
             'lname' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'role' => 'required',
         ]);
 
         $user = new User();
@@ -43,6 +44,7 @@ class AdminController extends Controller
         $user->last_name = $request->lname;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role = $request->role;
 
         if ($user->save())
         {
@@ -59,32 +61,19 @@ class AdminController extends Controller
 
         return redirect(route('users'))->with('success', 'User deleted successfully!');
     }
-
-    function update(Request $request, $id)
-    {
+    function update(Request $request, $id){
         $user = User::findOrFail($id);
 
         $request->validate([
             'edit_fname' => '',
             'edit_lname' => '',
-            'edit_email' => '',
-            'current_password' => 'required',
-            'edit_password' => 'required',
-            'confirm_password' => 'required',
+            'role' => '',
         ]);
 
-        if(!Hash::check($request->current_password, $user->password)){
-            return back()->with('error', 'The current password is incorrect!');
-        }
-
-        $user->first_name = $request->input('edit_fname', $user->first_name);
-        $user->last_name = $request->input('edit_lname', $user->last_name);
-        $user->email = $request->input('edit_email', $user->email);
-
-        if($request->edit_password == $request->confirm_password){
-            $user->password = Hash::make($request->input('edit_password', $user->password));
-        }else{
-            return back()->with('error', 'The password does not match!');
+        if($user){
+            $user->first_name = $request->input('edit_fname', $user->first_name);
+            $user->last_name = $request->input('edit_lname', $user->last_name);
+            $user->role = $request->input('role', $user->role);
         }
 
         if ($user->save())
@@ -93,6 +82,10 @@ class AdminController extends Controller
         }
         return redirect(route('users'))->with('error', 'User has not updated successfully!');
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> efad4b039a4a96e2698db3fcc67b8b4ddbac82a3
 }
 
