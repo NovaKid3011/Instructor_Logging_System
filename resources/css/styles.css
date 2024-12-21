@@ -55,11 +55,6 @@ body{
     display: flex;
     gap: 30px;
 }
-.card{
-    background-color: #4E73DF;
-    border: none;
-    color: #fff;
-}
 .card_text{
     display: flex;
     justify-content: space-between;
@@ -85,4 +80,15 @@ body{
 .main-container{
     display: flex;
     align-items: center;
+}
+
+.dropdown-menu{
+    font-size: small;
+    background-color: #4E73DF;
+    padding: 0;
+    margin: 0;
+}
+.dropdown-item{
+    color: #fff;
+
 }

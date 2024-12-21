@@ -82,10 +82,6 @@ class AdminController extends Controller
         }
         return redirect(route('users'))->with('error', 'User has not updated successfully!');
     }
-<<<<<<< HEAD
     
-=======
-
->>>>>>> efad4b039a4a96e2698db3fcc67b8b4ddbac82a3
 }
 

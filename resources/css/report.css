@@ -1,0 +1,36 @@
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .print-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+
+    @media print {
+        #sidebar {
+            display: none !important;
+        }
+
+        .content {
+            width: 100% !important;
+            margin: 0;
+        }
+
+        .no-print, .navbar, .footer {
+            display: none !important;
+        }
+
+        body {
+            font-size: 11px;
+        }
+    }
