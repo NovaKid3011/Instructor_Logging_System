@@ -1,66 +1,43 @@
-@extends('layout.dashboard')
 
+@extends('layout.partials._head')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Schedule</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="resources/css/report-daily.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<style>
-                .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .card {
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
 
-        .print-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-        @media print {
-    #sidebar {
-        display: none !important;
-    }
+@vite('resources/css/report.css')
 
-    .content {
-        width: 100% !important;
-        margin: 0;
-    }
-
-    .no-print, .navbar, .footer {
-        display: none !important;
-    }
-
-    body {
-        font-size: 11px;
-    }
-}
-
-
-    </style>
-<body>
     <div class="container mt-4">
-        <h4 class="text-center mb-4">DECEMBER</h4>
+        
         <div class="card-header">
-                <h4> DR. APOLONIA SUAREZ</h4>
+        <h4 class="mb-4">DECEMBER</h4>
+        <div style="position: relative; width: 250px;">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+                style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); pointer-events: none;">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                <path d="M21 21l-6 -6" />
+            </svg>
+            <input
+                type="search" placeholder="Search Instructor"
+                style="width: 100%; padding: 5px 5px 5px 40px; border: 1px solid #ccc; border-radius: 50px; box-sizing: border-box;" />
+        </div>
+
+        </div>
+        <div class="card-header">
+                <h5> DR. APOLONIA SUAREZ</h5>
                 <button class="print-btn no-print" onclick="window.print()">   
-                
                 PRINT</button>
             </div>
         <table class="table table-bordered table-striped text-center align-middle">
-            <thead class="table-dark">
+            <thead class="table-primary">
                 <tr>
                     <th>DATE</th>
                     <th>DAY</th>
@@ -78,16 +55,16 @@
                     <td>1:00-2:30</td>
                     <td>GEN. ED. 102</td>
                     <td>101</td>
-                    <td></td>
-                    <td></td>
+                    <td>1:00</td>
+                    <td>Present</td>
                 </tr>
                 <tr>
                     <td>MON</td>
                     <td>2:30-4:00</td>
                     <td>GEN. ED. 102</td>
                     <td>101</td>
-                    <td></td>
-                    <td></td>
+                    <td>2:23</td>
+                    <td>Present</td>
                     
                 </tr>
                 <tr>
@@ -105,6 +82,7 @@
                     <td>GEN. ED. 102</td>
                     <td>101</td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td rowspan="2">9</td>
@@ -120,6 +98,7 @@
                     <td>2:30-4:00</td>
                     <td>GEN. ED. 102</td>
                     <td>101</td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -137,6 +116,8 @@
                     <td>GEN. ED. 102</td>
                     <td>101</td>
                     <td></td>
+                    <td></td>
+
                 </tr>
                 <tr>
                     <td rowspan="2">16</td>
@@ -152,6 +133,7 @@
                     <td>2:30-4:00</td>
                     <td>GEN. ED. 102</td>
                     <td>101</td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -169,6 +151,7 @@
                     <td>GEN. ED. 102</td>
                     <td>101</td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td rowspan="2">23</td>
@@ -184,6 +167,7 @@
                     <td>2:30-4:00</td>
                     <td>GEN. ED. 102</td>
                     <td>101</td>
+                    <td></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -201,6 +185,7 @@
                     <td>GEN. ED. 102</td>
                     <td>101</td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td rowspan="2">30</td>
@@ -217,12 +202,9 @@
                     <td>GEN. ED. 102</td>
                     <td>101</td>
                     <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 @endsection

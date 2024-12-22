@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailController;
 
@@ -46,3 +47,5 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
         });
     });
 });
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');

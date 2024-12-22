@@ -15,6 +15,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Time In</th>
+                            <th>Picture</th>
                             <th>Name</th>
                             <th>Subject Code</th>
                             <th>Description</th>
@@ -25,6 +26,7 @@
                     <tbody>
                         <tr>
                             <td>07:30 AM</td>
+                            <td></td>
                             <td>MR. MARK JOSEPH C. GIGANTE</td>
                             <td>IT ELEC 102<br>PC 114<br>PC 114</td>
                             <td>askdhifhiurksg<br>fkhsgiuwrkji<br>fkhsgiuwrkji</td>
@@ -33,6 +35,7 @@
                         </tr>
                         <tr>
                             <td>03:00 PM</td>
+                            <td></td>
                             <td>MR. MARVIN BROÑOLA</td>
                             <td>ENG 101<br>PC 118</td>
                             <td>noteshere<br>anothernote</td>
@@ -41,6 +44,7 @@
                         </tr>
                         <tr>
                             <td>09:00 AM</td>
+                            <td></td>
                             <td>DR. APOLONIA SUAREZ</td>
                             <td>CS 201<br>PC 115</td>
                             <td>xyzexampletext<br>anotherexample</td>
@@ -49,6 +53,7 @@
                         </tr>
                         <tr>
                             <td>10:30 AM</td>
+                            <td></td>
                             <td>MR. ALAN ABERILLA</td>
                             <td>MATH 203<br>PC 116</td>
                             <td>loremipsumtext<br>samplenotes</td>
@@ -57,6 +62,7 @@
                         </tr>
                         <tr>
                             <td>01:00 PM</td>
+                            <td></td>
                             <td>MR. EMANUELLE BARRIENTOS</td>
                             <td>PHYSICS 101<br>PC 117</td>
                             <td>exampletext1<br>exampletext2</td>
@@ -65,6 +71,7 @@
                         </tr>
                         <tr>
                             <td>03:00 PM</td>
+                            <td></td>
                             <td>MR. MARNITO C. MAHINLO</td>
                             <td>ENG 101<br>PC 118</td>
                             <td>noteshere<br>anothernote</td>
