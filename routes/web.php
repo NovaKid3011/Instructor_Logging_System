@@ -38,13 +38,9 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
             Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
 
-
+            Route::get('/report', [ReportController::class, 'index'])->name('reports');
         });
-        Route::prefix('reports')->group(function () {
-            Route::get('/daily', [ReportController::class, 'dailyReport'])->name('reports.daily'); // Fetch daily report
-            Route::get('/monthly', [ReportController::class, 'monthlyReport'])->name('reports.monthly'); // Fetch monthly report
-            Route::get('/custom', [ReportController::class, 'customReport'])->name('reports.custom'); // Fetch custom report based on query parameters
-        });
+        
     });
 });
 
