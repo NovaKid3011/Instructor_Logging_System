@@ -21,7 +21,8 @@ class AdminController extends Controller
     public function users()
     {
         if(Auth::user()->role == 1){
-            $users = User::where('id', '!=', Auth::user()->id)->get();
+
+            $users = User::where('id', '!=', Auth::user()->id)->where('role', '!=', 1)->get();
 
             return view('admin.users', compact('users'));
         }

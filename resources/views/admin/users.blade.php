@@ -43,12 +43,12 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Created_at</th>
-                            <th>Updated_at</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if (count($users) > 0)
+
                         @foreach ($users as $user)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -62,8 +62,6 @@
                                         Admin
                                     @endif
                                 </td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
                                 <td>
                                     <button id="edit" class="btn btn-sm btn-primary edit" data-bs-toggle="modal" data-bs-target="#editModal" data-editid="{{ $user->id }}" data-editfname="{{ $user->first_name }}"
                                         data-editlname="{{ $user->last_name }}" data-role="{{ $user->role }}">
@@ -72,11 +70,8 @@
                                         data-username="{{ $user->first_name }} {{ $user->last_name }}" data-role="{{ $user->role }}" >Delete</button>
                                 </td>
                             </tr>
-                        {{-- @empty
-                            <tr>
-                                <td colspan="4" class="text-center">No users found.</td>
-                            </tr> --}}
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -144,6 +139,7 @@
 
 
 {{-- Edit Modal --}}
+@if ($users->isnotEmpty())
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -189,6 +185,7 @@
           </div>
         </div>
       </div>
+@endif
 
     <script>
         const editModal = document.getElementById('editModal');
@@ -277,6 +274,7 @@
 
 
 {{-- Delete Modal --}}
+@if ($users->isnotEmpty())
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -292,15 +290,13 @@
                     <form id="deleteUserForm" method="POST" action="{{ route('user.delete', $user->id) }}">
                         @csrf
                         @method('DELETE')
-                        @php
-                            var_dump($user->id);
-                        @endphp
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+@endif
 
     <script>
         let createModal = document.getElementById('userModal');

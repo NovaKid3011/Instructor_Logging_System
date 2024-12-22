@@ -34,16 +34,16 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
+            Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
+            Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
+            Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
 
-            
+
         });
         Route::prefix('reports')->group(function () {
             Route::get('/daily', [ReportController::class, 'dailyReport'])->name('reports.daily'); // Fetch daily report
             Route::get('/monthly', [ReportController::class, 'monthlyReport'])->name('reports.monthly'); // Fetch monthly report
             Route::get('/custom', [ReportController::class, 'customReport'])->name('reports.custom'); // Fetch custom report based on query parameters
-            Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
-            Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
-            Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
         });
     });
 });
