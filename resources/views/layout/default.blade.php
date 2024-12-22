@@ -16,26 +16,19 @@
 </head>
 
 <style>
-    .log-button{
-        background-color: #4E73DF;
+    main{
+        display: grid;
+        grid-template-columns: 650px 1fr;
     }
-    .bgcolor{
-        width: 98.7vw;
+    .school_image{
+        width: 100%;
         height: 100vh;
-        position: absolute;
-        z-index: 2;
-        opacity: 50%;
-        background-color:hsla(144,100%,50%,1);
-        background-image:
-        radial-gradient(at 80% 0%, rgb(0, 217, 255) 0px, transparent 50%),
-        radial-gradient(at 0% 0%, rgb(251, 242, 67) 0px, transparent 70%);
     }
     .login_form{
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100vh;
+        background: #2e56c2;
     }
-
 </style>
 
 <body>
