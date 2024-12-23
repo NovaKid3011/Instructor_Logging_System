@@ -9,11 +9,11 @@
                     <div class="border"></div>
                     {{Auth::user()->first_name}} {{Auth::user()->last_name}}
                 </a>
-                <ul class="dropdown-menu hover dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfile">
+                <ul class="dropdown-menu nav-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item text-dark" href="#" data-toggle="modal" data-target="#editProfile">
                         <i class="mdi mdi-logout me-2 text-primary"></i> Edit Profile
                     </a>
-                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <a class="dropdown-item text-dark" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="mdi mdi-logout me-2 text-primary"></i> Logout
                     </a>
                 </ul>

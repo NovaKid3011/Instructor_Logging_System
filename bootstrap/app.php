@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'preventBackHistory'=>App\Http\Middleware\PreventBackHistory::class
         ]);
     })
+    // ->withSchedule(function(Schedule $schedule) {
+    //     $schedule->call(function() {
+    //         Mail::to('sjaevoy@gmail.com')->send(new PostMail())
+    //     })->dailyAt('18:15');
+    // })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
