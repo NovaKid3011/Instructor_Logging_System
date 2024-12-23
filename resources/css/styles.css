@@ -134,7 +134,7 @@ body{
   }
 
   .dropdown-btn:hover {
-    background-color: #2e56c2;
+    background-color: #284eb6;
   }
   .dropdown-container {
     height: 0;
@@ -149,4 +149,5 @@ body{
 .sub-menu a:hover{
     background-color: #2e56c2;
 }
+
 

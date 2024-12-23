@@ -80,7 +80,11 @@
             $('#instructorTable').DataTable();
         } );
     </script>
-
+    <script>
+        $(document).ready( function () {
+            $('#schedulesTable').DataTable();
+        } );
+    </script>
 
 </body>
 </html>

@@ -3,11 +3,11 @@
 @section('content')
 
 
-<div class="container mt-5 pt-5">
+<div class="container mt-5">
     <!-- Users Table -->
     <div class="">
         <table id="instructorTable">
-            <thead class="text-white" style="background-color: #2e56c2;">
+            <thead class="text-white" style="background-color: #4468cc;">
                 <tr>
                     <th>ID</th>
                     <th>First Name</th>
@@ -90,32 +90,50 @@
 </script> --}}
 
 
-<script>
-    $(document).ready(function() {
-        $('#instructorTable').DataTable({
-            ajax: {
-                url: 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects',
-                type: 'GET',
-                headers: {
-                    'x-api-key': '{{env("API_KEY")}}'
-                },
-                dataSrc: 'data'
-            },
-            columns: [
-                { data: 'employee.id' },
-                { data: 'employee.first_name' },
-                { data: 'employee.middle_name' },
-                { data: 'employee.last_name' },
-                {
-                    data: 'employee.image',
-                    render: function(data, type, row) {
-                        return data ? `<img src="${data}" alt="Profile Image" width="50px" class="rounded-circle">` : 'No image';
+    <script>
+        $(document).ready(function() {
+            $('#instructorTable').DataTable({
+                ajax: {
+                    url: 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects',
+                    type: 'GET',
+                    headers: {
+                        'x-api-key': '{{env("API_KEY")}}'
+                    },
+                    dataSrc: function(json) {
+                        console.log('Data received:', json);
+                        // Flatten the structure to get employees as separate rows
+                        let employees = [];
+                        let ids = new Set();
+                        json.data.forEach(item => {
+                            if (!ids.has(item.employee.id)) {
+                                ids.add(item.employee.id);
+                                employees.push({
+                                    id: item.employee.id,
+                                    first_name: item.employee.first_name,
+                                    middle_name: item.employee.middle_name,
+                                    last_name: item.employee.last_name,
+                                    image: item.employee.image
+                                });
+                            }
+                        });
+                        return employees;
                     }
-                }
-            ]
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'first_name' },
+                    { data: 'middle_name' },
+                    { data: 'last_name' },
+                    {
+                        data: 'image',
+                        render: function(data, type, row) {
+                            return data ? `<img src="${data}" alt="Profile Image" width="50" class="rounded-circle">` : 'No image';
+                        }
+                    }
+                ]
+            });
         });
-    });
-</script>
+    </script>
 
 
 

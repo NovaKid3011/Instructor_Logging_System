@@ -35,6 +35,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
+            Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
 
 
         });
