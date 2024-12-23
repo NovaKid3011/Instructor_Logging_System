@@ -3,7 +3,12 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
 
 Route::view('/', 'welcome')->name('home');
 
@@ -14,6 +19,13 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
+// Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
+// Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter']);
+
+
 
 
 
