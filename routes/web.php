@@ -23,6 +23,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'preventBackHistory'])->group(function(){
     Route::prefix('user')->group(function(){
         Route::get('/table', [UserController::class, 'table'])->name('table');
+        Route::get('/schedule/{id}', [UserController::class, 'schedule'])->name('sched');
     });
 
     Route::prefix('admin')->group(function(){

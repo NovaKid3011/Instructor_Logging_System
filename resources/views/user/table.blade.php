@@ -1,41 +1,30 @@
 @extends('welcome')
-@section('user')
+@section('content')
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered">
 
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Instructor</h5>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-bordered">
-
-                <thead class="table-dark">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($users as $user)
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Action</th>
+                        @if ($user->role == 0)
+                            <td>
+                                <a href="{{ route('sched', $user->id) }}" class="fs-4 px-3 text-black">
+                                    {{ $user->first_name }} {{ $user->last_name }}</a>
+                            </td>
+                        @else
+                        @endif
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse ($users as $user)
-                            <tr>
-                                @if ($user->role == 0)
-                                    <td>{{ $user->first_name }}</td>
-                                    <td>{{ $user->last_name }}</td>
-                                @else
-
-
-                                @endif
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center">No users found.</td>
-                            </tr>
-                        @endforelse
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr>
+                        <td colspan="4" class="text-center">No users found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-</div>
-
 @endsection
