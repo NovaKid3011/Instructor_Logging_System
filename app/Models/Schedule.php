@@ -12,12 +12,15 @@ class Schedule extends Authenticatable
     use Notifiable;
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'Date',
         'Day',
         'Time',
         'Subject_Code',
         'Room',
+        'Photo',
         'Instructor_id'
     ];
 }

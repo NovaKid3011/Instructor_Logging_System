@@ -6,6 +6,8 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Storage;
 
 class UserController extends Controller
 {
@@ -36,5 +38,30 @@ class UserController extends Controller
 
         return view('user.schedule', compact('user', 'schedule'));
 
+    }
+
+    function store(Request $request, $instructorId, $scheduleId)
+    {
+        $img = $request->image;
+        $folderPath = "public/";
+        $image_parts = explode(';base64,', $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $rand_code = Str::random(6);
+        $fileName = time() . $rand_code . '.png';
+        $file = $folderPath . $fileName;
+
+        Storage::disk('public')->put($fileName, $image_base64);
+        $publicUrl = Storage::url($fileName);
+
+
+        Schedule::Where('Instructor_id', '=', $instructorId)
+                ->Where('id', '=', $scheduleId)
+                ->update([
+                    'Photo' => $fileName,
+                ]);
+
+        return back();
     }
 }

@@ -24,6 +24,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function(){
     Route::prefix('user')->group(function(){
         Route::get('/table', [UserController::class, 'table'])->name('table');
         Route::get('/schedule/{id}', [UserController::class, 'schedule'])->name('sched');
+        Route::post('/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
     });
 
     Route::prefix('admin')->group(function(){

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->time('Time');
             $table->integer('Subject_Code');
             $table->integer('Room');
+            $table->string('Photo')->nullable();
             $table->foreignId('Instructor_id')->references('id')->on('users');
         });
     }
