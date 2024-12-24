@@ -2,7 +2,7 @@
 
 <nav id="sidebar" class=" sidebar">
     <a href="" class="logo p-2">
-        <img src="{{asset('/storage/images/Graphics.jpg')}}" width="220px" height="auto" class="py-2" alt="">
+        <img src="{{asset('/images/mlg-logo.png')}}" width="200px" height="auto" class="py-2" alt="mlg-logo">
     </a>
     <ul class="nav mt-5">
         <li class="{{Request::is('admin/dashboard') ? 'active' : ''}} p-3">

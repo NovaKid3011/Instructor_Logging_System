@@ -27,7 +27,7 @@
         <div class=" login_form d-flex justify-content-center  align-items-center">
             <div class="">
                 <a href="" class="logo">
-                    <img src="{{asset('/storage/images/Vertical Graphics.jpg')}}" width="250px" height="auto" class="" alt="">
+                    <img src="{{asset('/images/mlg-logo.png')}}" width="150px" height="auto" class="" alt="">
                 </a>
                 <div class="card-body col-12">
                     <form action="{{route('login.post')}}" method="POST">
