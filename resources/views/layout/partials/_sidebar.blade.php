@@ -2,9 +2,9 @@
 
 <nav id="sidebar" class=" sidebar">
     <a href="" class="logo p-2">
-        <img src="{{asset('/images/mlg-logo.png')}}" width="150px" height="auto" class="py-2" alt="">
+        <img src="{{asset('/images/mlg-logo.png')}}" width="200px" height="auto" class="py-2" alt="">
     </a>
-    <ul class="nav mt-5">
+    <ul class="nav mt-4">
         <li class="{{Request::is('admin/dashboard') ? 'active' : ''}} p-3">
             <div class="">
                 <a href="{{route('dashboard')}}" class="nav_btns text-white" style="text-decoration: none">Dashboard

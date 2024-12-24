@@ -5,7 +5,11 @@ body{
     font-size: small;
 }
 .logo{
-    border-bottom: 1px solid #ffffff7d;
+    padding: 20px;
+}
+.logo.img{
+    padding: 0%;
+    margin: 0%;
 }
 .con{
     display: grid;
@@ -30,7 +34,6 @@ body{
 }
 .active{
     background-color: #2e56c2;
-    color: #2e56c2;
 }
 .navbar{
     position: sticky;
@@ -45,15 +48,12 @@ body{
     flex-direction: column;
 }
 .nav a{
+    font-size: small;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: 1s ease;
-    border-radius: 3px;
 }
-.border{
-    height: 10px;
-}
+
 .user-nav{
     display: flex;
     flex-direction: column;
@@ -98,15 +98,14 @@ body{
 }
 
 .dropdown-menu{
-    font-size: small;
-    background-color: #4E73DF;
     padding: 0;
     margin: 0;
 }
-.dropdown-menu.show{
-    border: none;
-}
-.dropdown-item{
-    color: #fff;
 
+#instructorTable tbody tr {
+    border-bottom: 1px solid #ddd; /* Adjust color and width as needed */
+}
+
+#instructorTable tbody tr:last-child {
+    border-bottom: none;
 }

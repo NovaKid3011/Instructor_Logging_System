@@ -1,42 +1,60 @@
-
+body{
+    background-color: #e8f1fb;
+}
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    margin: 0 0 8px 0;
 }
-.card-d, body{
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.card-header-meow{
+    display: flex;
+    justify-content: flex-end;
+}
+.card-d{
+    box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.1);
     margin-top: 0;
     padding: 0;
-    background-color: #fff;
 }
 
 .tab-pane{
     background-color: #fff;
+    
 }
 
 .nav-tab{
-    background-color: #fff;
     display: flex;
+    background-color: #e8f1fb;
 }
-li{
-    text-decoration: none;
+.nav-link :active{
+    border: none;
+}
+.nav-link:hover{
+    background-color: #a8c4e5;
+}
 
+.containner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #b3b5b7;
+    padding-top: 10px;
+    margin-top: 15px;
 }
+
 
 .print-btn {
     background-color: #d80c21;
     color: #fff;
     border: none;
-    padding: 6px 12px;
+    padding: 6px;
     border-radius: 4px;
+    height: fit-content;
 }
 
 #reportTabs{
     display: flex;
+    margin: 0;
 }
 .nav-link.active {
     background-color: #007bff; 
