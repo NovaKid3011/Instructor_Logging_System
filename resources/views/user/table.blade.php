@@ -5,7 +5,7 @@
 
             <thead class="table-dark">
                 <tr>
-                    <th>Name</th>
+                    <th>Instructor Name</th>
                 </tr>
             </thead>
             <tbody>
