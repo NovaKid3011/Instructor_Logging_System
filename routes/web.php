@@ -41,7 +41,10 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
         });
         
-    });
+            Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
+
+
+        });
 });
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
