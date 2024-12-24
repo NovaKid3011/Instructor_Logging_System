@@ -50,6 +50,7 @@
             min-height: 100vh;
             width: 240px;
         }
+        
         .content {
             padding: 20px;
         }

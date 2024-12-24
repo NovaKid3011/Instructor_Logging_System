@@ -1,0 +1,68 @@
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    margin: 0 0 8px 0;
+}
+.card-d, body{
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.tab-pane{
+    background-color: #fff;
+}
+
+.nav-tab{
+    background-color: #fff;
+    display: flex;
+}
+li{
+    text-decoration: none;
+
+}
+
+.print-btn {
+    background-color: #d80c21;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+#reportTabs{
+    display: flex;
+}
+.nav-link.active {
+    background-color: #007bff; 
+    color: white; 
+}
+.nav-link {
+    transition: background-color 0.3s ease;
+}
+
+
+
+@media print {
+    #sidebar {
+        display: none !important;
+    }
+
+    .content {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .no-print, .navbar, .footer {
+        display: none !important;
+    }
+
+    body {
+        font-size: small;
+    }
+}

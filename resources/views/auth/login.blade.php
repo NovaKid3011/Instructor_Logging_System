@@ -27,7 +27,7 @@
         <div class=" login_form d-flex justify-content-center  align-items-center">
             <div class="">
                 <a href="" class="logo">
-                    <img src="{{asset('/storage/images/Vertical Graphics.png')}}" width="250px" height="auto" class="" alt="">
+                    <img src="{{asset('/storage/images/Vertical Graphics.jpg')}}" width="250px" height="auto" class="" alt="">
                 </a>
                 <div class="card-body col-12">
                     <form action="{{route('login.post')}}" method="POST">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="school_image">
-            <img src="{{asset('/storage/images/cat.jpg')}}" width="100%" height="100%" class="" alt="">
+            <img src="{{asset('images/cat.jpg')}}" width="100%" height="100%" class="" alt="photo">
         </div>
     </main>
 

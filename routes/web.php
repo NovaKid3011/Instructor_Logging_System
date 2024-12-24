@@ -37,8 +37,8 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
             Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
             Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
+            Route::get('/report', [ReportController::class, 'index'])->name('report');
 
-            Route::get('/report', [ReportController::class, 'index'])->name('reports');
         });
         
     });
