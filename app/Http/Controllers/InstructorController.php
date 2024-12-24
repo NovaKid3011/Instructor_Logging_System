@@ -14,4 +14,11 @@ class InstructorController extends Controller
         }
         return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
     }
+
+    public function schedules(){
+        if(Auth::user()->role == 1) {
+            return view('admin/schedules');
+        }
+        return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
+    }
 }

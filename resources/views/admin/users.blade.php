@@ -32,9 +32,6 @@
                 <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#addUser">
                     Add user
                 </button>
-                <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#recipient">
-                    Email Report
-                </button>
                 <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl}" id="myTable">
                     <thead class="table-primary">
                         <tr>
@@ -43,12 +40,12 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Created_at</th>
-                            <th>Updated_at</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if (count($users) > 0)
+
                         @foreach ($users as $user)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -62,8 +59,6 @@
                                         Admin
                                     @endif
                                 </td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
                                 <td>
                                     <button id="edit" class="btn btn-sm btn-primary edit" data-bs-toggle="modal" data-bs-target="#editModal" data-editid="{{ $user->id }}" data-editfname="{{ $user->first_name }}"
                                         data-editlname="{{ $user->last_name }}" data-role="{{ $user->role }}">
@@ -72,11 +67,8 @@
                                         data-username="{{ $user->first_name }} {{ $user->last_name }}" data-role="{{ $user->role }}" >Delete</button>
                                 </td>
                             </tr>
-                        {{-- @empty
-                            <tr>
-                                <td colspan="4" class="text-center">No users found.</td>
-                            </tr> --}}
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -144,6 +136,7 @@
 
 
 {{-- Edit Modal --}}
+@if ($users->isnotEmpty())
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -189,6 +182,7 @@
           </div>
         </div>
       </div>
+@endif
 
     <script>
         const editModal = document.getElementById('editModal');
@@ -217,66 +211,8 @@
         });
     </script>
 
-{{-- recipient modal --}}
-    <div id="recipient" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content p-3">
-                <div class="modal-header">
-                    <h5 class="modal-title">Recipient</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('getEmail')}}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="emailInput" class="form-label">Email address</label>
-                            <input type="email" name="recipient" class="form-control" id="emailInput" placeholder="To: " required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="(optional)"></textarea>
-                        </div>
-                        <div class="d-grid mx-auto">
-                            <button type="submit" class="btn btn-primary btn-block">Next</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-{{-- Email Preview Modal --}}
-    <div id="emailPreview" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content p-3">
-                <div class="modal-header">
-                    <h5 class="modal-title">Email Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('mail')}}" method="">
-                        @csrf
-                        @include('admin.mail')
-                        <div class="d-grid mx-auto">
-                            <button type="submit" class="btn btn-primary btn-block">Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('showModal'))
-                const emailPreviewModal = new bootstrap.Modal(document.getElementById('emailPreview'));
-                emailPreviewModal.show();
-            @endif
-        });
-    </script>
-
-
 {{-- Delete Modal --}}
+@if ($users->isnotEmpty())
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -292,16 +228,13 @@
                     <form id="deleteUserForm" method="POST" action="{{ route('user.delete', $user->id) }}">
                         @csrf
                         @method('DELETE')
-                        @php
-                            var_dump($user->id);
-                        @endphp
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+@endif
 
     <script>
         let createModal = document.getElementById('userModal');
@@ -325,9 +258,6 @@
             }
         }
     </script>
-
-
-
 
     <script>
         const deleteModal = document.getElementById('deleteModal');

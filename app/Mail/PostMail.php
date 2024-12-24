@@ -7,23 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
 class PostMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $subject = 'Part-time Instructor Report';
-    public $email;
-    public $content;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($email, $content)
+    public function __construct()
     {
-        $this->email = $email;
-        $this->content = $content;
+        //
     }
 
     /**
@@ -32,8 +28,7 @@ class PostMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: $this->email,
-            subject: $this->subject,
+            subject: 'Part-time Instructor Attendance',
         );
     }
 
@@ -42,12 +37,17 @@ class PostMail extends Mailable
      */
     public function content(): Content
     {
+        $user = User::all();
+
         return new Content(
-            markdown: 'admin.mail',
+            markdown: 'admin.post-mail',
             with: [
-                'subject' => $this->subject,
-                'content' => $this->content,
-            ],
+                'user' => [
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'role' => $user->role,
+                ],
+            ]
         );
     }
 
@@ -58,9 +58,6 @@ class PostMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-
-        ];
+        return [];
     }
-
 }

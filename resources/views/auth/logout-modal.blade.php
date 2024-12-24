@@ -15,7 +15,7 @@
                 </lord-icon>
             </div>
             <div class="modal-body">
-              <p>Are you aure you want to logout?</p>
+              <p>Are you sure you want to logout?</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" data-bs-dismiss="modal">Close</button>
