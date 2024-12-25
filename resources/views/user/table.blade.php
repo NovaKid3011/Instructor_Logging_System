@@ -3,9 +3,7 @@
 @section('user')
 
 <div class="container">
-        <small class="text-body-secondary px-2">Please select a letter to view instructors based on their lastname.</small>
-
-    <!-- Alphabet Toolbar -->
+        <p>Please select a letter to view instructors</p>
     <div class="alpha-toolbar">
         <div class="row">
             @foreach (range('A', 'F') as $letter)

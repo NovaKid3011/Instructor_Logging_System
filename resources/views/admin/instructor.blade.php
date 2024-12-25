@@ -7,7 +7,7 @@
     <!-- Users Table -->
     <div class="">
         <table id="instructorTable">
-            <thead class="text-white" style="background-color: #4468cc;">
+            <thead class="text-white " style="background-color: #4468cc;">
                 <tr>
                     <th>ID</th>
                     <th>First Name</th>
@@ -101,7 +101,6 @@
                     },
                     dataSrc: function(json) {
                         console.log('Data received:', json);
-                        // Flatten the structure to get employees as separate rows
                         let employees = [];
                         let ids = new Set();
                         json.data.forEach(item => {
@@ -127,7 +126,10 @@
                     {
                         data: 'image',
                         render: function(data, type, row) {
-                            return data ? `<img src="${data}" alt="Profile Image" width="50" class="rounded-circle">` : 'No image';
+                            return data 
+                                        ? `<img src="${data}" alt="Profile Image" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">` 
+                                        : 'No image';
+
                         }
                     }
                 ]

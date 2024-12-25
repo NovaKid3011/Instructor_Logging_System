@@ -1,6 +1,7 @@
 @extends('welcome')
 @section('user')
 
+
 <div class="container pt-5">
     <small class="text-body-secondary" id="search-letter" data-letter="{{ strtoupper($alpha) }}">Instructors with lastname starting with "{{ strtoupper($alpha) }}"</small>
 
@@ -10,6 +11,7 @@
             <thead>
                 <tr>
                     <th>Profile</th>
+
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Middle Name</th>
@@ -22,7 +24,6 @@
                 </tr>
             </tbody>
         </table>
-        <a class="text-decoration-none text-secondary d-flex justify align-items-center" href="{{route('table')}}">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14l-4 -4l4 -4" /><path d="M5 10h11a4 4 0 1 1 0 8h-1" /></svg>
             Back
         </a>
