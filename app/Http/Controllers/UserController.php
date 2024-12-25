@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 use Storage;
 
 class UserController extends Controller
@@ -25,18 +26,11 @@ class UserController extends Controller
         }
     }
 
-    public function schedule($id)
+    public function schedule(Request $request)
     {
+        $instructorId = $request->query('id');
 
-        $user = User::find($id);
-
-        if (!$user) {
-            return abort(404, 'User not found');
-        }
-
-        $schedule = Schedule::Where('Instructor_id', '=', $id)->get();
-
-        return view('user.schedule', compact('user', 'schedule'));
+        return view('user.schedule');
 
     }
 
