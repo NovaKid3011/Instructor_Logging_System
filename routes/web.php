@@ -3,8 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 
 Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -16,6 +17,9 @@ Route::middleware('preventBackHistory')->group(function () {
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
 
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
@@ -32,7 +36,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
 
-            
+
         });
         Route::prefix('reports')->group(function () {
             Route::get('/daily', [ReportController::class, 'dailyReport'])->name('reports.daily'); // Fetch daily report

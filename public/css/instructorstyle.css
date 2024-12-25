@@ -1,0 +1,56 @@
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Alphabet Toolbar */
+
+.container h6{
+    color:rgb(0, 0, 0);
+}
+.alpha-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Row of letters */
+.alpha-toolbar .row {
+    display: flex;
+    flex-wrap: wrap;  /* Allows letters to wrap into multiple rows */
+    justify-content: center; /* Aligns the items to the start of the row */
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Individual letter links */
+.alpha-toolbar .row a {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #4E73DF;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    width: calc(16.6667% - 10px); /* Ensures 7 links fit in one row */
+    box-sizing: border-box;  /* Ensures padding and margin are included in the width calculation */
+    text-align: center;
+}
+
+.alpha-link:hover {
+    transform: scale(1.1); /* Scale up the letter */
+    background-color: #3E63C8; /* Slightly darker background color on hover */
+}
+
+/* Optional: Active link (when clicked) */
+.alpha-link:active {
+    transform: scale(0.95); /* Scale down when clicked */
+}
+
