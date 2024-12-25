@@ -95,10 +95,6 @@ body{
     align-items: center;
 }
 
-.dropdown-menu{
-    padding: 0;
-    margin: 0;
-}
 
 #instructorTable tbody tr {
     border-bottom: 1px solid #ddd;

@@ -1,21 +1,21 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg" style="background-color: #4E73DF">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Laravel</a>
+        <a href="" class="logo d-flex justify-content-center">
+            <img src="{{asset('/storage/images/logo.png')}}" width="140px" height="auto" class="py-2" alt="">
+        </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
             </ul>
         </div>
-        <div class="d-flex">
-            @auth
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
-                    </ul>
-                </div>
-            @endauth
+        <div class="dropdown mx-3 pt-2">
+            <a class="nav-link text-light btn dropdown-toggle p-2" data-bs-toggle="dropdown" aria-expanded="false">
+                {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+            </a>
+            <ul class="dropdown-menu nav-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item text-dark" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <i class="mdi mdi-logout me-2 text-primary"></i> Logout
+                </a>
+            </ul>
         </div>
     </div>
 </nav>

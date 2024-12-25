@@ -41,6 +41,8 @@
 
 @yield('user')
 
+@include('auth.logout-modal')
+
 @include('footer')
 
 <script src="{{asset('js/test_api.js')}}"></script>

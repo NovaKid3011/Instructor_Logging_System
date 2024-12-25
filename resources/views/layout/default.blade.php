@@ -16,18 +16,17 @@
 </head>
 
 <style>
-    main{
-        display: grid;
-        grid-template-columns: 650px 1fr;
-    }
     .school_image{
         width: 100%;
         height: 100vh;
+        -webkit-filter: blur(1px) brightness(0.5);
+        -moz-filter: blur(1px) brightness(0.5);
+        -ms-filter: blur(1px) brightness(0.5);
+        -o-filter: blur(1px) brightness(0.5);
+        filter: blur(3px) brightness(0.5);
     }
     .login_form{
-        width: 100%;
-        height: 100vh;
-        background: #2e56c2;
+        z-index: 3;
     }
 </style>
 

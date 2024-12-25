@@ -7,13 +7,12 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmailController;
+use App\Http\Controllers\MailController;
 
 Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
-
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
 });
@@ -45,6 +44,8 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
         });
         
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
+            Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
+
 
 
         });
