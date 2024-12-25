@@ -16,7 +16,7 @@ class AuthController extends Controller
                 return redirect(route('dashboard'))
                  ->with('error', 'You are already logged in!');
             }else{
-                return redirect(route('table'))
+                return redirect(route('instructors.by_letter'))
                     ->with('error', 'You are already logged in!');
             }
         }
@@ -30,7 +30,7 @@ class AuthController extends Controller
                 return redirect(route('dashboard'))
                 ->with('error', 'You are already logged in!');
             }else{
-                return redirect(route('table'))
+                return redirect(route('instructors.by_letter'))
                 ->with('error', 'You are already logged in!');
             }
         }
@@ -43,7 +43,7 @@ class AuthController extends Controller
             $user = User::count();
             return view('layout.dashboard', compact('user'));
         }
-        return redirect(route('table'))
+        return redirect(route('instructors.by_letter'))
             ->with('error', 'You are not authorized!');
     }
 
@@ -99,6 +99,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         return redirect(route('login'));
     }
-    
+
 
 }
