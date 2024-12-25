@@ -32,7 +32,6 @@
             });
         </script>
     @endif
-
     <style>
         body {
             overflow-x: hidden;
@@ -50,11 +49,7 @@
             <!-- Sidebar -->
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark text-white p-3">
                 <h2 class="text-center">
-                    @if (Auth::check() && Auth::user()->role == '0')
-                        User
-                    @else
-                        Admin
-                    @endif
+                        Admin Dashboard
                 </h2>
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -69,12 +64,21 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('home')}}" class="nav-link text-white link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Home</a>
-                    </li>
-                    <li class="nav-item">
                         @if (Auth::check() && Auth::user()->role == '1')
                             <a href="{{route('users')}}" class="nav-link text-white link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Users</a>
                         @endif
+                    </li>
+                    <li class="nav-item">
+                    <div class="dropdown">
+                            <button class="btn dropdown-toggle text-white px-3 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reports
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{route(name: 'reports.daily')}}" class="dropdown-item">Daily</a></li>
+                                <li><a href="{{route('reports.monthly')}}" class="dropdown-item">Monthly</a></li>
+                                <li><a href="{{route('reports.custom')}}" class="dropdown-item">Custom</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>

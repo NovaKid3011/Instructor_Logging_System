@@ -27,7 +27,7 @@
 <script>
     const api_key = '{{ env("API_KEY") }}'; // Ensure the API key is correctly retrieved
 
-    fetch('https://api-portal.mlgcl.edu.ph/api/external/employee-subjects', {
+    fetch("https://api-portal.mlgcl.edu.ph/api/external/employee-subjects?last_name={{ strtoupper($alpha) }}", {
         headers: {
             'x-api-key': api_key // Ensure the header is correct
         }
@@ -81,6 +81,11 @@
             profileCell.innerHTML = profileImage;
             row.appendChild(profileCell);
 
+            // Last Name column
+            const lastNameCell = document.createElement('td');
+            lastNameCell.textContent = item.employee.last_name || 'N/A';
+            row.appendChild(lastNameCell);
+
             // First Name column
             const firstNameCell = document.createElement('td');
             firstNameCell.textContent = item.employee.first_name || 'N/A';
@@ -91,10 +96,6 @@
             middleNameCell.textContent = item.employee.middle_name || 'N/A';
             row.appendChild(middleNameCell);
 
-            // Last Name column
-            const lastNameCell = document.createElement('td');
-            lastNameCell.textContent = item.employee.last_name || 'N/A';
-            row.appendChild(lastNameCell);
 
             // Append the row to the table body
             tbody.appendChild(row);
