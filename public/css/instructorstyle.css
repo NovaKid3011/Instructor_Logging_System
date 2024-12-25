@@ -46,7 +46,7 @@
 
 .alpha-link:hover {
     transform: scale(1.1); /* Scale up the letter */
-    background-color: #3E63C8; /* Slightly darker background color on hover */
+    background-color: #ffffff; /* Slightly darker background color on hover */
 }
 
 /* Optional: Active link (when clicked) */

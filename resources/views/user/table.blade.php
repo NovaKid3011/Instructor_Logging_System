@@ -3,7 +3,7 @@
 @section('user')
 
 <div class="container">
-        <p>Please select a letter to view instructors</p>
+        <small class="text-body-secondary px-2">Please select a letter to view instructors based on their lastname.</small>
 
     <!-- Alphabet Toolbar -->
     <div class="alpha-toolbar">
