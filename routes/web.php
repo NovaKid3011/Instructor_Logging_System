@@ -25,6 +25,8 @@ Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByL
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
+        Route::get('/table/schedule', [UserController::class, 'schedule'])->name('sched');
+        Route::post('/table/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
     });
 
     Route::prefix('admin')->group(function () {
@@ -37,12 +39,12 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
-            Route::post('/mail', [EmailController::class, 'getEmail'])->name('getEmail');
-            Route::get('/mail', [EmailController::class, 'sendMail'])->name('mail');
+            Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');
+            Route::get('/mail', [MailController::class, 'sendMail'])->name('mail');
             Route::get('/report', [ReportController::class, 'index'])->name('report');
 
         });
-        
+
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
 
