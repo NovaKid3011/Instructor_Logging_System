@@ -101,7 +101,7 @@
                 </form>
 
     <select name="month" id="month-select" style="padding: 5px; border:none;">
-        <option value="" disabled selected>This month</option>
+        <option value="" disabled selected>{{ now()->format('F')}}</option>
         <option value="1">January</option>
         <option value="2">February</option>
         <option value="3">March</option>
