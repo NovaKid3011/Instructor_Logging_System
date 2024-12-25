@@ -21,4 +21,8 @@ class InstructorController extends Controller
         }
         return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
     }
+    public function showByLetter($alpha)
+    {
+        return view('user.letter')->with("alpha",$alpha);
+    }
 }

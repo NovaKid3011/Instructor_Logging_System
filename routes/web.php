@@ -20,6 +20,9 @@ Route::middleware('preventBackHistory')->group(function () {
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
+
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
