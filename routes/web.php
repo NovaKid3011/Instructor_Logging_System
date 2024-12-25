@@ -13,8 +13,6 @@ Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
-
-
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
 });
@@ -25,9 +23,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
 
 
-Route::middleware(['auth'])->group(function(){
-    Route::prefix('user')->group(function(){
-        // Route::view('/home', 'welcome')->name('home');
+
+Route::middleware(['auth', 'preventBackHistory'])->group(function () {
+    Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
     });
 
@@ -43,6 +41,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
+
 
 
         });
