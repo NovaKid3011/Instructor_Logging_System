@@ -54,3 +54,28 @@
     transform: scale(0.95); /* Scale down when clicked */
 }
 
+
+/* css in letter table */
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.08); /* Scaling added */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    border-bottom: 2px solid #ddd;
+}
+
+.card h5 {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #333;
+    text-transform: uppercase;
+}
