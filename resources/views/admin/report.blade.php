@@ -43,43 +43,45 @@
             
             <div class="card-d p-4">
             <div class="card-header">
-                <h6>Today Mon, DECEMBER 06, 2024</h6>
-                <button class="print-btn no-print" onclick="window.print()">
+            <h6>Today: {{ now()->format('l, F d, Y') }}</h6>                
+            <button class="print-btn no-print" onclick="window.print()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2"> <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path> </svg> PRINT</button>            </div>
                 <div class="table-container mt-3">
-                    <table class="table table-striped table-bordered table-responsive" id="myTable">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Time In</th>
-                                <th>Picture</th>
-                                <th>Name</th>
-                                <th>Subject Code</th>
-                                <th>Description</th>
-                                <th>Schedule</th>
-                                <th>Room</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>07:30 AM</td>
-                                <td></td>
-                                <td>MR. MARK JOSEPH C. GIGANTE</td>
-                                <td>IT ELEC 102</td>
-                                <td>Example Description</td>
-                                <td>07:30 AM - 09:00 PM at 103</td>
-                                <td>103</td>
-                            </tr>
-                            <tr>
-                                <td>07:30 AM</td>
-                                <td></td>
-                                <td>DetDet Gwapa</td>
-                                <td>IT ELEC 102</td>
-                                <td>Example Description</td>
-                                <td>07:30 AM - 09:00 PM at 103</td>
-                                <td>103</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered table-responsive" id="myTable">
+    <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Time In</th>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Subject Code</th>
+            <th>Description</th>
+            <th>Schedule</th>
+            <th>Room</th>
+            <th>Justification</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (count($attendance) > 0)
+
+        @foreach($attendance as $att)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>7:00 AM</td>
+            <td><img src="" alt="photo evidence"></td>
+            <td>{{ $att->first_name }} {{ $att->last_name }}</td>
+            <td>{{ $atts->subject_code ?? 'N/A' }}</td>
+            <td>{{ $att->description ?? 'N/A' }}</td>
+            <td>{{ $att->schedule ?? 'N/A' }}</td>
+            <td>{{ $att->room ?? 'N/A' }}</td>
+            <td>{{ $att->justification ?? 'N/A' }}</td>
+        </tr>
+        @endforeach
+        @endif
+    </tbody>
+</table>
+
+
                 </div>
             </div>
         </div>
@@ -87,56 +89,44 @@
     <div class="card-d p-4">
     
     <div class="card-header-meow">
-        
-        <div style="position: relative; width: 200px;">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-search"
-                style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); pointer-events: none;">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                <path d="M21 21l-6 -6" />
-            </svg>
-            <input
-                type="search" placeholder="Search Instructor"
-                style="width: 100%; padding: 5px 5px 5px 40px; border: 1px solid #ccc; border-radius: 50px; box-sizing: border-box;" />
-        </div>
-        <select name="month" id="month-select" style="padding: 5px; border:none;">
-            <option value="" disabled selected>This month</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select>
+    <form action="{{ route('report') }}" method="GET">
+                    <div class="form-outline">
+                        <!-- <input type="text" name="search" value="{{ request('search') }}" placeholder="Search"> -->
+    
+                    <input id="search-input" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1">
+                    </div>
+                    <button type="submit" class="btn btn-primary p-1">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+
+    <select name="month" id="month-select" style="padding: 5px; border:none;">
+        <option value="" disabled selected>This month</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+    </select>
     </div>
     <div class="table-container">
     <div class="containner">
         <div>
-        <h3>Mr. Emanuelle Barrientos</h3>
+        <h3>Mr. Sample Layout</h3>
         <p >December 2024</p>
         </div>
         <button class="print-btn no-print" onclick="window.print()">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2"> <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path> </svg> PRINT</button>
     </div>
 
-
-        <table class="table table-striped table-bordered table-responsive" id="monthlyTable">
+        <table class="table table-striped table-bordered table-responsive" id="myTable">
             
         <thead class="table-primary">
                 <tr>
@@ -163,7 +153,7 @@
                     <td>101</td>
                     <td>Present</td>
                     <td>N/A</td>
-                </tr>
+</tr>
                 @if(isset($attendances) && $attendances->count())
                 @foreach($attendances as $attendance)
                     <tr>
@@ -179,8 +169,22 @@
                     </tr>
                 @endforeach
                 @else
-                    <tr><td colspan="9">No attendance data available.</td></tr>
+                    <tr><td colspan="9">No attendance data available yet.</td></tr>
                 @endif
+                @isset($search)
+                    <div>
+                        <p>Search Results for "{{ $search }}"</p>
+                        @if($results->isEmpty())
+                            <p>No results found.</p>
+                        @else
+                            <ul>
+                                @foreach($results as $result)
+                                    <a href="">{{ $result->first_name }}</a>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                @endisset
 
             </tbody>
         </table>
@@ -189,5 +193,7 @@
 
     </div>
 </div>
+
+
 
 @endsection

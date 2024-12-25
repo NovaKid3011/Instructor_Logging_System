@@ -17,4 +17,11 @@ class Attendance extends Model
         'subject_code', 'description', 'schedule', 'room',
         'status', 'remarks',
     ];
+
+}
+class Search extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['first_name']; // Specify the searchable columns
 }

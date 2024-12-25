@@ -4,12 +4,13 @@ body{
 .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     background-color: #fff;
+    align-items: center;
 }
 .card-header-meow{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 .card-d{
     box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.1);
@@ -63,9 +64,49 @@ body{
 .nav-link {
     transition: background-color 0.3s ease;
 }
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
+    .form-outline input {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid #CFE2FF;
+        border-radius: 4px 0 0 4px;
+    }
 
+    .btn-primary {
+        padding: 10px 20px;
+        border-radius: 0 4px 4px 0;
+    }
 
+    .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #CFE2FF;
+        border-radius: 4px;
+    }
+
+    .result ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .result ul li {
+        margin: 5px 0;
+    }
+
+    .result ul li a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .result ul li a:hover {
+        text-decoration: underline;
+    }
 @media print {
     #sidebar {
         display: none !important;
