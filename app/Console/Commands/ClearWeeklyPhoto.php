@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Schedule;
+use App\Models\Photo;
 
 class ClearWeeklyPhoto extends Command
 {
@@ -26,7 +26,7 @@ class ClearWeeklyPhoto extends Command
      */
     public function handle()
     {
-        Schedule::whereNotNull('Photo')->update(['Photo' => null]);
+        Photo::whereNotNull('Photo')->update(['Photo' => null]);
 
         $this->info('Weekly cleanup of non-null records completed.');
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -45,16 +44,6 @@ class UserController extends Controller
         $rand_code = Str::random(6);
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
-
-        Storage::disk('public')->put($fileName, $image_base64);
-        $publicUrl = Storage::url($fileName);
-
-
-        Schedule::Where('Instructor_id', '=', $instructorId)
-                ->Where('id', '=', $scheduleId)
-                ->update([
-                    'Photo' => $fileName,
-                ]);
 
         return back();
     }
