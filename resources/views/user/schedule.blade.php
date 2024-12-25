@@ -36,7 +36,7 @@
                 <div class="modal-body">
                     <form action="">
                         @csrf
-                        <video id="camera" height="400" width="466" autoplay></video>
+                        <div id="camera"></div>
                         <input type="hidden" name="image" class="image-tag">
                     </form>
                 </div>
@@ -96,18 +96,16 @@
             });
         });
 
-        const videoElement = document.getElementById('camera');
+        Webcam.set({
+            height: 400,
+            width: 400,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
 
-        async function startWebcam() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                videoElement.srcObject = stream;
-            } catch (err) {
-                console.error("Error accessing webcam:", err);
-            }
-        }
+        Webcam.attach('#camera');
 
-        window.onload = startWebcam;
+
     </script>
 
 @endsection
