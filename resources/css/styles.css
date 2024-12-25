@@ -43,13 +43,11 @@ body{
     display: flex;
     flex-direction: column;
 }
-
 .nav a{
+    font-size: small;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: .02s;
-    border-radius: 3px;
 }
 .border{
     height: 10px;
@@ -65,6 +63,10 @@ body{
 .main-content{
     display: flex;
     gap: 30px;
+}
+.card{
+    border: none;
+    color: #fff;
 }
 .card_text{
     display: flex;
@@ -93,61 +95,11 @@ body{
     align-items: center;
 }
 
-.dropdown-menu{
-    font-size: small;
-    background-color: #2e56c2;
-}
-.dropdown-menu.show{
-    border: none;
-}
-.dropdown-item{
-    color: #fff;
+
+#instructorTable tbody tr {
+    border-bottom: 1px solid #ddd;
 }
 
-.drop-active{
-    background-color: #4E73DF;
+#instructorTable tbody tr:last-child {
+    border-bottom: none;
 }
-.nav-menu{
-    background-color: #fff;
-}
-.nav-menu a:hover{
-    transition: none;
-    background-color: #4E73DF;
-}
-
-
-
-
-
-
-  .dropdown-btn {
-    background: none;
-    color: white;
-    border: none;
-    width: 100%;
-    text-align: left;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-    font-size: small;
-  }
-
-  .dropdown-btn:hover {
-    background-color: #284eb6;
-  }
-  .dropdown-container {
-    height: 0;
-    overflow: hidden;
-    transition: height 0.3s ease-out;
-    background-color: #4468cc;
-  }
-  .dropdown-container a {
-    color: white;
-    padding: 13px 13px 13px 25px;
-  }
-.sub-menu a:hover{
-    background-color: #2e56c2;
-}
-
-

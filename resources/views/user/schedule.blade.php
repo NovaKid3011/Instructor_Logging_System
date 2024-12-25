@@ -106,11 +106,6 @@
 
         async function startWebcam() {
             try {
-                getUserMedia({
-                    video: true,
-                    height: 400,
-                    width: 460
-                });
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 videoElement.srcObject = stream;
             } catch (err) {

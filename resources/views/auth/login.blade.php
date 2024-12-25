@@ -24,10 +24,10 @@
     @endif
 
     <main class="m-0">
-        <div class=" login_form d-flex justify-content-center  align-items-center">
+        <div class=" login_form d-flex justify-content-center  align-items-center position-absolute top-50 start-50 translate-middle">
             <div class="">
                 <a href="" class="logo">
-                    <img src="{{asset('/storage/images/Vertical Graphics.png')}}" width="250px" height="auto" class="" alt="">
+                    <img src="{{asset('/images/mlg-logo.png')}}" width="150px" height="auto" class="" alt="">
                 </a>
                 <div class="card-body col-12">
                     <form action="{{route('login.post')}}" method="POST">
@@ -44,7 +44,7 @@
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
                         </div>
-                        <div class="d-grid mx-auto mb-4">
+                        <div class="d-grid mx-auto mb-4 shadow bg-body-tertiary rounded">
                             <button type="submit" class="btn btn-primary log-button text-light">Login</button>
                         </div>
                     </form>
@@ -52,7 +52,8 @@
             </div>
         </div>
         <div class="school_image">
-            <img src="{{asset('/storage/images/cat.jpg')}}" width="100%" height="100%" class="" alt="">
+
+            <img src="{{asset('/storage/images/school.png')}}" width="100%" height="100%" class="" alt="">
         </div>
     </main>
 

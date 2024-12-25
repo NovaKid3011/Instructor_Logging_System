@@ -22,7 +22,7 @@
         </script>
     @endif
 
-    <div class="container mt-5">
+    <div class="container mt-3">
         <!-- Users Table -->
         <div class="">
             {{-- <div class="text-primary">
