@@ -51,7 +51,7 @@
 .alpha-link:active {
     transform: scale(0.95); /* Scale down when clicked */
 }
-
+}
 
 /* css in letter table */
 
@@ -108,3 +108,4 @@
         padding: 10px;
     }
 }
+

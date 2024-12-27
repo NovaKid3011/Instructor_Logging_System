@@ -1,5 +1,5 @@
 @extends('welcome')
-@section('user')
+@section('content')
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center">
@@ -10,7 +10,6 @@
     </div>
 
     <!-- Instructors Cards -->
-
     <div id="instructors-container" class="mt-4">
         <div id="instructorCards" class="row">
             <div class="col-12 text-center">Loading...</div>
@@ -24,7 +23,7 @@
 
     fetch("https://api-portal.mlgcl.edu.ph/api/external/employees?last_name={{ strtoupper($alpha) }}", {
         headers: {
-            'x-api-key': api_key // sakto dapat ni
+            'x-api-key': api_key
         }
     }).then(res => {
         if (!res.ok) {
@@ -73,8 +72,12 @@
             card.style.maxWidth = '250px';
             card.style.border = '1px solid #ddd';
             card.style.borderRadius = '8px';
-
-            // Profile Image Ni
+             // Add click event listener for redirection
+            card.addEventListener('click', () => {
+                const instructorId = item.id; // Assuming `id` exists in the data
+                window.location.href = `/user/schedule/${instructorId}`;
+            });
+            // Profile Image
             const profileImage = document.createElement('img');
             profileImage.src = item.image || 'https://via.placeholder.com/150';
             profileImage.alt = 'Profile Image';
@@ -100,4 +103,3 @@
 </script>
 
 @endsection
-
