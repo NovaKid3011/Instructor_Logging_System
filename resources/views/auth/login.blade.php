@@ -53,7 +53,8 @@
         </div>
         <div class="school_image">
 
-            <img src="{{asset('/storage/images/school.png')}}" width="100%" height="100%" class="" alt="">
+            <!-- <img src="{{asset('/storage/images/school.png')}}" width="100%" height="100%" class="" alt=""> -->
+            <img src="{{asset('/storage/images/school.jpg')}}" width="100%" height="100%" class="" alt="">
         </div>
     </main>
 
