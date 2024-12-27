@@ -10,6 +10,7 @@
     </div>
 
     <!-- Instructors Cards -->
+
     <div id="instructors-container" class="mt-4">
         <div id="instructorCards" class="row">
             <div class="col-12 text-center">Loading...</div>
@@ -23,7 +24,7 @@
 
     fetch("https://api-portal.mlgcl.edu.ph/api/external/employees?last_name={{ strtoupper($alpha) }}", {
         headers: {
-            'x-api-key': api_key
+            'x-api-key': api_key // sakto dapat ni
         }
     }).then(res => {
         if (!res.ok) {
@@ -73,7 +74,7 @@
             card.style.border = '1px solid #ddd';
             card.style.borderRadius = '8px';
 
-            // Profile Image
+            // Profile Image Ni
             const profileImage = document.createElement('img');
             profileImage.src = item.image || 'https://via.placeholder.com/150';
             profileImage.alt = 'Profile Image';
@@ -99,3 +100,4 @@
 </script>
 
 @endsection
+
