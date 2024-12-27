@@ -19,11 +19,11 @@
 
 
 <script>
-    const api_key = '{{ env("API_KEY") }}'; // Ensure the API key is correctly retrieved
+    const api_key = '{{ env("API_KEY") }}';
 
     fetch("https://api-portal.mlgcl.edu.ph/api/external/employees?last_name={{ strtoupper($alpha) }}", {
         headers: {
-            'x-api-key': api_key // Ensure the header is correct
+            'x-api-key': api_key
         }
     }).then(res => {
         if (!res.ok) {
@@ -84,7 +84,7 @@
             profileImage.style.borderTopLeftRadius = '8px';
             profileImage.style.borderTopRightRadius = '8px';
 
-            // Name
+            //  Name and middle name js to make 1 letter nalang
             const name = document.createElement('h5');
             name.className = 'mt-3 text-uppercase fw-bold';
             name.textContent = `${item.first_name || ''} ${item.middle_name ? item.middle_name.charAt(0) + '.' : ''} ${item.last_name || ''}`;

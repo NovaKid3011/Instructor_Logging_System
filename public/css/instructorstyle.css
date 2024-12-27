@@ -1,4 +1,4 @@
-/* Container */
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -25,13 +25,13 @@
     flex-wrap: wrap;  /* Allows letters to wrap into multiple rows */
     justify-content: center; /* Aligns the items to the start of the row */
     width: 100%;
-    margin-bottom: 10px;
+
 }
 
 /* Individual letter links */
 .alpha-toolbar .row a {
     display: inline-block;
-    padding: 10px;
+    padding: 23px;
     margin: 5px;
     font-size: 20px;
     color: #ffffff;
@@ -78,4 +78,35 @@
     font-size: 18px;
     color: #333;
     text-transform: uppercase;
+}
+
+/* Media Queries */
+@media screen and (max-width: 425px) {
+    /* Two items per row */
+    .alpha-toolbar .row a {
+        width: calc(50% - 10px); /* Two links fit in one row */
+        font-size: 18px; /* Adjust font size for smaller screens */
+        padding: 20px; /* Adjust padding */
+    }
+
+    /* Adjust cards */
+    .card {
+        margin-bottom: 20px; /* Add spacing between cards */
+    }
+}
+
+@media screen and (max-width: 375px) {
+    /* Slightly smaller sizes */
+    .alpha-toolbar .row a {
+        font-size: 16px;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    /* Extra small screens */
+    .alpha-toolbar .row a {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
