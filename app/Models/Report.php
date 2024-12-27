@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barangay extends Model
+class Report extends Model
 {
     //
 }

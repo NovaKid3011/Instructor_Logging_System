@@ -1,11 +1,11 @@
 
 @extends('welcome')
-@section('user')
+@section('content')
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered" id="instructor">
 
 <div class="container">
         <p>Please select a letter to view instructors</p>
-
-    <!-- Alphabet Toolbar -->
     <div class="alpha-toolbar">
         <div class="row">
             @foreach (range('A', 'F') as $letter)

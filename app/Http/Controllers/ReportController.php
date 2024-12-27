@@ -3,50 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Attendance;
 
 class ReportController extends Controller
 {
-    public function dailyReport()
+    public function index()
     {
-        // via API
-        return view("admin.reports.daily");
-        
-    }
+        $attendance = Attendance::all(); 
 
-    public function monthlyReport()
-    {
-        return view("admin.reports.monthly");
-    }
-
-    public function customReport(Request $request)
-    {
-        return view("admin.reports.custom");
-    }
-
-    public function create()
-    {
-        return view('admin.reports.create');
-    }
-
-    public function store(Request $request)
-    {
-        // via API
-    }
-
-    // Show Edit Form
-    public function edit($id)
-    {
-        // via API
-    }
-
-    public function update(Request $request, $id)
-    {
-        // via API
+        return view("admin.report", compact('attendance'));
+        // dd($request->all());
 
     }
-
-    public function destroy($id)
-    {
-        // via API
-    }
+    
+    
 }
