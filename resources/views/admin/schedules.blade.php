@@ -32,7 +32,7 @@
     $(document).ready(function() {
         $('#schedulesTable').DataTable({
             ajax: {
-                url: 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects',
+                url: 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/2',
                 type: 'GET',
                 headers: {
                     'x-api-key': '{{env("API_KEY")}}'
@@ -51,7 +51,7 @@
                                 time_start: subject.time_start,
                                 time_end: subject.time_end,
                                 code: subject.code,
-                                description: subject.description
+                                description: subject.description,
                             });
                         });
                     });

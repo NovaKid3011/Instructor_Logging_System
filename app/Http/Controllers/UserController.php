@@ -25,9 +25,8 @@ class UserController extends Controller
         }
     }
 
-    public function schedule(Request $request)
+    public function schedule()
     {
-        $instructorId = $request->query('id');
 
         return view('user.schedule');
 
