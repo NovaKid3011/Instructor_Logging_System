@@ -24,7 +24,15 @@ class InstructorController extends Controller
     }
 
     public function showByLetter($alpha)
-    {
-        return view('user.letter')->with("alpha",$alpha);
-    }
+{
+    // Debugging
+//    dd($alpha);
+
+    return view('user.letter')->with('alpha', $alpha);
+}
+    public function schedule($id)
+{
+
+        return view('user.schedule', compact('instructor'));
+}
 }
