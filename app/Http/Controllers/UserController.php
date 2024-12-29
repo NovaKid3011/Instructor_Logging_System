@@ -28,8 +28,10 @@ class UserController extends Controller
 
     public function schedule($id)
     {
+        $photo = Photo::all();
+        $timedInSchedules = $photo->pluck('schedule_id')->toArray();
 
-        return view('user.schedule', ['employeeId' => $id]);
+        return view('user.schedule', ['employeeId' => $id, 'photos' => $photo, 'timedInSchedules' => $timedInSchedules]);
 
     }
 
