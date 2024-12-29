@@ -45,11 +45,10 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');
             Route::get('/mail', [MailController::class, 'sendMail'])->name('mail');
             Route::get('/report', [ReportController::class, 'index'])->name('report');
-            Route::get('/download-csv', [ReportController::class, 'downloadCsv'])->name('report.download_csv');
-
-
-
-        });
+            // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
+            Route::get('/download-daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
+            Route::get('/download-monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
+});
 
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');

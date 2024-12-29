@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('subject_code');
-            $table->string('description');
-            $table->string('schedule');
-            $table->string('room'); 
+            // $table->string('subject_code');
+            // $table->string('description');
+            // $table->string('schedule');
+            // $table->string('room'); 
             $table->timestamps();
         });
     }
