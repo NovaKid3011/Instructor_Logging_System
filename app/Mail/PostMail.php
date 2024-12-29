@@ -10,16 +10,17 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 
+
 class PostMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $users;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($users)
     {
-        //
+        $this->users = $users;
     }
 
     /**
@@ -37,16 +38,11 @@ class PostMail extends Mailable
      */
     public function content(): Content
     {
-        $user = User::all();
 
         return new Content(
             markdown: 'admin.post-mail',
             with: [
-                'user' => [
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'role' => $user->role,
-                ],
+                'user' => $this->users,
             ]
         );
     }
