@@ -24,6 +24,7 @@ Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByL
 Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
 
 
+
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
