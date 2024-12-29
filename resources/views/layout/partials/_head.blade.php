@@ -100,48 +100,9 @@
     <script>
         $(document).ready( function () {
             $('#instructorTable').DataTable();
-            // const id = $($this).data('id');
-            // console.log(id);
-            // window.location.href = `/admin/dashboard/view/${id}`;
         } );
     </script>
 
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-
-        hamburger.addEventListener('click', function() {
-            sidebar.classList.toggle('show');
-            hamburger.classList.toggle('active');
-        });
-
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = dropdownBtn.nextElementSibling;
-
-        dropdownBtn.addEventListener('click', function() {
-            dropdownContainer.classList.toggle('show');
-            dropdownBtn.classList.toggle('active');
-            if (dropdownContainer.classList.contains('show')) {
-                dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            } else {
-                dropdownContainer.style.height = '0';
-            }
-        });
-
-        // Prevent the dropdown from closing when a submenu item is clicked
-        dropdownContainer.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-
-        // Keep the dropdown open if a submenu item is active
-        if (dropdownContainer.querySelector('.drop-active')) {
-            dropdownContainer.classList.add('show');
-            dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            dropdownBtn.classList.add('active');
-        }
-    });
-</script> --}}
 
 
 </body>

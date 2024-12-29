@@ -15,7 +15,6 @@
                     <th>First Name</th>
                     <th>Middle Name</th>
                     <th>Report</th>
-                    {{-- <th>Birthdate</th> --}}
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -69,7 +68,7 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return `<button class="btn btn-sm text-white btn-primary view-btn" data-id="${row.id}">View</button>`
+                            return `<button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</button>`;
                         }
                     }
                 ]

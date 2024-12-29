@@ -15,6 +15,18 @@ body{
     display: flex;
     flex-direction: column;
 }
+.admin-nav{
+    border: 1px solid #dcdcdc;
+}
+.admin-nav a{
+    color: #000;
+    border-radius: 3px;
+}
+.admin-nav a:hover, .admin-nav:hover{
+    background-color: #284eb6;
+    color: #fff;
+    transition: .2s;
+}
 .sidebar{
     background-color: #4E73DF;
     height: 100vh;
@@ -113,7 +125,6 @@ body{
 
 .dropdown-menu{
     font-size: small;
-    background-color: #2e56c2;
 }
 .dropdown-item{
     color: #fff;
