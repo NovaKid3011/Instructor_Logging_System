@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use App\Models\Photo;
 use Storage;
 
 class UserController extends Controller
@@ -25,10 +26,10 @@ class UserController extends Controller
         }
     }
 
-    public function schedule()
+    public function schedule($id)
     {
 
-        return view('user.schedule');
+        return view('user.schedule', ['employeeId' => $id]);
 
     }
 
@@ -44,10 +45,11 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-        return back();
+        Photo::create([
+            'photo' => $fileName,
+            'schedule_id' => $scheduleId,
+        ]);
+
+        return back()->with('success', 'Timed in successfully!');
     }
-
-
-
 }
-
