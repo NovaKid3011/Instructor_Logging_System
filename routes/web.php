@@ -27,7 +27,7 @@ Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('us
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
-        Route::get('/table/schedule', [UserController::class, 'schedule'])->name('sched');
+        Route::get('/table/schedule/{instructorId}', [UserController::class, 'schedule'])->name('sched');
         Route::post('/table/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
     });
 
@@ -39,7 +39,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
             Route::get('/users', [AdminController::class, 'users'])->name('users');
             Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
-            Route::delete('/users/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
+            Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
             Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');
@@ -52,10 +52,13 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
+            Route::post('/manage-email', [MailController::class, 'registerMail'])->name('add-email');
+            Route::put('/manage-email/{id}', [MailController::class, 'editMail'])->name('editMail');
+            Route::delete('/delete-email/{id}', [MailController::class, 'deleteEmail'])->name('email-delete');
+
+        });
 
 
 
         });
-});
-
 Route::get('/search', [SearchController::class, 'index'])->name('search');

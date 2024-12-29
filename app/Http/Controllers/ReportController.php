@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
@@ -13,6 +14,7 @@ class ReportController extends Controller
 
         $attendanceQuery = Attendance::query();
 
+        // Filter by search (first name or last name)
         if ($search) {
             $attendanceQuery->where(function ($query) use ($search) {
                 $query->where('first_name', 'LIKE', "%{$search}%")
@@ -20,87 +22,32 @@ class ReportController extends Controller
             });
         }
 
+        // Filter by month
         if ($month) {
             $attendanceQuery->whereMonth('created_at', $month);
         }
 
+        // Paginate the results
         $attendance = $attendanceQuery->paginate(10);
 
         return view('admin.report', compact('attendance', 'search', 'month'));
     }
 
-    public function dailyReport(Request $request)
-    {
-        $search = $request->input('search');
-        $month = $request->input('month');
 
-        $attendanceQuery = Attendance::query();
 
-        if ($search) {
-            $attendanceQuery->where(function ($query) use ($search) {
-                $query->where('first_name', 'LIKE', "%{$search}%")
-                      ->orWhere('last_name', 'LIKE', "%{$search}%");
-            });
-        }
-
-        if ($month) {
-            $attendanceQuery->whereMonth('created_at', $month);
-        }
-
-        $attendance = $attendanceQuery->get();
-
-        $csvData = $attendance->map(function ($att) {
-            return [
-                'Time In' => $att->created_at->format('h:i A'),
-                'Name' => $att->first_name . ' ' . $att->last_name,
-                'Status' => $att->status,
-                'Justification' => $att->justification,
-            ];
-        });
-
-        $csvHeader = ['Time In', 'Name', 'Status', 'Justification'];
-        $filename = 'attendance_report-' . now()->format('Y-m-d') . '.csv';
-
-        return response()->stream(function () use ($csvHeader, $csvData) {
-            $handle = fopen('php://output', 'w');
-            fputcsv($handle, $csvHeader);
-
-            foreach ($csvData as $row) {
-                fputcsv($handle, $row);
-            }
-
-            fclose($handle);
-        }, 200, [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-        ]);
-    }
-
-    public function monthlyReport(Request $request)
+public function showAttendance(Request $request)
 {
-    $search = $request->input('search');
-    $month = $request->input('month');
-
-    // Query to filter attendance based on search and month
-    $filteredAttendanceQuery = Attendance::query();
-
-    if ($search) {
-        $filteredAttendanceQuery->where(function ($query) use ($search) {
-            $query->where('first_name', 'LIKE', "%{$search}%")
-                  ->orWhere('last_name', 'LIKE', "%{$search}%");
-        });
-    }
-
-    if ($month) {
-        $filteredAttendanceQuery->whereMonth('created_at', $month);
-    }
-
-    // Get the filtered results
-    $filteredAttendance = $filteredAttendanceQuery->get();
-
-    // Pass the data to the view
-    return view('admin.report', compact('filteredAttendance', 'search', 'month'));
+    // Fetch data from the attendance table and group it by first_name, last_name, and month
+    $attendance = Attendance::query()
+        ->selectRaw('first_name, last_name, YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as attendance_count')
+        ->groupBy('first_name', 'last_name', 'year', 'month')
+        ->orderBy('first_name')
+        ->orderBy('last_name')
+        ->orderBy('year')
+        ->orderBy('month')
+        ->get();
+    
+    return view('admin.report', compact('attendance'));
 }
 
 }
-

@@ -137,14 +137,17 @@
 </div>
 
 <div class="table-container">
+
     @if ($attendance->isEmpty())
         <p>No record available for this month.</p>
     @else
         @isset($search)
             <div>
                 <div class="containner">
-                    <h3>{{ $attendance->first()->first_name }} {{ $attendance->first()->last_name }}</h3>
+                    <div>
+                        <h3>{{ $attendance->first()->first_name }} {{ $attendance->first()->last_name }}</h3>
                     <p>{{ $attendance->first()->created_at->format('F Y') }}</p>
+                    </div>
                     <a class="print" href="{{ route('report.monthly_report', ['search' => request('search'), 'month' => request('month')]) }}" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
                             <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
@@ -177,47 +180,44 @@
                 </table>
             </div>
         @else
-            @if (isset($filteredAttendance) && $filteredAttendance->isNotEmpty())
-                @foreach ($filteredAttendance as $att)
-                    <div class="container">
-                        <div>
-                            <h3>{{ $att->first_name }} {{ $att->last_name }}</h3>
-                            <p class="text-secondary">{{ $att->created_at->format('F Y') }}</p>
-                        </div>
-                        <a class="print" href="{{ route('report.download_csv', ['search' => request('search'), 'month' => request('month')]) }}" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
-                                <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-                                <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                                <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
-                            </svg>
-                            Download CSV
-                        </a>
+        <div>
+                <div class="containner">
+                    <div>
+                        <h3>{{ $attendance->first()->first_name }} {{ $attendance->first()->last_name }}</h3>
+                    <p>{{ $attendance->first()->created_at->format('F Y') }}</p>
                     </div>
+                    <a class="print" href="{{ route('report.monthly_report', ['search' => request('search'), 'month' => request('month')]) }}" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
+                            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
+                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                            <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
+                        </svg>
+                        Download CSV
+                    </a>
+                </div>
 
-                    <table class="table table-striped table-bordered table-responsive" id="myTable">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Picture</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <table class="table table-striped table-bordered table-responsive" id="myTable">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($attendance as $att)
                             <tr>
                                 <td>{{ $att->created_at->format('d') }}</td>
                                 <td>{{ $att->created_at->format('l') }}</td>
                                 <td>
                                     <img src="{{ asset('images/' . $att->picture) }}" alt="Picture" width="50px">
                                 </td>
-                                <td>{{ $att->status }}</td>
                             </tr>
-                        </tbody>
-                    </table>
-                @endforeach
-            @else
-                <p>No attendance records found for the selected name and month.</p>
-            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
         @endisset
     @endif
 </div>

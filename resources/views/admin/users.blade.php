@@ -32,7 +32,7 @@
                 <button id="createB" class="btn btn-primary m-2" style="background-color: #4E73DF" data-bs-toggle="modal" data-bs-target="#addUser">
                     Add user
                 </button>
-                <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl}" id="myTable">
+                <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl} shadow bg-body-tertiary rounded" id="myTable">
                     <thead class="table-primary">
                         <tr>
                             <th>#</th>
@@ -212,7 +212,6 @@
     </script>
 
 {{-- Delete Modal --}}
-@if ($users->isnotEmpty())
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -225,7 +224,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form id="deleteUserForm" method="POST" action="{{ route('user.delete', $user->id) }}">
+                    <form id="deleteUserForm" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -234,7 +233,6 @@
             </div>
         </div>
     </div>
-@endif
 
     <script>
         let createModal = document.getElementById('userModal');
@@ -267,7 +265,10 @@
             const userName = button.getAttribute('data-username');
 
             const userNameElement = document.getElementById('userName');
+            const deleteForm = document.getElementById('deleteUserForm');
+
             userNameElement.textContent = userName;
+            deleteForm.action = `{{ url('admin/dashboard/delete/') }}/${userId}`;
         });
     </script>
 @endsection
