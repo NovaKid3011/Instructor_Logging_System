@@ -5,14 +5,14 @@
 <div class="container mt-3">
 <ul class="nav-tab nav-tabs display-flex" id="reportTabs" role="tablist" style="list-style: none; padding: 0;">
     <li class="nav-item" role="presentation">
-        <button 
-            class="nav-link {{ request()->hasAny(['month', 'search']) ? '' : 'active' }}" 
-            id="daily-tab" 
-            data-bs-toggle="tab" 
-            data-bs-target="#daily" 
-            type="button" 
-            role="tab" 
-            aria-controls="daily" 
+        <button
+            class="nav-link {{ request()->hasAny(['month', 'search']) ? '' : 'active' }}"
+            id="daily-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#daily"
+            type="button"
+            role="tab"
+            aria-controls="daily"
             aria-selected="{{ request()->hasAny(['month', 'search']) ? 'false' : 'true' }}"
             style="font-weight: bold; text-decoration:none; border: none; border-radius: 0; padding: 10px 20px;"
         >
@@ -20,14 +20,14 @@
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button 
-            class="nav-link {{ request()->hasAny(['month', 'search']) ? 'active' : '' }}" 
-            id="monthly-tab" 
-            data-bs-toggle="tab" 
-            data-bs-target="#monthly" 
-            type="button" 
-            role="tab" 
-            aria-controls="monthly" 
+        <button
+            class="nav-link {{ request()->hasAny(['month', 'search']) ? 'active' : '' }}"
+            id="monthly-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#monthly"
+            type="button"
+            role="tab"
+            aria-controls="monthly"
             aria-selected="{{ request()->hasAny(['month', 'search']) ? 'true' : 'false' }}"
             style="font-weight: bold; text-decoration:none; border: none; border-radius: 0; padding: 10px 20px;"
         >
@@ -44,7 +44,7 @@
 
         <div class="card-d p-3">
         <div class="card-header">
-        <h6>Today: {{ now()->format('l, F d, Y') }}</h6>                
+        <h6>Today: {{ now()->format('l, F d, Y') }}</h6>
         @if(isset($attendances) && count($attendances) > 0 && $attendances->first()->created_at->isToday())
     <a class="print" href="{{ route('report.daily_report', ['search' => request('search'), 'month' => request('month')]) }}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
@@ -65,7 +65,7 @@
     </span>
 @endif
 
-           
+
         </div>
             <div class="table-container mt-3">
             <table class="table table-striped table-bordered table-responsive" id="myTable">
@@ -74,7 +74,7 @@
             <th>#</th>
             <th>Time In</th>
             <th>Picture</th>
-            <th>Name</th>   
+            <th>Name</th>
             <th>Subject Code</th>
             <th>Description</th>
             <th>Schedule</th>
@@ -88,14 +88,14 @@
             @if ($att->created_at->isToday())
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $att->created_at->format('h:i A') }}</td>                
+                <td>{{ $att->created_at->format('h:i A') }}</td>
                 <td><img src="" alt="photo evidence"></td>
                 <td>{{ $att->first_name }} {{ $att->last_name }}</td>
                 <td>{{ $att->subject_code ?? 'N/A' }}</td>
                 <td>{{ $att->description ?? 'N/A' }}</td>
                 <td>{{ $att->schedule ?? 'N/A' }}</td>
-                <td>{{ $att->room ?? 'N/A' }}</td> 
-                <td>{{ $att->justification ?? 'N/A' }}</td>    
+                <td>{{ $att->room ?? 'N/A' }}</td>
+                <td>{{ $att->justification ?? 'N/A' }}</td>
             </tr>
             @endif
         @endforeach
@@ -110,7 +110,7 @@
         </div>
         <div class="tab-pane fade {{ request()->hasAny(['month', 'search']) ? 'show active' : '' }}" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
         <div class="card-d p-4">
-    
+
     <div class="card-header-meow">
     <form action="{{ route('report') }}" method="GET">
         <select name="month" id="month-select" style="padding: 5px; border:none;">
@@ -130,7 +130,7 @@
         </select>
         <div class="form-outline">
             <input id="search-input" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1" style="font-size: small">
-        </div> 
+        </div>
         <button type="submit" class="btn btn-primary p-1" style="font-size: small">
             <i class="fas fa-search"></i> Search
         </button>
@@ -170,7 +170,7 @@
                             <th>Schedule</th>
                             <th>Room</th>
                             <th>Justification</th></tbody>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -184,8 +184,8 @@
                                 <td>{{ $att->subject_code ?? 'N/A' }}</td>
                                 <td>{{ $att->description ?? 'N/A' }}</td>
                                 <td>{{ $att->schedule ?? 'N/A' }}</td>
-                                <td>{{ $att->room ?? 'N/A' }}</td> 
-                                <td>{{ $att->justification ?? 'N/A' }}</td>  
+                                <td>{{ $att->room ?? 'N/A' }}</td>
+                                <td>{{ $att->justification ?? 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -235,8 +235,8 @@
                         <td>{{ $att->subject_code ?? 'N/A' }}</td>
                         <td>{{ $att->description ?? 'N/A' }}</td>
                         <td>{{ $att->schedule ?? 'N/A' }}</td>
-                        <td>{{ $att->room ?? 'N/A' }}</td> 
-                        <td>{{ $att->justification ?? 'N/A' }}</td>  
+                        <td>{{ $att->room ?? 'N/A' }}</td>
+                        <td>{{ $att->justification ?? 'N/A' }}</td>
                     </tr>
                 @endforeach
             </tbody>
