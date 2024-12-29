@@ -1,5 +1,5 @@
 @isset($search)
-    @if ($attendance->isEmpty())
+    @if ($attendances->isEmpty())
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var noResultsModal = new bootstrap.Modal(document.getElementById('noResultsModal'));
