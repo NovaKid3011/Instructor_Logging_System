@@ -47,6 +47,8 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
+
+
         Photo::create([
             'photo' => $fileName,
             'schedule_id' => $scheduleId,

@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('photo');
-            $table->integer('schedule_id')->nullable();
-            $table->timestamps();
+            $table->integer('schedule_id');
         });
     }
 
