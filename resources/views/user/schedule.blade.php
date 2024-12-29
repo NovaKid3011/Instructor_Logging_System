@@ -67,6 +67,9 @@
 
         var API_key = document.querySelector('meta[name="api-key"]').content
 
+        var photos = @json($photos);
+        var timedInSchedules = @json($timedInSchedules);
+
         $(document).ready(function() {
             const employeeId = @json($employeeId);
             const API_url = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/' + employeeId;
@@ -89,7 +92,11 @@
                                 row.append(`<td>${item.time_end}</td>`);
                                 row.append(`<td>${item.code}</td>`);
                                 row.append(`<td>${item.description}</td>`);
-                                row.append(`<td><button type="button" class="btn btn-primary" id="timeIn" data-bs-toggle="modal" data-bs-target="#cameraModal" data-employee-id="${employeeId}" data-schedule-id="${item.id}">Time In</button></td>`);
+                                if (timedInSchedules.includes(item.id)) {
+                                row.append(`<td><span class="text-muted">Timed In</span></td>`);
+                                } else {
+                                    row.append(`<td><button type="button" class="btn btn-primary" id="timeIn" data-bs-toggle="modal" data-bs-target="#cameraModal" data-employee-id="${employeeId}" data-schedule-id="${item.id}">Time In</button></td>`);
+                                }
                                 tableBody.append(row);
                             });
                         } else {
