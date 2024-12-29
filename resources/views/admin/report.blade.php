@@ -5,14 +5,14 @@
 <div class="container mt-3">
 <ul class="nav-tab nav-tabs display-flex" id="reportTabs" role="tablist" style="list-style: none; padding: 0;">
     <li class="nav-item" role="presentation">
-        <button 
-            class="nav-link active" 
-            id="daily-tab" 
-            data-bs-toggle="tab" 
-            data-bs-target="#daily" 
-            type="button" 
-            role="tab" 
-            aria-controls="daily" 
+        <button
+            class="nav-link active"
+            id="daily-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#daily"
+            type="button"
+            role="tab"
+            aria-controls="daily"
             aria-selected="true"
             style="font-weight: bold; text-decoration:none; border: none; border-radius: 0; padding: 10px 20px;"
         >
@@ -20,14 +20,14 @@
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button 
-            class="nav-link" 
-            id="monthly-tab" 
-            data-bs-toggle="tab" 
-            data-bs-target="#monthly" 
-            type="button" 
-            role="tab" 
-            aria-controls="monthly" 
+        <button
+            class="nav-link"
+            id="monthly-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#monthly"
+            type="button"
+            role="tab"
+            aria-controls="monthly"
             aria-selected="false"
             style="font-weight: bold; text-decoration:none; border: none; border-radius: 0; padding: 10px 20px;"
         >
@@ -40,10 +40,10 @@
 
     <div class="tab-content " id="reportTabsContent">
         <div class="tab-pane fade show active" id="daily" role="tabpanel" aria-labelledby="daily-tab">
-            
+
             <div class="card-d p-4">
             <div class="card-header">
-            <h6>Today: {{ now()->format('l, F d, Y') }}</h6>                
+            <h6>Today: {{ now()->format('l, F d, Y') }}</h6>
             <button class="print-btn no-print" onclick="window.print()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2"> <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path> <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path> <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path> </svg> PRINT</button>            </div>
                 <div class="table-container mt-3">
@@ -87,12 +87,12 @@
         </div>
         <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
     <div class="card-d p-4">
-    
+
     <div class="card-header-meow">
     <form action="{{ route('report') }}" method="GET">
                     <div class="form-outline">
                         <!-- <input type="text" name="search" value="{{ request('search') }}" placeholder="Search"> -->
-    
+
                     <input id="search-input" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1">
                     </div>
                     <button type="submit" class="btn btn-primary p-1">
@@ -127,7 +127,7 @@
     </div>
 
         <table class="table table-striped table-bordered table-responsive" id="myTable">
-            
+
         <thead class="table-primary">
                 <tr>
                     <th>Date</th>
@@ -143,7 +143,7 @@
             </thead>
             <tbody>
                 <tr>
-                    
+
                     <td>2</td>
                     <td>Mon</td>
                     <td><img src="{{ '/images/cat.jpg'}}" alt="meow" width="50px"></td>

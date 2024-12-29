@@ -14,6 +14,8 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Middle Name</th>
+                    <th>Report</th>
+                    {{-- <th>Birthdate</th> --}}
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -34,14 +36,6 @@
                     headers: {
                         'x-api-key': '{{env("API_KEY")}}'
                     },
-                    beforeSend: function(jqXHR, settings) {
-                        settings.url = settings.url.replace(/([?&])_=\d+/, '');  // Remove timestamp manually
-                    },
-                    error: function(xhr, error, thrown) {
-                        console.log('Error:', xhr.responseText);
-
-                        alert('Failed to load data. Check console for details.');
-                    },
                     dataSrc: function(json) {
                         console.log('Data received:', json);
                         // Flatten the structure to get employees as separate rows
@@ -52,7 +46,7 @@
                                 first_name: item.first_name,
                                 middle_name: item.middle_name,
                                 last_name: item.last_name,
-                                image: item.image
+                                image: item.image,
                             });
                         });
                         return employees;
@@ -72,6 +66,12 @@
                     { data: 'last_name' },
                     { data: 'first_name' },
                     { data: 'middle_name' },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-sm text-white btn-primary view-btn" data-id="${row.id}">View</button>`
+                        }
+                    }
                 ]
             });
         });

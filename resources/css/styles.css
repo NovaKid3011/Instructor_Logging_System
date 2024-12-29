@@ -18,33 +18,11 @@ body{
 .sidebar{
     background-color: #4E73DF;
     height: 100vh;
-}
-.sidebar .show{
-    left: 0;
+    position: sticky;
+    top: 0;
 }
 .sidebar li:hover{
     background-color: #2e56c2;
-}
-.hamburger {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 3;
-    cursor: pointer;
-    display: none; /* Hide the hamburger icon by default */
-    flex-direction: column;
-    justify-content: space-around;
-}
-.hamburger.active div:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active div:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active div:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
 }
 .nav_btns{
     display: flex;
