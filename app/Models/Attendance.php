@@ -9,7 +9,7 @@ class Attendance extends Model
     use HasFactory;
 
     // Specify the exact table name
-    protected $table = 'attendance';
+    protected $table = 'attendances';
 
     // Define the fillable attributes
     protected $fillable = [
