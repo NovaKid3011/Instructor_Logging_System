@@ -1,110 +1,103 @@
 @extends('welcome')
-@section('user')
+@section('content')
 
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 id="search-letter" data-letter="{{ strtoupper($alpha) }}">
+            Instructor Last Names Starting with "{{ strtoupper($alpha) }}"
+        </h5>
+        <a href="/user/table" class="btn btn-primary">Return</a>
+    </div>
 
-<div class="container pt-5">
-    <small class="text-body-secondary" id="search-letter" data-letter="{{ strtoupper($alpha) }}">Instructors with lastname starting with "{{ strtoupper($alpha) }}"</small>
-
-    <!-- Instructors Table -->
-    <div id="instructors-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Profile</th>
-
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-
-                </tr>
-            </thead>
-            <tbody id="instructorTable">
-                <tr>
-                    <td colspan="4">Loading...</td>
-                </tr>
-            </tbody>
-        </table>
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14l-4 -4l4 -4" /><path d="M5 10h11a4 4 0 1 1 0 8h-1" /></svg>
-            Back
-        </a>
+    <!-- Instructors Cards -->
+    <div id="instructors-container" class="mt-4">
+        <div id="instructorCards" class="row">
+            <div class="col-12 text-center">Loading...</div>
+        </div>
     </div>
 </div>
 
-<script>
-    const api_key = '{{ env("API_KEY") }}'; // Ensure the API key is correctly retrieved
 
-    fetch("https://api-portal.mlgcl.edu.ph/api/external/employee-subjects?last_name={{ strtoupper($alpha) }}", {
+<script>
+    const api_key = '{{ env("API_KEY") }}';
+
+    fetch("https://api-portal.mlgcl.edu.ph/api/external/employees?last_name={{ strtoupper($alpha) }}", {
         headers: {
-            'x-api-key': api_key // Ensure the header is correct
+            'x-api-key': api_key
         }
     }).then(res => {
-        console.log('Response status:', res.status);
         if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
         return res.json();
     })
     .then(response => {
-        console.log('Data received:', response);
-
-        // Access the 'data' array from the response object
         const data = response.data;
-
         if (!Array.isArray(data)) {
             console.error('Expected an array but got:', data);
             return;
         }
-
         populateTable(data);
     })
     .catch(error => {
         console.error('Fetch error:', error);
     });
 
-    function populateTable(data)
-    {
-        const tbody = document.querySelector('#instructorTable');
-        console.log('Populating table with data:', data);
+    function populateTable(data) {
+        const container = document.querySelector('#instructorCards');
+        container.innerHTML = ''; // Clear loading message
 
-        // Clear loading message
-        tbody.innerHTML = '';
-
-        // Filter instructors based on the letter of their last name
         const letter = document.querySelector('#search-letter').getAttribute('data-letter').toUpperCase();
-        const filteredData = data.filter(item => item.employee.last_name && item.employee.last_name.toUpperCase().startsWith(letter));
+        const filteredData = data.filter(item => {
+            if (!item.last_name) return false;
+
+            const sanitizedLastName = item.last_name
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toUpperCase();
+            return sanitizedLastName.startsWith(letter);
+        });
 
         if (filteredData.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4">No instructors found for this letter.</td></tr>`;
+            container.innerHTML = `<div class="col-12 text-center">No instructors found for this letter.</div>`;
             return;
         }
 
         filteredData.forEach(item => {
-            const row = document.createElement('tr');
+            const col = document.createElement('div');
+            col.className = 'col-12 col-md-4 col-lg-3 mb-4 d-flex justify-content-center';
 
-            // Profile column
-            const profileCell = document.createElement('td');
-            const profileImage = item.employee.image ? `<img src="${item.employee.image}" alt="Profile Image" width="50">` : 'No image';
-            profileCell.innerHTML = profileImage;
-            row.appendChild(profileCell);
+            const card = document.createElement('div');
+            card.className = 'card text-center p-3 shadow';
+            card.style.maxWidth = '250px';
+            card.style.border = '1px solid #ddd';
+            card.style.borderRadius = '8px';
+             // Add click event listener for redirection
+            card.addEventListener('click', () => {
+                const instructorId = item.id; // Assuming `id` exists in the data
+                window.location.href = `/user/schedule/${instructorId}`;
+            });
+            // Profile Image
+            const profileImage = document.createElement('img');
+            profileImage.src = item.image || 'https://via.placeholder.com/150';
+            profileImage.alt = 'Profile Image';
+            profileImage.className = 'rounded';
+            profileImage.style.width = '100%';
+            profileImage.style.height = '200px';
+            profileImage.style.objectFit = 'cover';
+            profileImage.style.borderTopLeftRadius = '8px';
+            profileImage.style.borderTopRightRadius = '8px';
 
-            // Last Name column
-            const lastNameCell = document.createElement('td');
-            lastNameCell.textContent = item.employee.last_name || 'N/A';
-            row.appendChild(lastNameCell);
+            //  Name and middle name js to make 1 letter nalang
+            const name = document.createElement('h5');
+            name.className = 'mt-3 text-uppercase fw-bold';
+            name.textContent = `${item.first_name || ''} ${item.middle_name ? item.middle_name.charAt(0) + '.' : ''} ${item.last_name || ''}`;
 
-            // First Name column
-            const firstNameCell = document.createElement('td');
-            firstNameCell.textContent = item.employee.first_name || 'N/A';
-            row.appendChild(firstNameCell);
-
-            // Middle Name column
-            const middleNameCell = document.createElement('td');
-            middleNameCell.textContent = item.employee.middle_name || 'N/A';
-            row.appendChild(middleNameCell);
-
-
-            // Append the row to the table body
-            tbody.appendChild(row);
+            // Append elements
+            card.appendChild(profileImage);
+            card.appendChild(name);
+            col.appendChild(card);
+            container.appendChild(col);
         });
     }
 </script>

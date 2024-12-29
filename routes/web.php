@@ -21,11 +21,13 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
+Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
+
 
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
-        Route::get('/table/schedule', [UserController::class, 'schedule'])->name('sched');
+        Route::get('/table/schedule/{instructorId}', [UserController::class, 'schedule'])->name('sched');
         Route::post('/table/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
     });
 

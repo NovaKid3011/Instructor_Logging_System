@@ -34,8 +34,17 @@
                     headers: {
                         'x-api-key': '{{env("API_KEY")}}'
                     },
+                    beforeSend: function(jqXHR, settings) {
+                        settings.url = settings.url.replace(/([?&])_=\d+/, '');  // Remove timestamp manually
+                    },
+                    error: function(xhr, error, thrown) {
+                        console.log('Error:', xhr.responseText);
+
+                        alert('Failed to load data. Check console for details.');
+                    },
                     dataSrc: function(json) {
                         console.log('Data received:', json);
+                        // Flatten the structure to get employees as separate rows
                         let employees = [];
                         json.data.forEach(item => {
                             employees.push({
