@@ -17,8 +17,14 @@
 
 <style>
     .school_image{
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 100vh;
+        height: 100%;
+        background: url('{{ asset('/storage/images/school.png') }}') no-repeat center center fixed;
+        background-size: cover;
+        z-index: -1;
         -webkit-filter: blur(1px) brightness(0.5);
         -moz-filter: blur(1px) brightness(0.5);
         -ms-filter: blur(1px) brightness(0.5);
@@ -28,6 +34,11 @@
     .login_form{
         z-index: 3;
     }
+    .login_card{
+        background-color: #ffffff51;
+        border-radius: 10px
+    }
+
 </style>
 
 <body>
