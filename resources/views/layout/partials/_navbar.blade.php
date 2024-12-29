@@ -33,10 +33,7 @@
                         <div class="border"></div>
                         {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                     </a>
-                    <ul class="dropdown-menu hover dropdown-menu-lg-end">
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editProfile">
-                            <i class="mdi mdi-account-edit me-2 text-primary"></i> Edit Profile
-                        </a>
+                    <ul class="dropdown-menu hover dropdown-menu-lg-end p-1">
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
                             <i class="mdi mdi-logout me-2 text-primary"></i> Logout
                         </a>
