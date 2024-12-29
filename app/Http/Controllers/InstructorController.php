@@ -28,7 +28,7 @@ class InstructorController extends Controller
     // Debugging
 //    dd($alpha);
 
-    return view('user.letter')->with('alpha', $alpha);
+    return view('user.letter')->with('alpha', $alpha);  
 }
     public function schedule($id)
 {

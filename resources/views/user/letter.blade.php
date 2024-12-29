@@ -72,10 +72,12 @@
             card.style.maxWidth = '250px';
             card.style.border = '1px solid #ddd';
             card.style.borderRadius = '8px';
+
              // Add click event listener for redirection
             card.addEventListener('click', () => {
-                const instructorId = item.id; // Assuming `id` exists in the data
+                const instructorId = item.id; //getting the id of the instructor
                 window.location.href = `/user/schedule/${instructorId}`;
+
             });
             // Profile Image
             const profileImage = document.createElement('img');
