@@ -10,6 +10,5 @@ The instructors present today are:
 @endforeach
 
 
-Thanks,<br>
-{{ config('app.name') }}
+
 </x-mail::message>

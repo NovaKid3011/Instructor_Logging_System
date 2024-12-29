@@ -14,6 +14,7 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Middle Name</th>
+                    <th>Report</th>
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -72,6 +73,12 @@
                     { data: 'last_name' },
                     { data: 'first_name' },
                     { data: 'middle_name' },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</button>`;
+                        }
+                    }
                 ]
             });
         });

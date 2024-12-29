@@ -68,9 +68,9 @@
             }
         }
     </style> --}}
-    <div class="hamburger">
+    {{-- <div class="hamburger">
         <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-    </div>
+    </div> --}}
 
     <div class="con">
         <!-- Sidebar -->
@@ -103,42 +103,6 @@
         } );
     </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-
-        hamburger.addEventListener('click', function() {
-            sidebar.classList.toggle('show');
-            hamburger.classList.toggle('active');
-        });
-
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = dropdownBtn.nextElementSibling;
-
-        dropdownBtn.addEventListener('click', function() {
-            dropdownContainer.classList.toggle('show');
-            dropdownBtn.classList.toggle('active');
-            if (dropdownContainer.classList.contains('show')) {
-                dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            } else {
-                dropdownContainer.style.height = '0';
-            }
-        });
-
-        // Prevent the dropdown from closing when a submenu item is clicked
-        dropdownContainer.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-
-        // Keep the dropdown open if a submenu item is active
-        if (dropdownContainer.querySelector('.drop-active')) {
-            dropdownContainer.classList.add('show');
-            dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            dropdownBtn.classList.add('active');
-        }
-    });
-</script>
 
 
 </body>
