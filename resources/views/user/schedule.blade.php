@@ -92,11 +92,12 @@
                                 row.append(`<td>${item.time_end}</td>`);
                                 row.append(`<td>${item.code}</td>`);
                                 row.append(`<td>${item.description}</td>`);
-                                if (timedInSchedules.includes(item.id)) {
-                                row.append(`<td><span class="text-muted">Timed In</span></td>`);
-                                } else {
-                                    row.append(`<td><button type="button" class="btn btn-primary" id="timeIn" data-bs-toggle="modal" data-bs-target="#cameraModal" data-employee-id="${employeeId}" data-schedule-id="${item.id}">Time In</button></td>`);
-                                }
+                                row.append(`<td><button type="button" class="btn btn-primary" id="timeIn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#cameraModal"
+                                    data-employee-id="${employeeId}"
+                                    data-schedule-id="${item.id}"
+                                >Time In</button></td>`);
                                 tableBody.append(row);
                             });
                         } else {
