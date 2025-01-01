@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -34,7 +34,7 @@ class ReportController extends Controller
         return view('admin.report', compact('attendances', 'search', 'month'));
     }
 
-    
+
     public function dailyReport(Request $request)
 {
     $search = $request->input('search');
@@ -54,7 +54,7 @@ class ReportController extends Controller
     return response()->stream(function () use ($attendances) {
         $file = fopen('php://output', 'w');
         fputcsv($file, ['Time In', 'Name', 'Subject Code', 'Description', 'Schedule', 'Room', 'Justification']);
-        
+
         foreach ($attendances as $attendance) {
             fputcsv($file, [
                 $attendance->created_at->format('h:i A'),
@@ -99,7 +99,7 @@ public function monthlyReport(Request $request)
     return response()->stream(function () use ($attendances) {
         $file = fopen('php://output', 'w');
         fputcsv($file, ['Date', 'Day', 'Name', 'Subject Code', 'Description', 'Schedule', 'Room', 'Justification']);
-        
+
         foreach ($attendances as $attendance) {
             fputcsv($file, [
                 $attendance->created_at->format('Y-m-d'),
@@ -120,6 +120,6 @@ public function monthlyReport(Request $request)
     ]);
 }
 
-    
+
     }
-    
+

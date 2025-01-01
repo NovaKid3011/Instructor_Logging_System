@@ -25,10 +25,15 @@
     @if(session('success'))
         <script>
             Swal.fire({
+                position: 'top-end',
                 icon: 'success',
+                toast: true,
                 title: 'Success!',
-                text: '{{ session('success') }}',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-toast'
+                }
             });
         </script>
     @endif
@@ -36,10 +41,15 @@
     @if(session('error'))
         <script>
             Swal.fire({
+                position: 'top-end',
                 icon: 'error',
-                title: 'Oops...',
                 text: '{{ session('error') }}',
-                confirmButtonText: 'OK'
+                toast: true,
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-toast'
+                }
             });
         </script>
     @endif
@@ -100,6 +110,15 @@
     <script>
         $(document).ready( function () {
             $('#instructorTable').DataTable();
+        } );
+    </script>
+    <script>
+        $(document).ready( function () {
+            if ($('#monthlyTable').length && !$.fn.DataTable.isDataTable('#monthlyTable')) {
+                $('#monthlyTable').DataTable({
+                    searching: false // Disable the search functionality
+                });
+            }
         } );
     </script>
 

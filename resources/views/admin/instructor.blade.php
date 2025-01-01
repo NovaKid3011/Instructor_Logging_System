@@ -14,7 +14,7 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Middle Name</th>
-                    <th>Report</th>
+                    <th>Monthly Report</th>
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -68,7 +68,9 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return `<button class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</button>`;
+                            // Construct the URL with additional data as query parameters
+                            const url = `{{ route('instructor.monthly', '') }}/${row.id}?id=${encodeURIComponent(row.id)}&first_name=${encodeURIComponent(row.first_name)}&last_name=${encodeURIComponent(row.last_name)}&middle_name=${encodeURIComponent(row.middle_name)}&image=${encodeURIComponent(row.image)}`;
+                            return `<a href="${url}" class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</a>`;
                         }
                     }
                 ]

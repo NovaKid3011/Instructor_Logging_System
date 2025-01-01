@@ -54,6 +54,7 @@ body{
     border-radius: 4px;
     height: fit-content;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #reportTabs{

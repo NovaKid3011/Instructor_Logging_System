@@ -1,26 +1,26 @@
 @extends('welcome')
 @section('content')
 
-    <div class="container m-auto w-100">
-        <a href="{{route('table')}}" class="btn btn-dark">Back</a>
-        <div class="card h-100 w-100">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0 text-white"></h5>
+    <div class="container-xl m-auto w-100">
+        <a href="{{route('table')}}" class="btn btn-primary mt-5">Back</a>
+        <div class="sched-con w-100 d-flex-column justify-content-center align-items-center">
+            <div class="text-dark">
+                <h5 class="mb-0 mt-4">Schedule</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body mt-4">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="schedule">
+                    <table class="table table-bordered mt-3" id="schedule">
 
-                        <thead class="table-dark">
-                            <th>Days</th>
-                            <th>Room</th>
-                            <th>Section</th>
-                            <th>Time Started</th>
-                            <th>Time Ended</th>
-                            <th>Subject Code</th>
-                            <th>Subject Description</th>
-                            <th>Action</th>
-                        </thead>
+                    <thead class="table-primary">
+                        <th>Days</th>
+                        <th>Room</th>
+                        <th>Section</th>
+                        <th>Time Started</th>
+                        <th>Time Ended</th>
+                        <th>Subject Code</th>
+                        <th>Subject Description</th>
+                        <th>Action</th>
+                    </thead>
 
                     </table>
                 </div>
