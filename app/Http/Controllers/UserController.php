@@ -48,10 +48,15 @@ class UserController extends Controller
 
         $apiUrl1 = "https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}";
         $apiUrl2 = "https://api-portal.mlgcl.edu.ph/api/external/employees";
+        $apiKey = env('API_KEY');
 
         try {
-            $response1 = Http::get($apiUrl1);
-            $response2 = Http::get($apiUrl2);
+            $response1 = Http::withHeaders([
+                'x-api-key' => $apiKey,
+            ])->get($apiUrl1);
+            $response2 = Http::withHeaders([
+                'x-api-key' => $apiKey,
+            ])->get($apiUrl2);
 
             if ($response1->successful() && $response2->successful()) {
                 $apiData1 = collect($response1->json());
