@@ -5,10 +5,11 @@
         <a href="{{route('table')}}" class="btn btn-primary mt-5">Back</a>
         <div class="sched-con w-100 d-flex-column justify-content-center align-items-center">
             <div class="text-dark">
-                <h5 class="mb-0 mt-4">Schedule</h5>
+                <h5 class="mb-0 mt-4"></h5>
             </div>
             <div class="card-body mt-4">
-                <table class="table table-striped table-bordered mt-3" id="schedule">
+                <div class="table-responsive">
+                    <table class="table table-bordered mt-3" id="schedule">
 
                     <thead class="table-primary">
                         <th>Days</th>
@@ -21,13 +22,14 @@
                         <th>Action</th>
                     </thead>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Camera</h5>
@@ -104,14 +106,13 @@
                     'x-api-key': API_key,
                 },
                 success: function(response) {
-                    console.log('Employee API Response:', response);
                     if (response.data && Array.isArray(response.data)) {
                         const employee = response.data.find(emp => emp.id === parseInt(employeeId));
                         if (employee) {
-                            console.log('Found Employee:', employee);
 
                             $('input[name="first_name"]').val(employee.first_name);
                             $('input[name="last_name"]').val(employee.last_name);
+                            $('h5').append(employee.first_name + ' ' + employee.last_name + ' - Schedule');
 
                         } else {
                             console.error('Employee not found with id:', employeeId);
@@ -165,6 +166,12 @@
                     error: function(xhr, status, error) {
                         console.error("API call failed:", xhr.status, error);
                     },
+                },
+                searching: false,
+                processing: false,
+                paging: false,
+                language: {
+                    processing: "",
                 },
             });
 
