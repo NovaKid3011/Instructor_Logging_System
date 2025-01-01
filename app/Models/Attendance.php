@@ -10,12 +10,13 @@ class Attendance extends Model
     use HasFactory;
 
     protected $fillable = [
-        'time_in',
+        'photo',
         'first_name',
         'last_name',
         'subject_code',
         'description',
         'schedule',
         'room',
+        'instructor_id',
     ];
 }
