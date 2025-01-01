@@ -9,5 +9,6 @@ class Photo extends Model
     protected $fillable = [
         'photo',
         'schedule_id',
+        'instructor_id',
     ];
 }

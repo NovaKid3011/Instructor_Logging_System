@@ -52,6 +52,7 @@ class UserController extends Controller
         Photo::create([
             'photo' => $fileName,
             'schedule_id' => $scheduleId,
+            'instructor_id' => $instructorId,
         ]);
 
         return back()->with('success', 'Timed in successfully!');

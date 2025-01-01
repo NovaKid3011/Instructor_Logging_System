@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('photos')){
-            Schema::create('photos', function (Blueprint $table) {
-                $table->id();
-                $table->string('photo');
-                $table->integer('schedule_id');
-            });
-        };
+        Schema::table('photos', function (Blueprint $table) {
+            $table->integer('instructor_id')->before('created_at');
+        });
     }
 
     /**
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::table('photos', function (Blueprint $table) {
+            $table->dropColumn('instructor_id');
+        });
     }
 };
