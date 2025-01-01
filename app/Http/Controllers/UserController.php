@@ -45,8 +45,8 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-        $apiUrl1 = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}';
-        $apiUrl2 = 'https://api-portal.mlgcl.edu.ph/api/external/employees';
+        $apiUrl1 = "https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}";
+        $apiUrl2 = "https://api-portal.mlgcl.edu.ph/api/external/employees";
 
         $response1 = Http::get($apiUrl1);
         $response2 = Http::get($apiUrl2);
@@ -60,12 +60,12 @@ class UserController extends Controller
 
             if($attendance && $employee){
                 Attendance::create([
-                    'picture' => $fileName,
+                    'photo' => $fileName,
                     'first_name' => $employee['first_name'] ?? null,
                     'last_name' => $employee['last_name'] ?? null,
                     'subject_code' => $attendance['code'] ?? null,
                     'description' => $attendance['description'] ?? null,
-                    'schedule' => $attendance['code'] ?? null,
+                    'schedule' => ($attendance['time_start'] ?? '') . ' - ' . ($attendance['time_end'] ?? ''),
                     'room' => $attendance['room'] ?? null,
                     'instructor_id' => $employee['id'] ?? null,
                 ]);
