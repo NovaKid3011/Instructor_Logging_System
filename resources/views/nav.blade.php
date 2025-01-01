@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg" style="background-color: #4E73DF">
     <div class="container-fluid">
         <a href="" class="logo d-flex justify-content-center">
-            {{-- <img src="{{asset('/storage/images/logo.png')}}" width="140px" height="auto" class="py-2" alt=""> --}}
+            <img src="{{asset('/storage/images/logo.png')}}" width="140px" height="auto" class="py-2" alt="">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">

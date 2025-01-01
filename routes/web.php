@@ -43,18 +43,22 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('user.delete');
             Route::put('/users/update/{id}', [AdminController::class, 'update'])->name('user.update');
             Route::get('/instructor', [InstructorController::class, 'index'])->name('instructor');
+            Route::get('/instructor-monthly/{id}', [InstructorController::class, 'instructorMonthly'])->name('instructor.monthly');
+            Route::get('/instructor/monthly-report', [InstructorController::class, 'monthlyReport'])->name('instructor.monthly_report');
+
+
+
+
             Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');
             Route::get('/mail', [MailController::class, 'sendMail'])->name('mail');
-            Route::get('/report', [ReportController::class, 'index'])->name('report');
-            // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
-
-            Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
             Route::post('/manage-email', [MailController::class, 'registerMail'])->name('add-email');
             Route::put('/manage-email/{id}', [MailController::class, 'editMail'])->name('editMail');
             Route::delete('/delete-email/{id}', [MailController::class, 'deleteEmail'])->name('email-delete');
 
 
+            Route::get('/report', [ReportController::class, 'index'])->name('report');
+            // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
             Route::get('/report/daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
             Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
 

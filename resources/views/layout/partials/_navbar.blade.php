@@ -8,6 +8,8 @@
                 @break
             @case('instructor')
                 Instructors
+            @case('instructor.monthly')
+                Instructors
                 @break
             @case('report')
                 Reports
