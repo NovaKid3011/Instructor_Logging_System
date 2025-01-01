@@ -57,19 +57,18 @@ class UserController extends Controller
         ]);
 
         $attendance = new Attendance();
-        if($attendance){
-            $attendance->photo = $fileName;
-            $attendance->first_name = $request->first_name;
-            $attendance->last_name = $request->last_name;
-            $attendance->subject_code = $request->subject_code;
-            $attendance->description = $request->description;
-            $attendance->schedule = $request->schedule;
-            $attendance->room = $request->room;
-            $attendance->instructor_id = $request->instructor_id;
+        $attendance->photo = $fileName;
+        $attendance->first_name = $request->first_name;
+        $attendance->last_name = $request->last_name;
+        $attendance->subject_code = $request->subject_code;
+        $attendance->description = $request->description;
+        $attendance->schedule = $request->schedule;
+        $attendance->room = $request->room;
+        $attendance->instructor_id = $request->instructor_id;
+        if($attendance->save()){
+            return back()->with('success', 'Timed in successfully!');
         }else{
             return back()->with('error', 'Timed in failed!');
         }
-
-        return back()->with('success', 'Timed in successfully!');
     }
 }
