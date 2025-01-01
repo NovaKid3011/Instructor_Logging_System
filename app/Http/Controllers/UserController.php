@@ -46,53 +46,28 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-        $apiUrl1 = "https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}";
-        $apiUrl2 = "https://api-portal.mlgcl.edu.ph/api/external/employees";
-        $apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3BvcnRhbC5tbGdjbC5lZHUucGgiLCJhdWQiOiJodHRwOi8vaW5zdHJ1Y3Rvci1sb2dnaW5nLnRlc3QiLCJpYXQiOjE3MzQ4NzE3MTYsIm5iZiI6bnVsbH0.Jt1qW469yayjYeaoOSwqj8vlmh_6Mf1r7k2Pi-zjHFY';
+        $request->validate([
+            'first_name' => '',
+            'last_name' => '',
+            'subject_code' => '',
+            'description' => '',
+            'schedule' => '',
+            'room' => '',
+            'instructor_id' => '',
+        ]);
 
-        try {
-            $response1 = Http::withHeaders([
-                'x-api-key' => $apiKey,
-            ])->get($apiUrl1);
-            $response2 = Http::withHeaders([
-                'x-api-key' => $apiKey,
-            ])->get($apiUrl2);
-
-            if ($response1->successful() && $response2->successful()) {
-                $apiData1 = collect($response1->json());
-                $apiData2 = collect($response2->json());
-
-                $attendance = $apiData1->firstWhere('id', $scheduleId);
-                $employee = $apiData2->firstWhere('id', $instructorId);
-
-                if ($attendance && $employee) {
-                    // Check if the data is valid
-                    $data = [
-                        'photo' => $fileName,
-                        'first_name' => $employee['first_name'] ?? null,
-                        'last_name' => $employee['last_name'] ?? null,
-                        'subject_code' => $attendance['code'] ?? null,
-                        'description' => $attendance['description'] ?? null,
-                        'schedule' => ($attendance['time_start'] ?? '') . ' - ' . ($attendance['time_end'] ?? ''),
-                        'room' => $attendance['room'] ?? null,
-                        'instructor_id' => $employee['id'] ?? null,
-                    ];
-
-                    // Insert into the database
-                    if (array_filter($data)) {
-                        Attendance::create($data);
-                    } else {
-                        return back()->with('error', 'Incomplete data.');
-                    }
-                } else {
-                    return back()->with('error', 'Attendance or Employee data not found.');
-                }
-            } else {
-                return back()->with('error', 'Failed to fetch data from external API.');
-            }
-        } catch (\Exception $e) {
-            Log::error('Error in store method: ' . $e->getMessage());
-            return back()->with('error', 'An error occurred: ' . $e->getMessage());
+        $attendance = new Attendance();
+        if($attendance){
+            $attendance->photo = $fileName;
+            $attendance->first_name = $request->first_name;
+            $attendance->last_name = $request->last_name;
+            $attendance->subject_code = $request->subject_code;
+            $attendance->description = $request->description;
+            $attendance->schedule = $request->schedule;
+            $attendance->room = $request->room;
+            $attendance->instructor_id = $request->instructor_id;
+        }else{
+            return back()->with('error', 'Timed in failed!');
         }
 
         return back()->with('success', 'Timed in successfully!');

@@ -38,6 +38,13 @@
                         @csrf
                         <div id="camera"></div>
                         <input type="hidden" name="image" class="image-tag">
+                        <input type="hidden" name="first_name">
+                        <input type="hidden" name="last_name">
+                        <input type="hidden" name="subject_code">
+                        <input type="hidden" name="description">
+                        <input type="hidden" name="schedule">
+                        <input type="hidden" name="room">
+                        <input type="hidden" name="instructor_id">
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-primary" onclick="take_capture()">Capture</button>
@@ -88,6 +95,36 @@
         $(document).ready(function() {
             const employeeId = @json($employeeId);
             const API_url = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/' + employeeId;
+            const API_empUrl = `https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100`;
+
+            $.ajax({
+                url: API_empUrl,
+                type: 'GET',
+                headers: {
+                    'x-api-key': API_key,
+                },
+                success: function(response) {
+                    console.log('Employee API Response:', response);
+                    if (response.data && Array.isArray(response.data)) {
+                        const employee = response.data.find(emp => emp.id === parseInt(employeeId));
+                        if (employee) {
+                            console.log('Found Employee:', employee);
+
+                            $('input[name="first_name"]').val(employee.first_name);
+                            $('input[name="last_name"]').val(employee.last_name);
+
+                        } else {
+                            console.error('Employee not found with id:', employeeId);
+                        }
+                    } else {
+                        console.error('Invalid data format in employee API response.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('API call failed:', xhr.status, error);
+                }
+            });
+
             $('#schedule').DataTable({
                 ajax: {
                     url: API_url,
@@ -112,6 +149,12 @@
                                     data-bs-target="#cameraModal"
                                     data-employee-id="${employeeId}"
                                     data-schedule-id="${item.id}"
+                                    data-room="${item.room}"
+                                    data-days="${item.days}"
+                                    data-section="${item.section}"
+                                    data-schedule="${item.days}, ${item.time_start} - ${item.time_end}"
+                                    data-subject-code="${item.code}"
+                                    data-subject-description="${item.description}"
                                 >Time In</button></td>`);
                                 tableBody.append(row);
                             });
@@ -129,6 +172,21 @@
                 var button = $(event.relatedTarget);
                 var employeeId = button.data('employee-id');
                 var scheduleId = button.data('schedule-id');
+                var room = button.data('room');
+                var days = button.data('days');
+                var section = button.data('section');
+                var schedule = button.data('schedule');
+                var subjectCode = button.data('subject-code');
+                var subjectDescription = button.data('subject-description');
+
+                $('input[name="instructor_id"]').val(employeeId);
+                $('input[name="schedule"]').val(scheduleId);
+                $('input[name="room"]').val(room);
+                $('input[name="days"]').val(days);
+                $('input[name="section"]').val(section);
+                $('input[name="schedule"]').val(schedule);
+                $('input[name="subject_code"]').val(subjectCode);
+                $('input[name="description"]').val(subjectDescription);
 
                 if (employeeId && scheduleId) {
                     routeUrl = `/user/table/schedule/${employeeId}/upload/${scheduleId}`;
