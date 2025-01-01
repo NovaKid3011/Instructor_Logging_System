@@ -1,33 +1,35 @@
 @extends('welcome')
 @section('content')
 
-    <div class="container-xl m-auto w-100">
+    <div class="container m-auto w-100">
         <a href="{{route('table')}}" class="btn btn-dark">Back</a>
         <div class="card h-100 w-100">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Schedule</h5>
+                <h5 class="mb-0 text-white"></h5>
             </div>
             <div class="card-body">
-                <table class="table table-striped table-bordered" id="schedule">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="schedule">
 
-                    <thead class="table-dark">
-                        <th>Days</th>
-                        <th>Room</th>
-                        <th>Section</th>
-                        <th>Time Started</th>
-                        <th>Time Ended</th>
-                        <th>Subject Code</th>
-                        <th>Subject Description</th>
-                        <th>Action</th>
-                    </thead>
+                        <thead class="table-dark">
+                            <th>Days</th>
+                            <th>Room</th>
+                            <th>Section</th>
+                            <th>Time Started</th>
+                            <th>Time Ended</th>
+                            <th>Subject Code</th>
+                            <th>Subject Description</th>
+                            <th>Action</th>
+                        </thead>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Camera</h5>
@@ -104,14 +106,13 @@
                     'x-api-key': API_key,
                 },
                 success: function(response) {
-                    console.log('Employee API Response:', response);
                     if (response.data && Array.isArray(response.data)) {
                         const employee = response.data.find(emp => emp.id === parseInt(employeeId));
                         if (employee) {
-                            console.log('Found Employee:', employee);
 
                             $('input[name="first_name"]').val(employee.first_name);
                             $('input[name="last_name"]').val(employee.last_name);
+                            $('h5').append(employee.first_name + ' ' + employee.last_name + ' - Schedule');
 
                         } else {
                             console.error('Employee not found with id:', employeeId);
@@ -165,6 +166,12 @@
                     error: function(xhr, status, error) {
                         console.error("API call failed:", xhr.status, error);
                     },
+                },
+                searching: false,
+                processing: false,
+                paging: false,
+                language: {
+                    processing: "",
                 },
             });
 
