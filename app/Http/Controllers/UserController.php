@@ -45,7 +45,7 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-        $apiUrl1 = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/' + $instructorId;
+        $apiUrl1 = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}';
         $apiUrl2 = 'https://api-portal.mlgcl.edu.ph/api/external/employees';
 
         $response1 = Http::get($apiUrl1);
