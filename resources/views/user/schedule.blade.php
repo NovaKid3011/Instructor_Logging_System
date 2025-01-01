@@ -71,7 +71,7 @@
             Webcam.snap(function(data_uri){
                 $(".image-tag").val(data_uri);
                 Webcam.freeze();
-                document.querySelector('.btn-success').disabled = true;
+                document.querySelector('.btn-success').disabled = false;
             });
         };
 
