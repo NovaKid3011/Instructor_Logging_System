@@ -72,30 +72,6 @@ class UserController extends Controller
             }
         }
 
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'subject_code' => 'required|string',
-            'description' => 'nullable|string',
-            'schedule' => 'required|string',
-            'room' => 'required|string',
-            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $photoPath = $request->file('photo')->store('photos', 'public');
-
-        Attendance::create([
-            'photo' => $photoPath,
-            'time_in' => now(),
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'subject_code' => $request->subject_code,
-            'description' => $request->description,
-            'schedule' => $request->schedule,
-            'room' => $request->room,
-            'instructor_id' => $instructorId, 
-        ]);
-
         return back()->with('success', 'Timed in successfully!');
     }
 }
