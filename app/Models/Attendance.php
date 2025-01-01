@@ -13,6 +13,7 @@ class Attendance extends Model
 
     // Define the fillable attributes
     protected $fillable = [
+        'instructor_id',
         'time_in', 'picture', 'first_name', 'last_name',
         'subject_code', 'description', 'schedule', 'room',
         'status', 'remarks',
