@@ -59,7 +59,7 @@
         Webcam.attach('#camera');
 
         document.getElementById('cameraForm').addEventListener('submit', function(e) {
-            const imageValue = document.getElementByClassName('.image-tag').value;
+            const imageValue = document.querySelector('.image-tag').value;
 
             if (!imageValue) {
                 e.preventDefault();
@@ -71,7 +71,7 @@
             Webcam.snap(function(data_uri){
                 $(".image-tag").val(data_uri);
                 Webcam.freeze();
-                document.getElementByClassName('.btn-success').disabled = true;
+                document.querySelector('.btn-success').disabled = true;
             });
         };
 
@@ -80,7 +80,7 @@
         $('#cameraModal').on('hidden.bs.modal', function(){
             $('.image-tag').val('');
             Webcam.unfreeze();
-            document.getElementByClassName('btn-success').disabled = true;
+            document.querySelector('btn-success').disabled = true;
         });
 
         var API_key = document.querySelector('meta[name="api-key"]').content
