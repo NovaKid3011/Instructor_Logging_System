@@ -5,7 +5,7 @@
         <a href="{{route('table')}}" class="btn btn-primary mt-5">Back</a>
         <div class="sched-con w-100 d-flex-column justify-content-center align-items-center">
             <div class="text-dark">
-                <h5 class="mb-0 mt-4">Schedule</h5>
+                <h5 class="mb-0 mt-4"></h5>
             </div>
             <div class="card-body mt-4">
                 <div class="table-responsive">
