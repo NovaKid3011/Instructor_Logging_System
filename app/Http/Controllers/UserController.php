@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Log;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -37,7 +37,7 @@ class UserController extends Controller
     function store(Request $request, $instructorId, $scheduleId)
     {
         $img = $request->image;
-        $folderPath = "public/";
+        $folderPath = "webcam/";
         $image_parts = explode(';base64,', $img);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
@@ -45,6 +45,8 @@ class UserController extends Controller
         $rand_code = Str::random(6);
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
+
+        Storage::disk('public')->put($file, $image_base64);
 
         $request->validate([
             'first_name' => '',
