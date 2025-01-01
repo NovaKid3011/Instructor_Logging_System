@@ -37,7 +37,7 @@ class UserController extends Controller
     function store(Request $request, $instructorId, $scheduleId)
     {
         $img = $request->image;
-        $folderPath = "public/webcam/";
+        $folderPath = "webcam/";
         $image_parts = explode(';base64,', $img);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
@@ -46,7 +46,7 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-        Storage::put($file, $image_base64);
+        Storage::disk('public')->put($file, $image_base64);
 
         $request->validate([
             'first_name' => '',
