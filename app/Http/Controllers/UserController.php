@@ -48,7 +48,7 @@ class UserController extends Controller
 
         $apiUrl1 = "https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/{$instructorId}";
         $apiUrl2 = "https://api-portal.mlgcl.edu.ph/api/external/employees";
-        $apiKey = env('API_KEY');
+        $apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3BvcnRhbC5tbGdjbC5lZHUucGgiLCJhdWQiOiJodHRwOi8vaW5zdHJ1Y3Rvci1sb2dnaW5nLnRlc3QiLCJpYXQiOjE3MzQ4NzE3MTYsIm5iZiI6bnVsbH0.Jt1qW469yayjYeaoOSwqj8vlmh_6Mf1r7k2Pi-zjHFY';
 
         try {
             $response1 = Http::withHeaders([
