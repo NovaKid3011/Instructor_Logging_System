@@ -2,15 +2,15 @@
 @section('content')
 
     <div class="container-xl m-auto w-100">
-        <a href="{{route('table')}}" class="btn btn-dark">Back</a>
-        <div class="card h-100 w-100">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Schedule</h5>
+        <a href="{{route('table')}}" class="btn btn-primary mt-5">Back</a>
+        <div class="sched-con w-100 d-flex-column justify-content-center align-items-center">
+            <div class="text-dark">
+                <h5 class="mb-0 mt-4">Schedule</h5>
             </div>
-            <div class="card-body">
-                <table class="table table-striped table-bordered" id="schedule">
+            <div class="card-body mt-4">
+                <table class="table table-striped table-bordered mt-3" id="schedule">
 
-                    <thead class="table-dark">
+                    <thead class="table-primary">
                         <th>Days</th>
                         <th>Room</th>
                         <th>Section</th>
