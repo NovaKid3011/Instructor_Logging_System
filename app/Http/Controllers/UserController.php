@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-use App\Models\Photo;
+use App\Models\Attendance;
 use Storage;
 
 class UserController extends Controller
@@ -28,10 +28,8 @@ class UserController extends Controller
 
     public function schedule($id)
     {
-        $photo = Photo::all();
-        $timedInSchedules = $photo->pluck('schedule_id')->toArray();
 
-        return view('user.schedule', ['employeeId' => $id, 'photos' => $photo, 'timedInSchedules' => $timedInSchedules]);
+        return view('user.schedule', ['employeeId' => $id]);
 
     }
 
@@ -47,12 +45,32 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
+        $apiUrl1 = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/' + $instructorId;
+        $apiUrl2 = 'https://api-portal.mlgcl.edu.ph/api/external/employees';
 
+        $response1 = Http::get($apiUrl1);
+        $response2 = Http::get($apiUrl2);
 
-        Photo::create([
-            'photo' => $fileName,
-            'schedule_id' => $scheduleId,
-        ]);
+        if($response1->successful() && $response2->successful()){
+            $apiData1 = collect($response1->json());
+            $apiData2 = collect($response2->json());
+
+            $attendance = $apiData1->firstWhere('id', $scheduleId);
+            $employee = $apiData2->firstWhere('id', $instructorId);
+
+            if($attendance && $employee){
+                Attendance::create([
+                    'picture' => $fileName,
+                    'first_name' => $employee['first_name'] ?? null,
+                    'last_name' => $employee['last_name'] ?? null,
+                    'subject_code' => $attendance['code'] ?? null,
+                    'description' => $attendance['description'] ?? null,
+                    'schedule' => $attendance['code'] ?? null,
+                    'room' => $attendance['room'] ?? null,
+                    'instructor_id' => $employee['id'] ?? null,
+                ]);
+            }
+        }
 
         return back()->with('success', 'Timed in successfully!');
     }

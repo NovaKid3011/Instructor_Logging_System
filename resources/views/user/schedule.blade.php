@@ -51,24 +51,39 @@
     <script>
         Webcam.set({
             height: 400,
-            width: 400,
+            width: 466,
             image_format: 'jpeg',
             jpeg_quality: 90
         });
 
         Webcam.attach('#camera');
 
+        document.getElementById('cameraForm').addEventListener('submit', function(e) {
+            const imageValue = document.getElementByClassName('.image-tag').value;
+
+            if (!imageValue) {
+                e.preventDefault();
+                alert('Please capture an image before submitting.');
+            }
+        });
+
         function take_capture(){
             Webcam.snap(function(data_uri){
                 $(".image-tag").val(data_uri);
                 Webcam.freeze();
+                document.getElementByClassName('.btn-success').disabled = true;
             });
         };
 
-        var API_key = document.querySelector('meta[name="api-key"]').content
+        document.querySelector('.btn-success').disabled = true;
 
-        var photos = @json($photos);
-        var timedInSchedules = @json($timedInSchedules);
+        $('#cameraModal').on('hidden.bs.modal', function(){
+            $('.image-tag').val('');
+            Webcam.unfreeze();
+            document.getElementByClassName('btn-success').disabled = true;
+        });
+
+        var API_key = document.querySelector('meta[name="api-key"]').content
 
         $(document).ready(function() {
             const employeeId = @json($employeeId);
