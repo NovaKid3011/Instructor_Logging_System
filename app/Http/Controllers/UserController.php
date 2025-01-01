@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-use App\Models\Photo;
+use App\Models\Attendance;
+use Illuminate\Support\Facades\Log;
 use Storage;
 
 class UserController extends Controller
@@ -28,10 +29,8 @@ class UserController extends Controller
 
     public function schedule($id)
     {
-        $photo = Photo::all();
-        $timedInSchedules = $photo->pluck('schedule_id')->toArray();
 
-        return view('user.schedule', ['employeeId' => $id, 'photos' => $photo, 'timedInSchedules' => $timedInSchedules]);
+        return view('user.schedule', ['employeeId' => $id]);
 
     }
 
@@ -47,13 +46,30 @@ class UserController extends Controller
         $fileName = time() . $rand_code . '.png';
         $file = $folderPath . $fileName;
 
-
-
-        Photo::create([
-            'photo' => $fileName,
-            'schedule_id' => $scheduleId,
+        $request->validate([
+            'first_name' => '',
+            'last_name' => '',
+            'subject_code' => '',
+            'description' => '',
+            'schedule' => '',
+            'room' => '',
+            'instructor_id' => '',
         ]);
 
-        return back()->with('success', 'Timed in successfully!');
+        $attendance = new Attendance();
+        $attendance->time_in = now();
+        $attendance->photo = $fileName;
+        $attendance->first_name = $request->first_name;
+        $attendance->last_name = $request->last_name;
+        $attendance->subject_code = $request->subject_code;
+        $attendance->description = $request->description;
+        $attendance->schedule = $request->schedule;
+        $attendance->room = $request->room;
+        $attendance->instructor_id = $request->instructor_id;
+        if($attendance->save()){
+            return back()->with('success', 'Timed in successfully!');
+        }else{
+            return back()->with('error', 'Timed in failed!');
+        }
     }
 }
