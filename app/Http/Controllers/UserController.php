@@ -57,6 +57,7 @@ class UserController extends Controller
         ]);
 
         $attendance = new Attendance();
+        $attendance->time_in = now();
         $attendance->photo = $fileName;
         $attendance->first_name = $request->first_name;
         $attendance->last_name = $request->last_name;
