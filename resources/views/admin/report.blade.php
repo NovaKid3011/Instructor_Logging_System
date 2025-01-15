@@ -44,26 +44,67 @@
 
         <div class="card-d p-3">
         <div class="card-header">
-        <h6>Today: {{ now()->format('l, F d, Y') }}</h6>
-        @if(isset($attendances) && count($attendances) > 0 && $attendances->first()->created_at->isToday())
-    <a class="print" href="{{ route('report.daily_report', ['search' => request('search'), 'month' => request('month')]) }}">
+        <h6>Today: {{ now()->format('l, F d, Y') 
+        }}</h6>
+        <div class="dropdown">
+    <button 
+        class="btn btn-primary dropdown-toggle" 
+        type="button" 
+        id="downloadDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false" 
+        data-has-data="{{ $hasTodayData ? 'true' : 'false' }}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
             <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
             <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
             <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
         </svg>
-        Download CSV
-    </a>
-@else
-    <span class="print">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
-            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-            <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
-        </svg>
-        Download CSV
-    </span>
-@endif
+        Download
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
+        <li>
+            <a 
+                class="dropdown-item" 
+                href="{{ route('pdf-daily', ['search' => request('search'), 'month' => request('month')]) }}">
+                as PDF
+            </a>
+        </li>
+        <li>
+            <a 
+                class="dropdown-item" 
+                href="{{ route('csv-daily', ['search' => request('search'), 'month' => request('month')]) }}" 
+                id="csvOption">
+                as CSV
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="#" id="printOption">
+                Print
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var downloadDropdown = document.getElementById('downloadDropdown');
+
+    downloadDropdown.addEventListener('click', function (event) {
+        var hasData = this.getAttribute('data-has-data');
+
+        if (hasData === 'false') {
+
+            Swal.fire({
+                title: 'No records for today.',
+                icon: 'info',
+                confirmButtonText: 'Okay'
+            });
+        }
+    });
+});
+
+</script>
+
 
 
         </div>

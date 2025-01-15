@@ -58,8 +58,9 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
 
             Route::get('/report', [ReportController::class, 'index'])->name('report');
-            // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
-            Route::get('/report/daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
+            Route::get('/report/print-daily', [ReportController::class, ''])->name('print-daily');
+            Route::get('/report/pdf-daily', [ReportController::class, ''])->name('pdf-daily');
+            Route::get('/report/csv-daily', [ReportController::class, 'dailyReport'])->name('csv-daily');
             Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
 
             });

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
-class Report extends Model
-{
-    //
-}
+$today = Carbon::today()->toDateString();
+
+$hasTodayData = $attendances->where('date', $today)->isNotEmpty();

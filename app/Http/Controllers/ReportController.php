@@ -9,29 +9,66 @@ use Illuminate\Http\Response;
 class ReportController extends Controller
 {
     public function index(Request $request)
+{
+    $search = $request->input('search');
+    $month = $request->input('month');
+
+    $attendanceQuery = Attendance::query();
+
+    if ($search) {
+        $attendanceQuery->where(function ($query) use ($search) {
+            $query->where('first_name', 'LIKE', "%{$search}%")
+                  ->orWhere('last_name', 'LIKE', "%{$search}%");
+        });
+    }
+
+    if ($month) {
+        $attendanceQuery->whereMonth('created_at', $month);
+    }
+
+    $attendances = $attendanceQuery->paginate(10);
+
+    $hasTodayData = Attendance::whereDate('created_at', now()->toDateString())->exists();
+
+    return view('admin.report', compact('attendances', 'search', 'month', 'hasTodayData'));
+}
+
+public function printDaily(Request $request)
     {
         $search = $request->input('search');
-        $month = $request->input('month');
+        $attendances = Attendance::query();
 
-        $attendanceQuery = Attendance::query();
-
-        // Filter by search (first name or last name)
         if ($search) {
-            $attendanceQuery->where(function ($query) use ($search) {
+            $attendances->where(function ($query) use ($search) {
                 $query->where('first_name', 'LIKE', "%{$search}%")
                       ->orWhere('last_name', 'LIKE', "%{$search}%");
             });
         }
 
-        // Filter by month
-        if ($month) {
-            $attendanceQuery->whereMonth('created_at', $month);
+        $attendances = $attendances->whereDate('created_at', now())->get();
+
+        return view('admin.print-daily', compact('attendances'));
+    }
+
+    public function pdfDaily(Request $request)
+    {
+        $search = $request->input('search');
+        $attendances = Attendance::query();
+
+        if ($search) {
+            $attendances->where(function ($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%{$search}%")
+                      ->orWhere('last_name', 'LIKE', "%{$search}%");
+            });
         }
 
-        // Paginate the results
-        $attendances = $attendanceQuery->paginate(10);
+        $attendances = $attendances->whereDate('created_at', now())->get();
 
-        return view('admin.report', compact('attendances', 'search', 'month'));
+        $pdf = PDF::loadView('admin.pdf-daily', compact('attendances'));
+
+        $fileName = 'Daily_report_' . now()->format('m-d-Y') . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
 
