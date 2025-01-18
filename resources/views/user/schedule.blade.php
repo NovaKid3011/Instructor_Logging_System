@@ -45,12 +45,36 @@
                         <input type="hidden" name="subject_code">
                         <input type="hidden" name="description">
                         <input type="hidden" name="schedule">
+                        <input type="hidden" name="schedule_id">
                         <input type="hidden" name="room">
                         <input type="hidden" name="instructor_id">
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-primary" onclick="take_capture()">Capture</button>
                       <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="justificationModal" tabindex="-1" aria-labelledby="justificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="justificationModalLabel">Justification for Absence</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="justificationForm" method="POST">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="justification" class="form-label">Justification</label>
+                            <textarea class="form-control" id="justification" name="justification" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Submit Justification</button>
                     </div>
                 </form>
             </div>
@@ -92,10 +116,9 @@
             document.querySelector('btn-success').disabled = true;
         });
 
-        var API_key = document.querySelector('meta[name="api-key"]').content
-
         $(document).ready(function() {
             const employeeId = @json($employeeId);
+            const attendance = @json($attendance);
             const API_url = 'https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/' + employeeId;
             const API_empUrl = `https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100`;
 
@@ -103,7 +126,7 @@
                 url: API_empUrl,
                 type: 'GET',
                 headers: {
-                    'x-api-key': API_key,
+                    'x-api-key': env(API_KEY),
                 },
                 success: function(response) {
                     if (response.data && Array.isArray(response.data)) {
@@ -145,18 +168,62 @@
                                 row.append(`<td>${item.time_end}</td>`);
                                 row.append(`<td>${item.code}</td>`);
                                 row.append(`<td>${item.description}</td>`);
-                                row.append(`<td><button type="button" class="btn btn-primary" id="timeIn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cameraModal"
-                                    data-employee-id="${employeeId}"
-                                    data-schedule-id="${item.id}"
-                                    data-room="${item.room}"
-                                    data-days="${item.days}"
-                                    data-section="${item.section}"
-                                    data-schedule="${item.days}, ${item.time_start} - ${item.time_end}"
-                                    data-subject-code="${item.code}"
-                                    data-subject-description="${item.description}"
-                                >Time In</button></td>`);
+
+                                const currentDate = new Date();
+                                const currentDateString = currentDate.toISOString().split('T')[0];
+
+                                const yesterday = new Date();
+                                yesterday.setDate(currentDate.getDate() - 1);
+                                const yesterdayDateString = yesterday.toISOString().split('T')[0];
+
+                                const isTimedIn = attendance && attendance.some(att => att.schedule_id === item.id);
+                                const isTimedInYesterday = attendance && attendance.some(att => att.schedule_id === item.id && att => att.date === yesterdayDateString);
+
+                                const actionColumn = $('<td>');
+
+                                if (isTimedIn) {
+                                    const attendanceDate = attendance.some(att => att.date === currentDateString);
+
+                                    if (attendanceDate){
+                                        actionColumn.append(`<td><span class="text-success">Already Timed In</span></td>`);
+                                    } else {
+                                        actionColumn.append(`<td><button type="button" class="btn btn-primary" id="timeIn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cameraModal"
+                                            data-employee-id="${employeeId}"
+                                            data-schedule-id="${item.id}"
+                                            data-room="${item.room}"
+                                            data-days="${item.days}"
+                                            data-section="${item.section}"
+                                            data-schedule="${item.days}, ${item.time_start} - ${item.time_end}"
+                                            data-subject-code="${item.code}"
+                                            data-subject-description="${item.description}"
+                                        >Time In</button></td>`);
+                                    }
+
+                                } else {
+                                    actionColumn.append(`<td><button type="button" class="btn btn-primary" id="timeIn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#cameraModal"
+                                        data-employee-id="${employeeId}"
+                                        data-schedule-id="${item.id}"
+                                        data-room="${item.room}"
+                                        data-days="${item.days}"
+                                        data-section="${item.section}"
+                                        data-schedule="${item.days}, ${item.time_start} - ${item.time_end}"
+                                        data-subject-code="${item.code}"
+                                        data-subject-description="${item.description}"
+                                    >Time In</button></td>`);
+                                }
+
+                                if (!isTimedInYesterday) {
+                                    actionColumn.append(`<button type="button" class="btn btn-warning ms-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#justificationModal"
+                                    >Justification for Absence</button>`);
+                                }
+
+                                row.append(actionColumn);
                                 tableBody.append(row);
                             });
                         } else {
@@ -187,7 +254,7 @@
                 var subjectDescription = button.data('subject-description');
 
                 $('input[name="instructor_id"]').val(employeeId);
-                $('input[name="schedule"]').val(scheduleId);
+                $('input[name="schedule_id"]').val(scheduleId);
                 $('input[name="room"]').val(room);
                 $('input[name="days"]').val(days);
                 $('input[name="section"]').val(section);

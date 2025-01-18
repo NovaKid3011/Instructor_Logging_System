@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -29,9 +30,9 @@ class UserController extends Controller
 
     public function schedule($id)
     {
+        $attendance = Attendance::where('instructor_id', $id)->get();
 
-        return view('user.schedule', ['employeeId' => $id]);
-
+        return view('user.schedule', ['employeeId' => $id, 'attendance' => $attendance]);
     }
 
     function store(Request $request, $instructorId, $scheduleId)
@@ -48,30 +49,37 @@ class UserController extends Controller
 
         Storage::disk('public')->put($file, $image_base64);
 
+        $today = Carbon::today()->toDateString();
+
         $request->validate([
             'first_name' => '',
             'last_name' => '',
             'subject_code' => '',
             'description' => '',
             'schedule' => '',
+            'schedule_id' => '',
             'room' => '',
             'instructor_id' => '',
         ]);
 
         $attendance = new Attendance();
         $attendance->time_in = now();
+        $attendance->date = $today;
         $attendance->photo = $fileName;
         $attendance->first_name = $request->first_name;
         $attendance->last_name = $request->last_name;
         $attendance->subject_code = $request->subject_code;
         $attendance->description = $request->description;
         $attendance->schedule = $request->schedule;
+        $attendance->schedule_id = $request->schedule_id;
         $attendance->room = $request->room;
         $attendance->instructor_id = $request->instructor_id;
+
         if($attendance->save()){
             return back()->with('success', 'Timed in successfully!');
         }else{
             return back()->with('error', 'Timed in failed!');
         }
+
     }
 }
