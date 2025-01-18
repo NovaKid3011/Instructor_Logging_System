@@ -15,36 +15,26 @@ body{
     display: flex;
     flex-direction: column;
 }
+.admin-nav{
+    border: 1px solid #dcdcdc;
+}
+.admin-nav a{
+    color: #000;
+    border-radius: 3px;
+}
+.admin-nav a:hover, .admin-nav:hover{
+    background-color: #284eb6;
+    color: #fff;
+    transition: .2s;
+}
 .sidebar{
     background-color: #4E73DF;
     height: 100vh;
-}
-.sidebar .show{
-    left: 0;
+    position: sticky;
+    top: 0;
 }
 .sidebar li:hover{
     background-color: #2e56c2;
-}
-.hamburger {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 3;
-    cursor: pointer;
-    display: none; /* Hide the hamburger icon by default */
-    flex-direction: column;
-    justify-content: space-around;
-}
-.hamburger.active div:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active div:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active div:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
 }
 .nav_btns{
     display: flex;
@@ -135,7 +125,6 @@ body{
 
 .dropdown-menu{
     font-size: small;
-    background-color: #2e56c2;
 }
 .dropdown-item{
     color: #fff;
@@ -185,5 +174,38 @@ body{
     background-color: #2e56c2;
     color: #fff;
 }
-
-
+/* #monthlyTable .dt-search{
+    display: none;
+} */
+#employee a:hover{
+    color:#284eb6
+}
+.print{
+    background-color: #0c8c00;
+    color: #fff;
+    border: none;
+    padding: 6px;
+    margin-top: 25px 0 25px 0;
+    border-radius: 4px;
+    height: fit-content;
+    text-decoration: none;
+    cursor: pointer;
+}
+.print:hover{
+    background-color: #0a6e00;
+}
+.search_form{
+    border: 1px solid #000000;
+    padding: 5px;
+    border-radius: 20px;
+}
+.custom-toast {
+    width: auto; /* Adjust width for rectangle shape */
+    height: auto; /* Adjust height automatically */
+    padding: 15px; /* Add padding for spacing */
+    border-radius: 8px; /* Optional: round the corners */
+    color: #000; /* Set text color */
+    font-size: 14px; /* Adjust text size */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow */
+  }

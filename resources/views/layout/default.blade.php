@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{asset("images/New MLG logo.png")}}" type="image/png">
     <title>@yield('title', 'Crud')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -22,7 +23,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: url('{{ asset('/storage/images/school.png') }}') no-repeat center center fixed;
+        background: url('{{ asset('/images/school.png') }}') no-repeat center center fixed;
         background-size: cover;
         z-index: -1;
         -webkit-filter: blur(1px) brightness(0.5);

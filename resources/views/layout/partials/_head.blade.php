@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{asset("images/New MLG logo.png")}}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -25,10 +26,15 @@
     @if(session('success'))
         <script>
             Swal.fire({
+                position: 'top-end',
                 icon: 'success',
+                toast: true,
                 title: 'Success!',
-                text: '{{ session('success') }}',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-toast'
+                }
             });
         </script>
     @endif
@@ -36,41 +42,18 @@
     @if(session('error'))
         <script>
             Swal.fire({
+                position: 'top-end',
                 icon: 'error',
-                title: 'Oops...',
                 text: '{{ session('error') }}',
-                confirmButtonText: 'OK'
+                toast: true,
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-toast'
+                }
             });
         </script>
     @endif
-
-    {{-- <style>
-        #sidebar {
-            position: sticky;
-            top: 0;
-            min-height: 100vh;
-            width: 240px;
-        }
-
-        .content {
-            padding: 20px;
-        }
-        @media (max-width: 786px) {
-            .hamburger{
-                display: flex;
-            }
-            .sidebar {
-                width: 180px;
-                left: -250px;
-            }
-            .sidebar .show{
-                left: 0;
-            }
-        }
-    </style> --}}
-    <div class="hamburger">
-        <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-    </div>
 
     <div class="con">
         <!-- Sidebar -->
@@ -102,43 +85,16 @@
             $('#instructorTable').DataTable();
         } );
     </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-
-        hamburger.addEventListener('click', function() {
-            sidebar.classList.toggle('show');
-            hamburger.classList.toggle('active');
-        });
-
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownContainer = dropdownBtn.nextElementSibling;
-
-        dropdownBtn.addEventListener('click', function() {
-            dropdownContainer.classList.toggle('show');
-            dropdownBtn.classList.toggle('active');
-            if (dropdownContainer.classList.contains('show')) {
-                dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            } else {
-                dropdownContainer.style.height = '0';
+    <script>
+        $(document).ready( function () {
+            if ($('#monthlyTable').length && !$.fn.DataTable.isDataTable('#monthlyTable')) {
+                $('#monthlyTable').DataTable({
+                    searching: false // Disable the search functionality
+                });
             }
-        });
+        } );
+    </script>
 
-        // Prevent the dropdown from closing when a submenu item is clicked
-        dropdownContainer.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-
-        // Keep the dropdown open if a submenu item is active
-        if (dropdownContainer.querySelector('.drop-active')) {
-            dropdownContainer.classList.add('show');
-            dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
-            dropdownBtn.classList.add('active');
-        }
-    });
-</script>
 
 
 </body>

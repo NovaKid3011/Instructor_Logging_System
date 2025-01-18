@@ -19,17 +19,10 @@
                 </a>
             @endif
         </li>
-        <li class="{{Request::is('admin/dashboard/instructor') ? 'active' : ''}} p-3">
+        <li class="{{Request::is('admin/dashboard/instructor', 'admin/dashboard/instructor-monthly/*') ? 'active' : ''}} p-3">
             <div class="">
                 <a href="{{route('instructor')}}" class="nav_btns text-white" style="text-decoration: none">Instructors
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
-                </a>
-            </div>
-        </li>
-        <li class="{{Request::is('admin/dashboard/schedules') ? 'active' : ''}} p-3">
-            <div class="">
-                <a href="{{route('schedules')}}" class="nav_btns text-white" style="text-decoration: none">Schedules
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
                 </a>
             </div>
         </li>

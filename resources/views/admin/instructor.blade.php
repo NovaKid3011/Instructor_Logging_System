@@ -14,6 +14,7 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Middle Name</th>
+                    <th>Monthly Report</th>
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -34,14 +35,6 @@
                     headers: {
                         'x-api-key': '{{env("API_KEY")}}'
                     },
-                    beforeSend: function(jqXHR, settings) {
-                        settings.url = settings.url.replace(/([?&])_=\d+/, '');  // Remove timestamp manually
-                    },
-                    error: function(xhr, error, thrown) {
-                        console.log('Error:', xhr.responseText);
-
-                        alert('Failed to load data. Check console for details.');
-                    },
                     dataSrc: function(json) {
                         console.log('Data received:', json);
                         // Flatten the structure to get employees as separate rows
@@ -52,7 +45,7 @@
                                 first_name: item.first_name,
                                 middle_name: item.middle_name,
                                 last_name: item.last_name,
-                                image: item.image
+                                image: item.image,
                             });
                         });
                         return employees;
@@ -72,6 +65,14 @@
                     { data: 'last_name' },
                     { data: 'first_name' },
                     { data: 'middle_name' },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            // Construct the URL with additional data as query parameters
+                            const url = `{{ route('instructor.monthly', '') }}/${row.id}?id=${encodeURIComponent(row.id)}&first_name=${encodeURIComponent(row.first_name)}&last_name=${encodeURIComponent(row.last_name)}&middle_name=${encodeURIComponent(row.middle_name)}&image=${encodeURIComponent(row.image)}`;
+                            return `<a href="${url}" class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</a>`;
+                        }
+                    }
                 ]
             });
         });

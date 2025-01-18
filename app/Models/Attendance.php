@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,20 +9,15 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    // Specify the exact table name
-    protected $table = 'attendances';
-
-    // Define the fillable attributes
     protected $fillable = [
-        'time_in', 'picture', 'first_name', 'last_name',
-        'subject_code', 'description', 'schedule', 'room',
-        'status', 'remarks',
+        'time_in',
+        'photo',
+        'first_name',
+        'last_name',
+        'subject_code',
+        'description',
+        'schedule',
+        'room',
+        'instructor_id',
     ];
-
-}
-class Search extends Model
-{
-    use HasFactory;
-
-    protected $fillable = ['first_name']; // Specify the searchable columns
 }

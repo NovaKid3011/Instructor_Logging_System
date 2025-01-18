@@ -36,7 +36,7 @@
                     Add Email
                 </button>
                 <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl} shadow bg-body-tertiary rounded" id="emailTable">
-                    <thead class="table">
+                    <thead class="table-primary">
                         <tr>
                             <th>#</th>
                             <th>Fullname</th>

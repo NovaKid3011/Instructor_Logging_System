@@ -11,7 +11,7 @@ body{
     display: flex;
     justify-content: flex-end;
     /* height: 100px; */
-    
+
 }
 
 .card-d{
@@ -21,7 +21,7 @@ body{
 }
 .tab-pane{
     background-color: #fff;
-    
+
 }
 .nav-tab{
     display: flex;
@@ -30,9 +30,9 @@ body{
 .nav-link :active{
     border: none;
 }
-.nav-link:hover{
+/* .nav-link:hover{
     background-color: #a8c4e5;
-}
+} */
 
 .containner{
     display: flex;
@@ -54,6 +54,7 @@ body{
     border-radius: 4px;
     height: fit-content;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #reportTabs{
@@ -61,8 +62,8 @@ body{
     margin: 0;
 }
 .nav-link.active {
-    background-color: #007bff; 
-    color: white; 
+    background-color: #007bff;
+    color: white;
 }
 .nav-link {
     transition: background-color 0.3s ease;

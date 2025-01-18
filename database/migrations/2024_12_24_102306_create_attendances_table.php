@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->integer('instructor_id');
             $table->time('time_in');
             $table->string('picture')->nullable();
             $table->string('first_name');
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('subject_code');
             $table->string('description');
             $table->string('schedule');
-            $table->string('room'); 
+            $table->string('room');
             $table->timestamps();
         });
     }
