@@ -34,11 +34,11 @@
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .toUpperCase();
-                return sanitizedLastName.startsWith(letter);
+                return sanitizedLastName.startsWith(letter) && item.is_part_time;
             });
 
             if (filteredData.length === 0) {
-                container.innerHTML = `<div class="col-12 text-center">No instructors found for this letter.</div>`;
+                container.innerHTML = `<div class="col-12 text-center">No part-time instructors found for this letter.</div>`;
                 return;
             }
 
