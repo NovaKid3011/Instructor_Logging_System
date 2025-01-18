@@ -35,7 +35,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
         Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
         Route::prefix('dashboard')->group(function () {
-            
+
             Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
             Route::get('/users', [AdminController::class, 'users'])->name('users');
             Route::post('/users/create', [AdminController::class, 'create'])->name('user.create');
@@ -46,7 +46,7 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::get('/mail', [MailController::class, 'sendMail'])->name('mail');
             Route::get('/report', [ReportController::class, 'index'])->name('report');
             // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
-            
+
 
             Route::get('/report/daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
             Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');

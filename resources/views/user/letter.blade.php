@@ -72,6 +72,7 @@
             card.style.maxWidth = '250px';
             card.style.border = '1px solid #ddd';
             card.style.borderRadius = '8px';
+
              // Add click event listener for redirection
             card.addEventListener('click', () => {
                 const instructorId = item.id; // Assuming `id` exists in the data
@@ -79,7 +80,7 @@
             });
             // Profile Image
             const profileImage = document.createElement('img');
-            profileImage.src = item.image || 'https://via.placeholder.com/150';
+            profileImage.src = item.im age || 'https://via.placeholder.com/150';
             profileImage.alt = 'Profile Image';
             profileImage.className = 'rounded';
             profileImage.style.width = '100%';
