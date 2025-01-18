@@ -8,6 +8,8 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\LoggerController;
+use App\Livewire\Counter;
 
 Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -46,7 +48,8 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
             Route::get('/instructor-monthly/{id}', [InstructorController::class, 'instructorMonthly'])->name('instructor.monthly');
             Route::get('/instructor/monthly-report', [InstructorController::class, 'monthlyReport'])->name('instructor.monthly_report');
 
-
+            Route::get('/settings/loggers', [LoggerController::class, 'index'])->name('loggers');
+            Route::post('/settings/loggers', [LoggerController::class, 'selection'])->name('selectedIds');
 
 
             Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');

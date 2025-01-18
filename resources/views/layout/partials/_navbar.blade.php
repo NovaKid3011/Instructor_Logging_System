@@ -8,6 +8,7 @@
                 @break
             @case('instructor')
                 Instructors
+                @break
             @case('instructor.monthly')
                 Instructors
                 @break
@@ -29,8 +30,8 @@
     <div class="navbar-1">
         <ul class="nav">
             <li class="nav-item">
-                <div class="dropdown mx-3 pt-3">
-                    <a class="nav-link text-black btn dropdown-toggle p-2" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown p-2 d-flex justify-content-center">
+                    <a class="nav-link text-black btn dropdown-toggle p-2 d-flex" data-bs-toggle="dropdown" aria-expanded="false">
                         <small class="text-muted">Admin</small>
                         <div class="border"></div>
                         {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
