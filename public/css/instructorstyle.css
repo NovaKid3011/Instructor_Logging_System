@@ -109,3 +109,16 @@
     }
 }
 
+@media screen and (max-width: 425px) {
+    /* Two items per row */
+    #instructor-cards .row {
+        width: calc(50% - 10px); /* Two links fit in one row */
+        font-size: 18px; /* Adjust font size for smaller screens */
+        padding: 20px; /* Adjust padding */
+    }
+
+    /* Adjust cards */
+    .card {
+        margin-bottom: 20px; /* Add spacing between cards */
+    }
+}
