@@ -130,16 +130,43 @@ class InstructorController extends Controller
 
 
 
-    public function showByLetter($alpha)
-{
-    // Debugging
-//    dd($alpha);
+//     public function showByLetter($alpha)
+// {
+//     // Debugging
+// //    dd($alpha);
 
-    return view('user.letter')->with('alpha', $alpha);
-}
-    public function schedule($id)
-{
+//     return view('user.letter')->with('alpha', $alpha);
+// }
+//     public function schedule($id)
+// {
 
-        return view('user.schedule', compact('instructor'));
+//         return view('user.schedule', compact('instructor'));
+// }
+public function showByLetter($alpha)
+    {
+        $api_key = env('API_KEY');
+        $response = Http::withHeaders([
+            'x-api-key' => $api_key,
+            'Origin' => 'http://instructor-logging.test'
+        ])->get("https://api-portal.mlgcl.edu.ph/api/external/employees", [
+            'last_name' => strtoupper($alpha)
+        ]);
+
+        if ($response->failed()) {
+            return redirect(route('dashboard'))->with('error', 'Failed to fetch data from API.');
+        }
+
+        $data = $response->json()['data'] ?? [];
+
+        // Fetch part-time instructor employee IDs from the database
+        $partTimeInstructorIds = DB::table('instructors')->pluck('employee_id')->toArray();
+
+        foreach ($data as &$item) {
+            $item['is_part_time'] = in_array($item['id'], $partTimeInstructorIds);
+        }
+
+        return view('user.letter', compact('alpha', 'data'));
+    }
 }
-}
+
+

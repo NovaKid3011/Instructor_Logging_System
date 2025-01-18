@@ -22,16 +22,15 @@ Route::middleware('preventBackHistory')->group(function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
-Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
 
 
-
-Route::middleware(['auth', 'preventBackHistory'])->group(function () {
+Route::middleware(['preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
         Route::get('/table/schedule/{instructorId}', [UserController::class, 'schedule'])->name('sched');
         Route::post('/table/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
+        Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
+        Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
     });
 
     Route::prefix('admin')->group(function () {
@@ -54,6 +53,16 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
             Route::post('/mail', [MailController::class, 'getEmail'])->name('getEmail');
             Route::get('/mail', [MailController::class, 'sendMail'])->name('mail');
+            Route::get('/report', [ReportController::class, 'index'])->name('report');
+            // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
+
+
+            Route::get('/report/daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
+            Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
+
+});
+
+            Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
             Route::get('/manage-email', [MailController::class, 'index'])->name('manage-emails');
             Route::post('/manage-email', [MailController::class, 'registerMail'])->name('add-email');
             Route::put('/manage-email/{id}', [MailController::class, 'editMail'])->name('editMail');
@@ -71,5 +80,5 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
 
 
-        });
+
 Route::get('/search', [SearchController::class, 'index'])->name('search');
