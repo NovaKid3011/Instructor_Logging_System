@@ -26,33 +26,16 @@
 
 
 
-    <script>
-        $(document).ready(function() {
-            $('#instructorTable').DataTable({
-                ajax: {
-                    url: 'https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100',
-                    type: 'GET',
-                    headers: {
-                        'x-api-key': '{{env("API_KEY")}}'
-                    },
-                    dataSrc: function(json) {
-                        console.log('Data received:', json);
-                        // Flatten the structure to get employees as separate rows
-                        let employees = [];
-                        json.data.forEach(item => {
-                            employees.push({
-                                id: item.id,
-                                first_name: item.first_name,
-                                middle_name: item.middle_name,
-                                last_name: item.last_name,
-                                image: item.image,
-                            });
-                        });
-                        return employees;
-                    }
-                },
-                columns: [
-                    { data: 'id' },
+<script>
+    $(document).ready(function() {
+        let selectedIds = @json(collect($data)->filter(fn($item) => $item['selected'])->pluck('id'));
+        console.log(selectedIds);
+        let filteredData = @json($data).filter(item => item.selected);
+        console.log(selectedIds);
+        var table = $('#instructorTable').DataTable({
+            data: filteredData,
+            columns: [
+                { data: 'id' },
                     {
                         data: 'image',
                         render: function(data, type, row) {
@@ -69,14 +52,16 @@
                         data: null,
                         render: function(data, type, row) {
                             // Construct the URL with additional data as query parameters
-                            const url = `{{ route('instructor.monthly', '') }}/${row.id}?id=${encodeURIComponent(row.id)}&first_name=${encodeURIComponent(row.first_name)}&last_name=${encodeURIComponent(row.last_name)}&middle_name=${encodeURIComponent(row.middle_name)}&image=${encodeURIComponent(row.image)}`;
+                            const url = `{{ route('instructor.monthly', '') }}/${row.id}?id=${encodeURIComponent(row.id)}`;
                             return `<a href="${url}" class="btn btn-sm btn-primary view-btn" data-id="${row.id}">View</a>`;
                         }
                     }
-                ]
-            });
+            ],
         });
-    </script>
+    });
+</script>
+
+
 
 
 

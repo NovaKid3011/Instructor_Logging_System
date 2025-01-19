@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->integer('instructor_id')->after('room');
+            $table->date('date')->after('time_in');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->dropColumn('instructor_id');
+            $table->dropColumn('date');
         });
     }
 };
