@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('schedule');
             $table->string('room');
+            $table->integer('instructor_id');
             $table->timestamps();
         });
     }

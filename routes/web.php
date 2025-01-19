@@ -27,10 +27,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['preventBackHistory'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/table', [UserController::class, 'table'])->name('table');
-        Route::get('/table/schedule/{instructorId}', [UserController::class, 'schedule'])->name('sched');
-        Route::post('/table/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
+        Route::post('/schedule/{instructorId}/upload/{scheduleId}', [UserController::class, 'store'])->name('sched.upload');
+        Route::post('/schedule/{instructorId}/justification/{scheduleId}', [UserController::class, 'justification'])->name('sched.justification');
         Route::get('/instructors/letter/{alpha}', [InstructorController::class, 'showByLetter'])->name('instructors.by_letter');
-        Route::get('/user/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
+        Route::get('/schedule/{id}', [UserController::class, 'schedule'])->name('user.sched');
     });
 
     Route::prefix('admin')->group(function () {
