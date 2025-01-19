@@ -10,6 +10,7 @@ use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 class InstructorController extends Controller
 {
     public function index(){
@@ -45,6 +46,7 @@ class InstructorController extends Controller
             'x-api-key' => env('API_KEY'),
             'Origin' => 'http://instructor-logging.test'
         ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
+
         if($response->successful()) {
             $data = $response->json()['data'] ?? [];
 
@@ -72,6 +74,7 @@ class InstructorController extends Controller
 
     public function monthlyReport(Request $request)
     {
+
         $month = $request->input('month');
         $instructorId = $request->input('instructor_id'); // Get instructor_id from the URL
 
@@ -99,7 +102,6 @@ class InstructorController extends Controller
             return response()->stream(function () use ($attendances) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, ['Time In', 'Name', 'Subject Code', 'Description', 'Schedule', 'Room', 'Justification']);
-
                 foreach ($attendances as $attendance) {
                     fputcsv($file, [
                         $attendance->created_at->format('h:i A'),
@@ -118,10 +120,34 @@ class InstructorController extends Controller
                 'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
             ]);
         }elseif($request->input('download') == 2) {
-            // $data = [
-            //     'title' => 'Sample PDF',
-            //     'cotent' =>
-            // ]
+            $response = Http::withHeaders([
+                'x-api-key' => env('API_KEY'),
+                'Origin' => 'http://instructor-logging.test'
+            ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
+
+            $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
+
+            $data = $response->json()['data'] ?? [];
+            $employee = array_filter($data, function ($item) use ($instructorId) {
+                return $item['id'] == $instructorId;
+            });
+
+            $employee = reset($employee);
+
+            $fileName = 'Attendance_Report_' . $month . '.pdf';
+            $dompdf = Pdf::loadView('layout.partials.pdf', compact('instructorAtt', 'employee'));
+            $dompdf->render();
+
+            return response()->streamDownload(function () use ($dompdf) {
+                echo $dompdf->output(); // Stream the PDF content
+            }, $fileName, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+            ]);
+
         }elseif($request->input('download') == 3) {
             dd('print ni');
         }
