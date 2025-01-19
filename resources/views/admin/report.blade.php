@@ -1,7 +1,134 @@
 @extends('layout.partials._head')
 @section('content')
 
-@vite('resources/css/report.css')
+<style>
+    
+    body{
+    background-color: #e8f1fb;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    align-items: center;
+}
+.card-header-meow{
+    display: flex;
+    justify-content: flex-end;
+    /* height: 100px; */
+
+}
+
+.card-d{
+    box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    padding: 0;
+}
+.tab-pane{
+    background-color: #fff;
+
+}
+.nav-tab{
+    display: flex;
+    background-color: #e8f1fb;
+}
+.nav-link :active{
+    border: none;
+}
+/* .nav-link:hover{
+    background-color: #a8c4e5;
+} */
+
+.containner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #b3b5b7;
+    padding-top: 10px;
+}
+
+.containner p, h3{
+    margin:0;
+}
+.print{
+    background-color: #0c8c00;
+    color: #fff;
+    border: none;
+    padding: 6px;
+    margin-top: 25px 0 25px 0;
+    border-radius: 4px;
+    height: fit-content;
+    text-decoration: none;
+}
+
+#reportTabs{
+    display: flex;
+    margin: 0;
+}
+.nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+.nav-link {
+    transition: background-color 0.3s ease;
+}
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .form-outline input {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid #CFE2FF;
+        border-radius: 4px 0 0 4px;
+    }
+
+    .btn-primary {
+        padding: 10px ;
+        border-radius: 0 4px 4px 0;
+    }
+    
+    h6{
+        margin:0;
+        padding:0;
+        font-weight: 500;
+    }
+    
+    img{
+        height: 50px;
+        width: auto;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #CFE2FF;
+        border-radius: 4px;
+    }
+
+    .result ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .result ul li {
+        margin: 5px 0;
+    }
+
+    .result ul li a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .result ul li a:hover {
+        text-decoration: underline;
+    }
+
+
+</style>
 <div class="container mt-3">
 <ul class="nav-tab nav-tabs display-flex" id="reportTabs" role="tablist" style="list-style: none; padding: 0;">
     <li class="nav-item" role="presentation">
@@ -44,7 +171,13 @@
 
         <div class="card-d p-3">
         <div class="card-header">
-        <h6>Today: {{ now()->format('l, F d, Y') }}</h6>
+        <div>
+            <h6>List of Instructors who timed in today:</h6>
+            <div class="text-secondary">
+                {{ now()->format('l, F d, Y') }}
+            </div>
+            
+        </div>
         @if(isset($attendances) && count($attendances) > 0 && $attendances->first()->created_at->isToday())
     <a class="print" href="{{ route('report.daily_report', ['search' => request('search'), 'month' => request('month')]) }}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
@@ -79,7 +212,6 @@
             <th>Description</th>
             <th>Schedule</th>
             <th>Room</th>
-            <th>Justification</th>
         </tr>
     </thead>
     <tbody>
@@ -89,13 +221,12 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $att->created_at->format('h:i A') }}</td>
-                <td><img src="" alt="photo evidence"></td>
+                <td><img src="{{ Storage::url('webcam/' . $att->photo) }}" alt="photo evidence"></td>
                 <td>{{ $att->first_name }} {{ $att->last_name }}</td>
                 <td>{{ $att->subject_code ?? 'N/A' }}</td>
                 <td>{{ $att->description ?? 'N/A' }}</td>
                 <td>{{ $att->schedule ?? 'N/A' }}</td>
                 <td>{{ $att->room ?? 'N/A' }}</td>
-                <td>{{ $att->justification ?? 'N/A' }}</td>
             </tr>
             @endif
         @endforeach
@@ -179,8 +310,7 @@
                                 <td>{{ $att->created_at->format('d') }}</td>
                                 <td>{{ $att->created_at->format('l') }}</td>
                                 <td>
-                                    <img src="{{ asset('images/' . $att->picture) }}" alt="Picture" width="50px">
-                                </td>
+                                    <td><img src="{{ Storage::url('webcam/' . $att->photo) }}" alt="photo evidence"></td>
                                 <td>{{ $att->subject_code ?? 'N/A' }}</td>
                                 <td>{{ $att->description ?? 'N/A' }}</td>
                                 <td>{{ $att->schedule ?? 'N/A' }}</td>
@@ -229,9 +359,7 @@
                     <tr>
                         <td>{{ $att->created_at->format('d') }}</td>
                         <td>{{ $att->created_at->format('l') }}</td>
-                        <td>
-                            <img src="{{ asset('images/' . $att->picture) }}" alt="Picture" width="50px">
-                        </td>
+                            <td><img src="{{ Storage::url('webcam/' . $att->photo) }}" alt="photo evidence"></td>
                         <td>{{ $att->subject_code ?? 'N/A' }}</td>
                         <td>{{ $att->description ?? 'N/A' }}</td>
                         <td>{{ $att->schedule ?? 'N/A' }}</td>

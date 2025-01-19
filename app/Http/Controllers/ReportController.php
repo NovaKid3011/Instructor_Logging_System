@@ -6,8 +6,10 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+
 class ReportController extends Controller
 {
+
     public function index(Request $request)
     {
         $search = $request->input('search');

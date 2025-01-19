@@ -4,6 +4,34 @@
 
 <div class="pt-3 px-5" id="employee"></div>
 
+<style>
+    .containner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #b3b5b7;
+    padding-top: 10px;
+}
+
+.containner p, h3{
+    margin:0;
+}
+
+.else{
+    text-align: center;
+}
+.print{
+    background-color: #0c8c00;
+    color: #fff;
+    border: none;
+    padding: 6px;
+    margin-top: 25px 0 25px 0;
+    border-radius: 4px;
+    height: fit-content;
+    text-decoration: none;
+}
+</style>
+
 <div class="container mt-2">
     <div class="mx-3">
         <form id="filterForm" class="d-flex justify-content-end mb-3">
@@ -37,7 +65,7 @@
             @if (request('month') == null)
                 <p class="fs-6 d-flex justify-content-center text-secondary">Please select a month.</p>
             @elseif ($attendances->isEmpty())
-                <p>No record available for this month.</p>
+                <p class="else">No record available for this month.</p>
             @else
                 <div>
                 @foreach ($attendances->groupBy(function ($att) {
