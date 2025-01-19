@@ -165,9 +165,9 @@
 
                             const currentDay = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(new Date()).toUpperCase();
 
-                            const yesterday = new Date();
-                            yesterday.setDate(yesterday.getDate() - 1);
-                            const yesterdayDay = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(yesterday).toUpperCase();
+                            // const yesterday = new Date();
+                            // yesterday.setDate(yesterday.getDate() - 1);
+                            // const yesterdayDay = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(yesterday).toUpperCase();
 
                             const dayMapping = {
                                 MTH: ['MON', 'THU'],
@@ -182,9 +182,9 @@
                             };
 
                             const todaysSchedules = response.filter(item => isMatchingDay(item.days, currentDay));
-                            const yesterdaysSchedules = response.filter(item => isMatchingDay(item.days, yesterdayDay));
+                            // const yesterdaysSchedules = response.filter(item => isMatchingDay(item.days, yesterdayDay));
 
-                            if(yesterdaysSchedules.length > 0){
+                            if(todaysSchedules.length > 0){
                                 const schedulesToDisplay = [...todaysSchedules, ...yesterdaysSchedules];
 
                                 schedulesToDisplay.forEach(item => {
