@@ -8,6 +8,8 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use App\Models\Attendance;
+
 
 Route::middleware('preventBackHistory')->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -58,16 +60,20 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
 
             Route::get('/report', [ReportController::class, 'index'])->name('report');
-            Route::get('/report/print-daily', [ReportController::class, ''])->name('print-daily');
-            Route::get('/report/pdf-daily', [ReportController::class, ''])->name('pdf-daily');
-            Route::get('/report/csv-daily', [ReportController::class, 'dailyReport'])->name('csv-daily');
-            Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
+            Route::get('/report/print', [ReportController::class, 'printDaily'])->name('print-daily');
+            Route::get('/report/pdf', [ReportController::class, 'pdfDaily'])->name('pdf-daily');
+            Route::get('/report/csv', [ReportController::class, 'dailyReport'])->name('csv-daily');
+
+            // by month
+
+            Route::get('/report/print-by-month', [ReportController::class, 'printByMonth'])->name('print-by-month');
+            Route::get('/report/csv-by-month', [ReportController::class, 'csvByMonth'])->name('csv-by-month');
+            Route::get('/report/pdf-by-month', [ReportController::class, 'pdfByMonth'])->name('pdf-byymonth');
 
             });
 
         });
 
 
-
-        });
+});
 Route::get('/search', [SearchController::class, 'index'])->name('search');
