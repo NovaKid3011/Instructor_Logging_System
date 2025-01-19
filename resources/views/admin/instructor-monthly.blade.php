@@ -46,7 +46,8 @@
     </a>
     <div class="d-flex justify-content-between align-items-center mt-4 pt-2">
         <div class="px-4 employee-con d-flex align-items-center" id="employee"></div>
-        <form id="filterForm" class="d-flex justify-content-end mb-2 mx-4 px-1" style="height: 35px">
+
+        <form action="{{route("instructor.monthly", ['id' => request('id')])}}" id="filterForm" class="d-flex justify-content-end mb-2 mx-4 px-1" style="height: 35px">
             <select name="month" id="month-select" style="padding: 5px; border: none;" class="search_form">
                 <option value="" disabled selected>Select month</option>
 >>>>>>> 2c85b84b872e7005a88169006673644fb3fb4313
@@ -63,9 +64,6 @@
                 <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>November</option>
                 <option class="" value="12" {{ request('month') == '12' ? 'selected' : '' }}>December</option>
             </select>
-            <div class="form-outline">
-                <input id="search-input" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1" style="font-size: small" hidden>
-            </div>
             <button type="submit" class="btn btn-primary px-3 py-1" style="font-size: small;">
                 <i class="fas fa-search"></i> Filter by month
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z" /></svg>
@@ -136,34 +134,56 @@
                             </div>
                         </form> --}}
                     </div>
+            @else
+                <div class="containner d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="fs-6">{{ $attendances->first()->created_at->format('F Y') }}</p>
+                    </div>
+                    <form action="{{ route('instructor.monthly_report', ['month' => request('month'), 'instructor_id' => request('id')]) }}"  id="exportType" class="d-flex justify-content-end mb-2" method="GET" onsubmit="exportForm(event)">
+                        <input type="hidden" name="month" value="{{ request('month') }}">
+                        <input type="hidden" name="instructor_id" value="{{ request('id') }}">
+                        <select name="download" id="download" style="padding: 5px; border: 1px solid #bebebe; border-radius: 5px 0 0 5px" class="search_form">
+                            <option value="" disabled selected>Export Option</option>
+                            <option value="1" {{request('download') == 1 ? 'selected' : ''}}>Download CSV</option>
+                            <option value="2" {{request('download') == 2 ? 'selected' : ''}}>PDF File</option>
+                            <option value="3" {{request('download') == 3 ? 'selected' : ''}}>Print</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary px-3 py-1" style="font-size: small; border-radius: 0 5px 5px 0">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+                        </button>
+                    </form>
+                </div>
 
-                    <table class="table table-striped table-bordered table-responsive" id="monthlyTable">
-                        <thead class="table-primary">
+                <table class="table table-striped table-bordered table-responsive" id="monthlyTable">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>Time in</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Subject Code</th>
+                            <th>Description</th>
+                            <th>Schedule</th>
+                            <th>Room</th>
+                            <th>Justification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($attendances as $att)
                             <tr>
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Subject Code</th>
-                                <th>Description</th>
-                                <th>Schedule</th>
-                                <th>Room</th>
-                                <th>Justification</th>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $att->created_at->timezone('Asia/Manila')->format('h:i A') }}</td>
+                                <td>{{ $att->created_at->format('d') }}</td>
+                                <td>{{ $att->created_at->format('l') }}</td>
+                                <td>{{ $att->subject_code ?? 'N/A' }}</td>
+                                <td>{{ $att->description ?? 'N/A' }}</td>
+                                <td>{{ $att->schedule ?? 'N/A' }}</td>
+                                <td>{{ $att->room ?? 'N/A' }}</td>
+                                <td>{{ $att->justification ?? 'N/A' }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($userAttendances as $att)
-                                <tr>
-                                    <td>{{ $att->created_at->format('d') }}</td>
-                                    <td>{{ $att->created_at->format('l') }}</td>
-                                    <td>{{ $att->subject_code ?? 'N/A' }}</td>
-                                    <td>{{ $att->description ?? 'N/A' }}</td>
-                                    <td>{{ $att->schedule ?? 'N/A' }}</td>
-                                    <td>{{ $att->room ?? 'N/A' }}</td>
-                                    <td>{{ $att->justification ?? 'N/A' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         @endif
     </div>
@@ -216,6 +236,22 @@
 </script>
 
 <script>
+    function exportForm() {
+        var option = document.getElementById('download').value;
+        if(option === '') {
+            alert('Please select an export method');
+            event.preventDefault();
+        }
+        // else{
+        //     // setTimeout(() => {
+        //     //    alert('Exported successfully');
+        //     // }, 1000);
+        //     // return true;
+        // }
+    }
+</script>
+
+{{-- <script>
     document.getElementById('filterForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const month = document.getElementById('month-select').value;
@@ -228,17 +264,11 @@
             urlParams.delete('month');
         }
 
-        if (search) {
-            urlParams.set('search', search);
-        } else {
-            urlParams.delete('search');
-        }
-
         window.location.search = urlParams.toString();
     });
-</script>
+</script> --}}
 
-<script>
+{{-- <script>
     document.getElementById('filterForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const month = document.getElementById('month-select').value;
@@ -264,7 +294,7 @@
 
         // window.location.search = urlParams.toString();
     });
-</script>
+</script> --}}
 
 
 @endsection
