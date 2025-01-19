@@ -30,6 +30,7 @@
 <script>
     $(document).ready(function() {
     let selectedIds = @json(collect($data)->filter(fn($item) => $item['selected'])->pluck('id'));
+    console.log(selectedIds);
     var table = $('#loggersTable').DataTable({
         data: @json($data),  // Pass the data from the controller to the DataTable
         columns: [

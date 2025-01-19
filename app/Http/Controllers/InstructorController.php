@@ -17,7 +17,7 @@ class InstructorController extends Controller
         if(Auth::user()->role == 1) {
             $response = Http::withHeaders([
                 'x-api-key' => env('API_KEY'),
-                'Origin' => 'http://instructor-logging.test'
+                'Origin' => 'https://instructor-logging.webactivities.online'
             ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
             if($response->successful()) {
@@ -44,7 +44,7 @@ class InstructorController extends Controller
 
         $response = Http::withHeaders([
             'x-api-key' => env('API_KEY'),
-            'Origin' => 'http://instructor-logging.test'
+            'Origin' => 'https://instructor-logging.webactivities.online'
         ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
         if($response->successful()) {
@@ -122,7 +122,7 @@ class InstructorController extends Controller
         }elseif($request->input('download') == 2) {
             $response = Http::withHeaders([
                 'x-api-key' => env('API_KEY'),
-                'Origin' => 'http://instructor-logging.test'
+                'Origin' => 'https://instructor-logging.webactivities.online'
             ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
             $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
@@ -173,7 +173,7 @@ public function showByLetter($alpha)
         $api_key = env('API_KEY');
         $response = Http::withHeaders([
             'x-api-key' => $api_key,
-            'Origin' => 'http://instructor-logging.test'
+            'Origin' => 'https://instructor-logging.webactivities.online'
         ])->get("https://api-portal.mlgcl.edu.ph/api/external/employees", [
             'last_name' => strtoupper($alpha)
         ]);

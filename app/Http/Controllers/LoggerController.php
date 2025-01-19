@@ -11,7 +11,7 @@ class LoggerController extends Controller
     public function index(){
         $response = Http::withHeaders([
             'x-api-key' => env('API_KEY'),
-            'Origin' => 'http://instructor-logging.test'
+            'Origin' => 'https://instructor-logging.webactivities.online'
         ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
         if ($response->successful()) {
