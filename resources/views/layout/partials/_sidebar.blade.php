@@ -1,8 +1,12 @@
 
 
-<nav id="sidebar" class="px-1 sidebar">
+<nav id="sidebar" class="px-1 sidebar" style="            
+            position: sticky;
+            top: 0;
+            min-height: 100vh;
+            width: 240px;">
     <a href="" class="logo d-flex justify-content-center">
-        <img src="{{asset('/storage/images/logo.png')}}" width="140px" height="auto" class="py-2" alt="photo">
+        <img src="{{asset('images/logo.png')}}" width="140px" height="auto" class="py-2" alt="photo">
     </a>
     <ul class="nav mt-5">
         <li class="{{Request::is('admin/dashboard') ? 'active' : ''}} p-3">

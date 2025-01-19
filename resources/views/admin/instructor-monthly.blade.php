@@ -2,6 +2,43 @@
 
 @section('content')
 
+<<<<<<< HEAD
+<div class="pt-3 px-5" id="employee"></div>
+
+<style>
+    .containner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #b3b5b7;
+    padding-top: 10px;
+}
+
+.containner p, h3{
+    margin:0;
+}
+
+.else{
+    text-align: center;
+}
+.print{
+    background-color: #0c8c00;
+    color: #fff;
+    border: none;
+    padding: 6px;
+    margin-top: 25px 0 25px 0;
+    border-radius: 4px;
+    height: fit-content;
+    text-decoration: none;
+}
+</style>
+
+<div class="container mt-2">
+    <div class="mx-3">
+        <form id="filterForm" class="d-flex justify-content-end mb-3">
+            <select name="month" id="month-select" style="padding: 5px; border:none;" class="search_form">
+                <option value="" disabled selected>Filter by month</option>
+=======
 <div class="instructor-cons mt-4">
     <a href="{{route("instructor")}}" class="px-4 text-decoration-none text-dark">
         <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
@@ -13,6 +50,7 @@
         <form action="{{route("instructor.monthly", ['id' => request('id')])}}" id="filterForm" class="d-flex justify-content-end mb-2 mx-4 px-1" style="height: 35px">
             <select name="month" id="month-select" style="padding: 5px; border: none;" class="search_form">
                 <option value="" disabled selected>Select month</option>
+>>>>>>> 2c85b84b872e7005a88169006673644fb3fb4313
                 <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>January</option>
                 <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>February</option>
                 <option value="3" {{ request('month') == '3' ? 'selected' : '' }}>March</option>
@@ -37,8 +75,65 @@
 <div class="container">
     <div class="mx-3 mt-4">
         <div class="table-container ">
+<<<<<<< HEAD
+            @if (request('month') == null)
+                <p class="fs-6 d-flex justify-content-center text-secondary">Please select a month.</p>
+            @elseif ($attendances->isEmpty())
+                <p class="else">No record available for this month.</p>
+            @else
+=======
             @if ($attendances->isEmpty())
                 <p class="d-flex justify-content-center text-secondary">No record available for this month.</p>
+            @elseif ($attendances)
+>>>>>>> 2c85b84b872e7005a88169006673644fb3fb4313
+                <div>
+                @foreach ($attendances->groupBy(function ($att) {
+                    return $att->first_name . ' ' . $att->last_name;
+                    }) as $fullName => $userAttendances)
+                    <div class="containner d-flex justify-content-between">
+                        <div>
+                            <p>{{ $userAttendances->first()->created_at->format('F Y') }}</p>
+                        </div>
+                        <form action="{{ route('instructor.monthly_report', ['month' => request('month'), 'instructor_id' => request('id')]) }}" id="filterForm" class="d-flex justify-content-end mb-2" method="GET">
+                            <input type="hidden" name="month" value="{{ request('month') }}">
+                            <input type="hidden" name="instructor_id" value="{{ request('id') }}">
+                            <select name="download" id="download" style="padding: 5px; border: 1px solid #bebebe; border-radius: 5px 0 0 5px" class="search_form">
+                                <option value="" disabled selected>Export Option</option>
+                                <option value="1" {{request('download') == 1 ? 'selected' : ''}}>Download CSV</option>
+                                <option value="2" {{request('download') == 2 ? 'selected' : ''}}>PDF File</option>
+                                <option value="3" {{request('download') == 3 ? 'selected' : ''}}>Print</option>
+                            </select>
+                            <div class="form-outline">
+                                <input id="download-type" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1" style="font-size: small" hidden>
+                            </div>
+                            <button type="submit" class="btn btn-primary px-3 py-1" style="font-size: small; border-radius: 0 5px 5px 0">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+                            </button>
+                        </form>
+                        {{-- <form action="{{ route('instructor.monthly_report', ['month' => request('month'),  'instructor_id' => request('id')]) }}">
+                            <div class="input-group" style="width:230px">
+                                <button type="submit" class="btn btn-primary px-2 py-1" style="font-size: small">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="22"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                                </button>
+                                <select class="form-select" id="inputGroupSelect01">
+                                <option selected disabled>Download Option</option>
+                                <option value="1">
+                                    <a class="print "
+                                        href="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
+                                            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
+                                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                                            <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
+                                        </svg>
+                                        Download CSV
+                                    </a>
+                                </option>
+                                <option value="2">PDF File</option>
+                                <option value="3">Print</option>
+                                </select>
+                            </div>
+                        </form> --}}
+                    </div>
             @else
                 <div class="containner d-flex justify-content-between align-items-center">
                     <div>
