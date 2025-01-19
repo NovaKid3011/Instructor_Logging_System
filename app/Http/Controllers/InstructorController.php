@@ -179,7 +179,7 @@ public function showByLetter($alpha)
         ]);
 
         if ($response->failed()) {
-            return redirect(route('dashboard'))->with('error', 'Failed to fetch data from API.');
+            return redirect(route('table'))->with('error', 'Failed to fetch data from API.');
         }
 
         $data = $response->json()['data'] ?? [];
