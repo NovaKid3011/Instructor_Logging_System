@@ -1,6 +1,10 @@
 
 
-<nav id="sidebar" class="px-1 sidebar">
+<nav id="sidebar" class="px-1 sidebar" style="            
+            position: sticky;
+            top: 0;
+            min-height: 100vh;
+            width: 240px;">
     <a href="" class="logo d-flex justify-content-center">
         <img src="{{asset('images/logo.png')}}" width="140px" height="auto" class="py-2" alt="photo">
     </a>
@@ -41,6 +45,10 @@
                 <a class="menus text-decoration-none d-flex justify-content-between align-items-center {{Request::is('admin/dashboard/manage-email') ? 'drop-active' : ''}}" href="{{route('manage-emails')}}">
                     Mails
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail-share"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 19h-8a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6" /><path d="M3 7l9 6l9 -6" /><path d="M16 22l5 -5" /><path d="M21 21.5v-4.5h-4.5" /></svg>
+                </a>
+                <a class="menus text-decoration-none d-flex justify-content-between align-items-center {{Request::is('admin/dashboard/settings/loggers') ? 'drop-active' : ''}}" href="{{route('loggers')}}">
+                    Loggers
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6zm10 0h6v6h-6zm-10 10h6v6h-6zm10 3h6m-3 -3v6" /></svg>
                 </a>
             </div>
 

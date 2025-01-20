@@ -7,12 +7,33 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Attendance;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class InstructorController extends Controller
 {
     public function index(){
         if(Auth::user()->role == 1) {
-            return view('admin/instructor');
+            $response = Http::withHeaders([
+                'x-api-key' => env('API_KEY'),
+                'Origin' => 'https://instructor-logging.webactivities.online'
+            ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
+
+            if($response->successful()) {
+
+                $data = $response->json()['data'] ?? [];
+
+                $selectedIds = DB::table('instructors')->pluck('employee_id')->toArray();
+
+                foreach($data as &$item) {
+                    $item['selected'] = in_array($item['id'], $selectedIds);
+                }
+                return view('admin.instructor', ['data' => $data]);
+            }else{
+                return view('admin.instructor')->with('error', 'cannot fetch data');
+            }
+
         }
         return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
     }
@@ -20,30 +41,46 @@ class InstructorController extends Controller
     public function instructorMonthly(Request $request, $id)
     {
         $instructor = Attendance::where('instructor_id', $id)->exists();
-        if ($instructor) {
-            $month = $request->input('month');
+
+        $response = Http::withHeaders([
+            'x-api-key' => env('API_KEY'),
+            'Origin' => 'https://instructor-logging.webactivities.online'
+        ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
+
+        if($response->successful()) {
+            $data = $response->json()['data'] ?? [];
+
+            foreach($data as &$items) {
+                $items['selected'] = $items['id'] == $id;
+            }
+            if($request->input('month') == null){
+                $month = date('m');
+            }else{
+                $month = $request->input('month');
+            }
 
             $attendanceQuery = Attendance::where('instructor_id', $id);
 
-                // Filter by month
-                if ($month) {
-                    $attendanceQuery->whereMonth('created_at', $month);
-                }
-                // Paginate the results
-                $attendances = $attendanceQuery->paginate(10);
-
-                return view('admin.instructor-monthly', compact('attendances', 'month'));
-        }else{
-            return redirect(route('instructor'))->with('error', 'No attendance rarr found!');
+            // Filter by month
+            if ($month) {
+                $attendanceQuery->whereMonth('created_at', $month);
+            }
+            // Paginate the results
+            $attendances = $attendanceQuery->paginate(10);
+            return view('admin.instructor-monthly', compact('attendances', 'month'))->with(['data' => $data]);
         }
 
     }
 
     public function monthlyReport(Request $request)
     {
-        $search = $request->input('search');
+
         $month = $request->input('month');
-        $instructorId = $request->query('instructor_id'); // Get instructor_id from the URL
+        $instructorId = $request->input('instructor_id'); // Get instructor_id from the URL
+
+        if(!$month) {
+            $month = date('m');
+        }
 
         if (!$month || !$instructorId) {
             return redirect()->back()->with('error', 'Month and instructor selection are required.');
@@ -51,11 +88,6 @@ class InstructorController extends Controller
 
         // Fetch attendance data based on the month, instructor, and optional search term
         $attendances = Attendance::query()
-            ->when($search, function ($query, $search) {
-                $query->where('first_name', 'like', "%{$search}%")
-                    ->orWhere('last_name', 'like', "%{$search}%")
-                    ->orWhere('subject_code', 'like', "%{$search}%");
-            })
             ->whereMonth('created_at', $month)
             ->where('instructor_id', $instructorId)
             ->get();
@@ -64,44 +96,103 @@ class InstructorController extends Controller
             return redirect()->back()->with('error', 'No attendance record found.');
         }
 
-        $fileName = 'Attendance_Report_' . now()->format('m-d-Y') . '.csv';
+        if($request->input('download') == 1){
+            $fileName = 'Attendance_Report_' . now()->format('m-d-Y') . '.csv';
 
-        return response()->stream(function () use ($attendances) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, ['Time In', 'Name', 'Subject Code', 'Description', 'Schedule', 'Room', 'Justification']);
+            return response()->stream(function () use ($attendances) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, ['Time In', 'Name', 'Subject Code', 'Description', 'Schedule', 'Room', 'Justification']);
+                foreach ($attendances as $attendance) {
+                    fputcsv($file, [
+                        $attendance->created_at->format('h:i A'),
+                        "{$attendance->first_name} {$attendance->last_name}",
+                        $attendance->subject_code ?? 'N/A',
+                        $attendance->description ?? 'N/A',
+                        $attendance->schedule ?? 'N/A',
+                        $attendance->room ?? 'N/A',
+                        $attendance->justification ?? 'N/A',
+                    ]);
+                }
 
-            foreach ($attendances as $attendance) {
-                fputcsv($file, [
-                    $attendance->created_at->format('h:i A'),
-                    "{$attendance->first_name} {$attendance->last_name}",
-                    $attendance->subject_code ?? 'N/A',
-                    $attendance->description ?? 'N/A',
-                    $attendance->schedule ?? 'N/A',
-                    $attendance->room ?? 'N/A',
-                    $attendance->justification ?? 'N/A',
-                ]);
-            }
+                fclose($file);
+            }, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            ]);
+        }elseif($request->input('download') == 2) {
+            $response = Http::withHeaders([
+                'x-api-key' => env('API_KEY'),
+                'Origin' => 'https://instructor-logging.webactivities.online'
+            ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
-            fclose($file);
-        }, 200, [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
-        ]);
+            $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
+
+            $data = $response->json()['data'] ?? [];
+            $employee = array_filter($data, function ($item) use ($instructorId) {
+                return $item['id'] == $instructorId;
+            });
+
+            $employee = reset($employee);
+
+            $fileName = 'Attendance_Report_' . $month . '.pdf';
+            $dompdf = Pdf::loadView('layout.partials.pdf', compact('instructorAtt', 'employee'));
+            $dompdf->render();
+
+            return response()->streamDownload(function () use ($dompdf) {
+                echo $dompdf->output(); // Stream the PDF content
+            }, $fileName, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+            ]);
+
+        }elseif($request->input('download') == 3) {
+            dd('print ni');
+        }
     }
 
 
 
 
-    public function showByLetter($alpha)
-{
-    // Debugging
-//    dd($alpha);
+//     public function showByLetter($alpha)
+// {
+//     // Debugging
+// //    dd($alpha);
 
-    return view('user.letter')->with('alpha', $alpha);
-}
-    public function schedule($id)
-{
+//     return view('user.letter')->with('alpha', $alpha);
+// }
+//     public function schedule($id)
+// {
 
-        return view('user.schedule', compact('instructor'));
+//         return view('user.schedule', compact('instructor'));
+// }
+public function showByLetter($alpha)
+    {
+        $api_key = env('API_KEY');
+        $response = Http::withHeaders([
+            'x-api-key' => $api_key,
+            'Origin' => 'https://instructor-logging.webactivities.online'
+        ])->get("https://api-portal.mlgcl.edu.ph/api/external/employees", [
+            'last_name' => strtoupper($alpha)
+        ]);
+
+        if ($response->failed()) {
+            return redirect(route('table'))->with('error', 'Failed to fetch data from API.');
+        }
+
+        $data = $response->json()['data'] ?? [];
+
+        // Fetch part-time instructor employee IDs from the database
+        $partTimeInstructorIds = DB::table('instructors')->pluck('employee_id')->toArray();
+
+        foreach ($data as &$item) {
+            $item['is_part_time'] = in_array($item['id'], $partTimeInstructorIds);
+        }
+
+        return view('user.letter', compact('alpha', 'data'));
+    }
 }
-}
+
+

@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->integer('instructor_id')->after('room');
+        Schema::create('justifications', function (Blueprint $table) {
+            $table->id();
+            $table->integer('instructor_id');
+            $table->integer('schedule_id');
+            $table->string('justification');
+            $table->date('absent_date');
+            $table->date('current_date');
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->dropColumn('instructor_id');
-        });
+        Schema::dropIfExists('justifications');
     }
 };

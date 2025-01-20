@@ -8,8 +8,10 @@ use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
+
 class ReportController extends Controller
 {
+
     public function index(Request $request)
     {
         $search = $request->input('search');

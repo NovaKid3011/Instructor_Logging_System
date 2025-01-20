@@ -1,0 +1,37 @@
+table {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+table, th, td {
+    border: 1px solid rgb(211, 211, 211);
+}
+thead {
+    background-color: #284eb6;
+    color: white;
+}
+th, td {
+    padding: 10px;
+    font-size: 10px;
+    text-align: center;
+}
+th {
+    font-weight: bold;
+}
+tbody tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+.school_con{
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+}
+.school h3, .school h5{
+    margin: 0;
+}
