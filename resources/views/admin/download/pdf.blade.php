@@ -6,99 +6,115 @@
     <title>MLGCL Daily Attendance Monitoring</title>
     <style>
         body {
-            font-family: "Poppins", sans-serif;
-            margin: 0;
-            font-size: 7;
-            padding: 20px;
-        }
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 20px;
+}
 
-        h4 {
-            color: #555;
-            font-size: 16px;
-        }
+h4 {
+    color: #555;
+    margin: 5px 0;
+    font-size: 14px; /* Adjusted for better scaling */
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 13px; /* Consistent text size */
+}
 
-        img {
-            width: 60px;
-            height: auto;
-            margin: 0 10px 0 0;
-        }
+img {
+    width: 60px;
+    height: auto;
+    margin: 0 10px 0 0;
+}
 
-        th, td {
-            text-align: center;
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
+th, td {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 8px; /* Slightly smaller padding for uniformity */
+}
 
-        .logo{
-            display: flex;
-        }
-        p, h4{
-            margin: 0;
-            font-size: 10;
-        }
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 
-        .school-name{
-            width: 100%;
-            margin: 10px 0 0 0 ;
-            display: flex;
-            justify-content: space-between;
-        }
+th {
+    background-color: #2c69cc;
+    color: white;
+    font-weight: bold;
+    font-size: 14px; /* Bold header text for readability */
+}
 
-        th {
-            background-color: #CFE2FF;
-            color: #333;
-            font-weight: bold;
-        }
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-        tr:nth-child(even) {
-            background-color: rgb(236, 236, 236);
-        }
+tr:hover {
+    background-color: #e0ebff; /* Optional hover effect */
+}
 
-        .name-column {
-            text-align: left;
-        }
+td[colspan] {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
 
-        td[colspan] {
-            text-align: center;
-            font-style: italic;
-            color: #999;
-        }
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        @media print {
+p, h4 {
+    margin: 0;
+}
+
+h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px; /* Clear and noticeable name display */
+}
+
+.school-name {
+    margin: 10px 0 0 0;
+}
+
+.container {
+    margin: 20px;
+    padding: 0;
+}
+
+@media print {
     body {
-        font-size: 10px;
-
+        margin: 0;
+        padding: 10px;
+        font-size: 8px; 
     }
 
-    .container {
-        margin: 20px;
-        padding: 0;
+    .header {
+        justify-content: center; 
     }
 
     table {
-        border-collapse: collapse;
+        width: 100%;
+        font-size: 8px;
     }
 
     th, td {
-        padding: 4px;
+        padding: 6px;
     }
-
 
     img {
-        width: 60px;
+        width: 50px;
         height: auto;
     }
-
-        }
-
-
+}
 
     </style>
 </head>
@@ -110,11 +126,13 @@
             <div class="school-name">
                 <div>
                 <h4 class="mb-0">MLGCL College of Learning INC.</h4>
-                <p class="mb-0">Brgy. Atabay, Hilongos, Keyte</p>
+                <p class="mb-0">Brgy. Atabay, Hilongos, Leyte</p>
                 </div>
-                <p class="mb-0">{{ now()->format('F d, Y') }}</p>
+                
             </div>
         </div>
+
+        <h3 class="date">Attendance for {{ now()->format('F d, Y') }}</h3>
 
         <table class="table table-striped table-bordered">
             <thead class="table-primary">
@@ -146,3 +164,4 @@
 
 </body>
 </html>
+ty

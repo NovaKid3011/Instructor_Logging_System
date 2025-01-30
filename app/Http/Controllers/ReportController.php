@@ -180,59 +180,86 @@ class ReportController extends Controller
             'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
         ]);
     }
-    public function pdfByMonth(Request $request)
+//     public function pdfByMonth(Request $request)
+// {
+//     $month = $request->input('month');
+//     $search = $request->input('search');
+//     $instructorId = $request->input('instructor_id');
+
+//     // 🛠 Debug: Check if values are received
+//     if (!$month || !is_numeric($month) || $month < 1 || $month > 12) {
+//         return redirect()->back()->withErrors('Invalid or missing month filter. Please select a valid month.');
+//     }
+
+//     // Query setup
+//     $attendanceQuery = Attendance::query();
+
+//     if ($instructorId) {
+//         $attendanceQuery->where('instructor_id', $instructorId);
+//     }
+
+//     if (!empty($search)) {
+//         $attendanceQuery->where(function ($query) use ($search) {
+//             $query->where('first_name', 'LIKE', "%{$search}%")
+//                   ->orWhere('last_name', 'LIKE', "%{$search}%");
+//         });
+//     }
+
+//     // Filter by selected month and year
+//     $attendanceQuery->whereMonth('created_at', $month)
+//                     ->whereYear('created_at', now()->year);
+
+//     // 🛠 Debug: Check SQL Query
+//     // dd($attendanceQuery->toSql(), $attendanceQuery->getBindings());
+
+//     // Fetch attendances
+//     $attendances = $attendanceQuery->get();
+
+//     // If no data, return error
+//     if ($attendances->isEmpty()) {
+//         return redirect()->back()->withErrors('No attendance records found for the selected month.');
+//     }
+
+//     // Formatting month name
+//     $monthName = Carbon::createFromFormat('m', $month)->format('F');
+//     $fileName = 'MLGCL_MONTHLY_ATTENDANCE_' . strtolower($monthName) . '_' . now()->year . '.pdf';
+
+//     try {
+//         // 🛠 Debug: Check if Blade template loads properly
+//         // return view('admin.download.pdf-by-month', compact('attendances', 'monthName', 'instructorId'));
+
+//         // Load PDF and download
+//         $pdf = PDF::loadView('admin.download.pdf-by-month', compact('attendances', 'monthName', 'instructorId'));
+//         return $pdf->download($fileName);
+//     } catch (\Exception $e) {
+//         \Log::error('PDF generation failed: ' . $e->getMessage());
+//         return redirect()->back()->withErrors('Failed to generate PDF. Please try again.');
+//     }
+// }
+    
+public function pdfByMonth(Request $request)
     {
-        $month = $request->input('month');
+        $month = $request->input('month', now()->format('Y-m'));
         $search = $request->input('search');
-        $instructorId = $request->input('instructor_id'); // Get instructor_id from request
-    
-        // Validation check for month
-        if (!$month || !is_numeric($month) || $month < 1 || $month > 12) {
-            return redirect()->back()->withErrors('Invalid or missing month filter. Please select a valid month.');
-        }
-    
-        // Query setup
-        $attendanceQuery = Attendance::query();
-    
-        if ($instructorId) {
-            $attendanceQuery->where('instructor_id', $instructorId);
-        }
-    
-        if ($search) {
-            $attendanceQuery->where(function ($query) use ($search) {
-                $query->where('first_name', 'LIKE', "%{$search}%")
-                      ->orWhere('last_name', 'LIKE', "%{$search}%");
-            });
-        }
-    
-        // Filter by selected month and year
-        $attendanceQuery->whereMonth('created_at', $month)
-                        ->whereYear('created_at', now()->year);
-    
-        // Fetch attendances
-        $attendances = $attendanceQuery->get();
-    
-        // Error if no attendance records found
-        if ($attendances->isEmpty()) {
-            return redirect()->back()->withErrors('No attendance records found for the selected month.');
-        }
-    
-        // Formatting month name using Carbon
-        $monthName = Carbon::createFromFormat('m', $month)->format('F');
+        $instructorId = $request->input('instructor_id');
+        $monthName = date('F', strtotime($month));
         $fileName = 'MLGCL_MONTHLY_ATTENDANCE_' . strtolower($monthName) . '_' . now()->year . '.pdf';
-    
-        try {
-            // Load PDF view and return response
-            $pdf = PDF::loadView('admin.download.pdf-by-month', compact('attendances', 'monthName', 'instructorId'));
-            return $pdf->download($fileName);
-        } catch (\Exception $e) {
-            // Log the error message for debugging
-            \Log::error('PDF generation failed: ' . $e->getMessage());
-            return response()->json(['error' => 'PDF generation failed: ' . $e->getMessage()], 500);
-        }
+
+        $attendances = Attendance::when($search, function ($query) use ($search) {
+                return $query->where('first_name', 'like', "%$search%")
+                             ->orWhere('last_name', 'like', "%$search%");
+            })
+            ->when($instructorId, function ($query) use ($instructorId) {
+                return $query->where('instructor_id', $instructorId);
+            })
+            ->whereMonth('created_at', date('m', strtotime($month)))
+            ->whereYear('created_at', date('Y', strtotime($month)))
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $pdf = Pdf::loadView('admin.download.pdf-by-month', compact('attendances', 'month'));
+        return $pdf->download($fileName);
     }
-    
-    
 public function printByMonth(Request $request)
 {
     $instructorId = $request->query('instructor_id');

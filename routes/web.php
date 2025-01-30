@@ -58,10 +58,6 @@ Route::middleware(['preventBackHistory'])->group(function () {
             Route::get('/report', [ReportController::class, 'index'])->name('report');
             // Route::get('/download-csv', [ReportController::class, 'dailyReport'])->name('report.daily_report');
 
-
-            Route::get('/report/daily-report', [ReportController::class, 'dailyReport'])->name('report.daily_report');
-            Route::get('/report/monthly-report', [ReportController::class, 'monthlyReport'])->name('report.monthly_report');
-
 });
 
             Route::get('/schedules', [InstructorController::class, 'schedules'])->name('schedules');
@@ -71,7 +67,7 @@ Route::middleware(['preventBackHistory'])->group(function () {
             Route::delete('/delete-email/{id}', [MailController::class, 'deleteEmail'])->name('email-delete');
 
 
-            Route::get('/report', [ReportController::class, 'index'])->name('report');
+            // Route::get('/report', [ReportController::class, 'index'])->name('report');
             Route::get('/report/print', [ReportController::class, 'printDaily'])->name('print-daily');
             Route::get('/report/pdf', [ReportController::class, 'pdfDaily'])->name('pdf-daily');
             Route::get('/report/csv', [ReportController::class, 'dailyReport'])->name('csv-daily');
@@ -80,7 +76,7 @@ Route::middleware(['preventBackHistory'])->group(function () {
 
             Route::get('/report/print-by-month', [ReportController::class, 'printByMonth'])->name('print-by-month');
             Route::get('/report/csv-by-month', [ReportController::class, 'csvByMonth'])->name('csv-by-month');
-            Route::get('/report/pdf-by-month', [ReportController::class, 'pdfByMonth'])->name('pdf-byymonth');
+            Route::get('/report/pdf-by-month', [ReportController::class, 'pdfByMonth'])->name('pdf-by-month');
 
             });
 
@@ -88,5 +84,4 @@ Route::middleware(['preventBackHistory'])->group(function () {
 
 
 
-});
 Route::get('/search', [SearchController::class, 'index'])->name('search');

@@ -93,19 +93,49 @@
                     <div>
                         <p class="fs-6">{{ $attendances->first()->created_at->format('F Y') }}</p>
                     </div>
-                    <form action="{{ route('instructor.monthly_report', ['month' => request('month'), 'instructor_id' => request('id')]) }}"  id="exportType" class="d-flex justify-content-end mb-2" method="GET" onsubmit="exportForm(event)">
-                        <input type="hidden" name="month" value="{{ request('month') }}">
-                        <input type="hidden" name="instructor_id" value="{{ request('id') }}">
-                        <select name="download" id="download" style="padding: 5px; border: 1px solid #bebebe; border-radius: 5px 0 0 5px" class="search_form">
-                            <option value="" disabled selected>Export Option</option>
-                            <option value="1" {{request('download') == 1 ? 'selected' : ''}}>Download CSV</option>
-                            <option value="2" {{request('download') == 2 ? 'selected' : ''}}>PDF File</option>
-                            <option value="3" {{request('download') == 3 ? 'selected' : ''}}>Print</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary px-3 py-1" style="font-size: small; border-radius: 0 5px 5px 0">
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
-                        </button>
-                    </form>
+                    <div class="d-flex justify-content-end mb-2">
+    <form 
+        action="{{ route('instructor.monthly_report', ['month' => request('month'), 'instructor_id' => request('id')]) }}" 
+        id="exportType" 
+        method="GET" 
+        onsubmit="exportForm(event)"
+        class="d-inline-flex">
+        <input type="hidden" name="month" value="{{ request('month') }}">
+        <input type="hidden" name="instructor_id" value="{{ request('id') }}">
+        <select 
+            name="download" 
+            id="download" 
+            style="padding: 5px; border: 1px solid #bebebe; border-radius: 5px 0 0 5px" 
+            class="search_form">
+            <option value="" disabled selected>Export Option</option>
+            <option value="1" {{ request('download') == 1 ? 'selected' : '' }}>Download CSV</option>
+            <option value="2" {{ request('download') == 2 ? 'selected' : '' }}>PDF File</option>
+            <option value="3" {{ request('download') == 3 ? 'selected' : '' }}>Print</option>
+        </select>
+        <button 
+            type="submit" 
+            class="btn btn-primary px-3 py-1" 
+            style="font-size: small; border-radius: 0 5px 5px 0">
+            <svg  
+                xmlns="http://www.w3.org/2000/svg"  
+                width="18"  
+                height="18"  
+                viewBox="0 0 24 24"  
+                fill="none"  
+                stroke="currentColor"  
+                stroke-width="2"  
+                stroke-linecap="round"  
+                stroke-linejoin="round"  
+                class="icon icon-tabler icons-tabler-outline icon-tabler-upload">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                <path d="M7 9l5 -5l5 5" />
+                <path d="M12 4l0 12" />
+            </svg>
+        </button>
+    </form>
+</div>
+
                 </div>
 
                 <table class="table table-striped table-bordered table-responsive" id="monthlyTable">

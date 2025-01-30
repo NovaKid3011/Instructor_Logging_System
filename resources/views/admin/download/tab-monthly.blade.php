@@ -41,48 +41,53 @@
                 <h3>{{ $fullName }}</h3>
                 <p>{{ $userAttendances->first()->created_at->format('F Y') }}</p>
             </div>
-            <div class="dropdown">
-            <button 
-                class="btn btn-primary dropdown-toggle" 
-                type="button" 
-                id="downloadDropdown" 
-                data-bs-toggle="dropdown" 
-                aria-expanded="false" 
-                data-has-data="{{ $hasTodayData ? 'true' : 'false' }}">
-                Export
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
-                <li>
-                    <a 
-                        class="dropdown-item" 
-                        href="{{ route('pdf-byymonth', [
-                            'search' => request('search'), 
-                            'month' => request('month'), 
-                            'instructor_id' => $userAttendances->first()->instructor_id     
-                        ]) }}">
-                        PDF File
-                    </a>
-                </li>
-                <li>
-                    <a 
-                        class="dropdown-item" 
-                        href="{{ route('csv-by-month', [
-                            'search' => request('search'), 
-                            'month' => request('month'), 
-                            'instructor_id' => $userAttendances->first()->instructor_id
-                        ]) }}" 
-                        id="csvOption">
-                        CSV
-                    </a>
-                </li>
-                <li>
-            <a class="dropdown-item" href="#" id="mprintOption">
-                Print
-            </a>
-        </li>
-    </ul>
+            <div class="d-inline-flex mt-2" style="border: 1px solid #bebebe; border-radius: 5px; width: 200px; font-size: inherit;">
+    <select 
+        name="downloadMonthly" 
+        id="downloadDropdownMonthly" 
+        class="form-select"
+        style="padding: 5px; border: 1px; border-radius: 8px; outline: none; font-size: small;">
+        <option value="" disabled selected>Export Option</option>
+        <option value="{{ route('csv-by-month', ['search' => request('search'), 'month' => request('month'), 'instructor_id' => optional($userAttendances->first())->instructor_id]) }}">
+            Download CSV
+        </option>
+        <option value="{{ route('pdf-by-month', ['search' => request('search'), 'month' => request('month'), 'instructor_id' => optional($userAttendances->first())->instructor_id]) }}">
+            PDF File
+        </option>
+        <option value="{{ route('print-by-month', ['search' => request('search'), 'month' => request('month'), 'instructor_id' => optional($userAttendances->first())->instructor_id]) }}">
+            Print
+        </option>
+
+    </select>
+    <button 
+        class="btn btn-primary" 
+        style="padding: 5px 20px; border-radius: 0; border: none;" 
+        type="button" 
+        onclick="handleExportmonthly()">
+        <i class="bi bi-upload me-1"></i>
+    </button>
 </div>
 
+<script>
+    function handleExportmonthly() {
+    var selectedOption = document.getElementById('downloadDropdownMonthly').value;
+    if (selectedOption !== '') {
+        window.location.href = selectedOption; 
+    }else{
+        Swal.fire({
+                title: 'Please select an export option.',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            });
+    }
+    if (selectedOption === 'print') {
+        window.open('{{ route('print-by-month', ['month' => request('month'), 'instructor_id' => request('instructor_id')]) }}', '_blank');
+    } else {
+        window.location.href = selectedOption;
+    }
+}
+
+</script>
         </div>
 
         <table class="table table-striped table-bordered table-responsive" id="myTable">

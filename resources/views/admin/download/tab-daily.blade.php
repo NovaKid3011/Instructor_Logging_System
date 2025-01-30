@@ -5,74 +5,63 @@
         <div class="card-header">
         <h6>Today: {{ now()->format('l, F d, Y') 
         }}</h6>
-        <div class="dropdown">
+       
+       <div class="d-inline-flex" style="border: 1px solid #bebebe; border-radius: 5px; width:200px; font-size:inherit;"
+       data-has-data = "false">
+    <select 
+        name="download" 
+        id="downloadDropdownd" 
+        class="form-select"         
+        style="padding: 5px; border: 1px; border-radius: 8px; outline: none; font-size:small;">
+        <option value="" disabled selected>Export Option</option>
+        <option 
+            value="{{ route('csv-daily', ['search' => request('search'), 'month' => request('month')]) }}">
+            Download CSV
+        </option>
+        <option 
+            value="{{ route('pdf-daily', ['search' => request('search'), 'month' => request('month')]) }}">
+            PDF File
+        </option>
+        <option 
+            value="{{ route('print-daily', ['search' => request('search'), 'month' => request('month')]) }}">
+            Print
+        </option>
+    </select>
     <button 
-        class="btn btn-primary dropdown-toggle" 
+        class="btn btn-primary" 
+        style="padding: 5px 20px; border-radius: 0; border: none;" 
         type="button" 
-        id="downloadDropdown" 
-        data-bs-toggle="dropdown" 
-        aria-expanded="false" 
-        data-has-data="{{ $hasTodayData ? 'true' : 'false' }}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
-            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-            <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
-        </svg>
-        Export
+        onclick="handleExport()">
+        <i class="bi bi-upload me-1"></i>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
-        <li>
-            <a 
-                class="dropdown-item" 
-                href="{{ route('pdf-daily', ['search' => request('search'), 'month' => request('month')]) }}">
-              PDF File
-            </a>
-        </li>
-        <li>
-            <a 
-                class="dropdown-item" 
-                href="{{ route('csv-daily', ['search' => request('search'), 'month' => request('month')]) }}" 
-                id="csvOption">
-                CSV
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="#" id="dprintOption">
-                Print
-            </a>
-        </li>
-    </ul>
 </div>
 
 <script>
-    document.getElementById('dprintOption').addEventListener('click', function () {
-        const printWindow = window.open('{{ route('print-daily') }}', '_blank');
-            printWindow.onload = function () {
-                setTimeout(() => printWindow.print(), 500);
-            };
+    function handleExport() {
+        const dropdown = document.getElementById("downloadDropdownd");
+        const selectedValue = dropdown.value;
+        const hasData = dropdown.getAttribute('data-has-data');
 
-    });
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var downloadDropdown = document.getElementById('downloadDropdown');
-
-    downloadDropdown.addEventListener('click', function (event) {
-        var hasData = this.getAttribute('data-has-data');
-
-        if (hasData === 'false') {
-
+        if (hasData === "false") {
             Swal.fire({
                 title: 'No records for today.',
                 icon: 'info',
                 confirmButtonText: 'Okay'
             });
+        } else if (selectedValue) {
+            if (selectedValue === "print") {
+                window.print();
+            } else {
+                window.location.href = selectedValue;
+            }
+        } else {
+            Swal.fire({
+                title: 'Please select an export option.',
+                icon: 'warning',
+                confirmButtonText: 'Okay'
+            });
         }
-    });
-});
-
+    }
 </script>
 
 
