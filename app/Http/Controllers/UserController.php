@@ -31,10 +31,37 @@ class UserController extends Controller
 
     public function schedule($id)
     {
+        $employeeApiUrl = "https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100";
+        $scheduleApiUrl = "https://api-portal.mlgcl.edu.ph/api/external/employee-subjects/" . $id;
+
+        $apiKey = env('API_KEY');
+
+        $employeeResponse = Http::withHeaders([
+            'x-api-key' => $apiKey,
+            'Origin' => 'http://instructor-logging.test'
+        ])->get($employeeApiUrl);
+
+        $employeeData = $employeeResponse->json();
+
+        $scheduleResponse = Http::withHeaders([
+            'x-api-key' => $apiKey,
+            'Origin' => 'http://instructor-logging.test'
+        ])->get($scheduleApiUrl);
+
+        $scheduleData = $scheduleResponse->json();
+
+        $employee = collect($employeeData['data'] ?? [])->firstWhere('id', (int) $id);
+
         $attendance = Attendance::where('instructor_id', $id)->get();
         $justification = Justification::where('instructor_id', $id)->get();
 
-        return view('user.schedule', ['employeeId' => $id, 'attendance' => $attendance, 'justification' => $justification]);
+        return view('user.schedule', [
+            'employee' => $employee,
+            'employeeId' => $id,
+            'schedules' => $scheduleData,
+            'attendance' => $attendance,
+            'justification' => $justification,
+        ]);
     }
 
     function store(Request $request, $instructorId, $scheduleId)

@@ -2,43 +2,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
-<div class="pt-3 px-5" id="employee"></div>
-
-<style>
-    .containner{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #b3b5b7;
-    padding-top: 10px;
-}
-
-.containner p, h3{
-    margin:0;
-}
-
-.else{
-    text-align: center;
-}
-.print{
-    background-color: #0c8c00;
-    color: #fff;
-    border: none;
-    padding: 6px;
-    margin-top: 25px 0 25px 0;
-    border-radius: 4px;
-    height: fit-content;
-    text-decoration: none;
-}
-</style>
-
-<div class="container mt-2">
-    <div class="mx-3">
-        <form id="filterForm" class="d-flex justify-content-end mb-3">
-            <select name="month" id="month-select" style="padding: 5px; border:none;" class="search_form">
-                <option value="" disabled selected>Filter by month</option>
-=======
 <div class="instructor-cons mt-4">
     <a href="{{route("instructor")}}" class="px-4 text-decoration-none text-dark">
         <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
@@ -50,7 +13,6 @@
         <form action="{{route("instructor.monthly", ['id' => request('id')])}}" id="filterForm" class="d-flex justify-content-end mb-2 mx-4 px-1" style="height: 35px">
             <select name="month" id="month-select" style="padding: 5px; border: none;" class="search_form">
                 <option value="" disabled selected>Select month</option>
->>>>>>> 2c85b84b872e7005a88169006673644fb3fb4313
                 <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>January</option>
                 <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>February</option>
                 <option value="3" {{ request('month') == '3' ? 'selected' : '' }}>March</option>
@@ -75,17 +37,9 @@
 <div class="container">
     <div class="mx-3 mt-4">
         <div class="table-container ">
-<<<<<<< HEAD
-            @if (request('month') == null)
-                <p class="fs-6 d-flex justify-content-center text-secondary">Please select a month.</p>
-            @elseif ($attendances->isEmpty())
-                <p class="else">No record available for this month.</p>
-            @else
-=======
             @if ($attendances->isEmpty())
                 <p class="d-flex justify-content-center text-secondary">No record available for this month.</p>
             @elseif ($attendances)
->>>>>>> 2c85b84b872e7005a88169006673644fb3fb4313
                 <div>
                 @foreach ($attendances->groupBy(function ($att) {
                     return $att->first_name . ' ' . $att->last_name;
