@@ -24,12 +24,16 @@
     @endif
 
     <main class="m-0">
-        <div class=" login_form d-flex justify-content-center  align-items-center position-absolute top-50 start-50 translate-middle">
-            <div class="p-4 login_card">
-                <a href="" class="logo">
-                    <img src="{{asset('/images/login_logo.png')}}" width="300px" height="auto" class="" alt="">
-                </a>
-                <div class="card-body col-12" style="width: 300px">
+        <div class="bg-cover">
+            <img src="{{asset("images/school.png")}}" alt="">
+        </div>
+        <div class=" login_form d-flex justify-content-center">
+            <a href="" class="logo">
+                <img src="{{asset("images/one student.png")}}" width="300px" alt="">
+                <img src="{{asset('/images/login_logo.png')}}" width="250px" height="auto" class="" alt="">
+            </a>
+            <div class="login_card loginForm">
+                <div class="formInput">
                     <form action="{{route('login.post')}}" method="POST">
                         @csrf
                         <div class="form-group mb-4">
@@ -51,37 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="school_image position-fixed">
-        </div>
     </main>
-
-        {{-- api fetching practice --}}
-    <script>
-        // fetch(`https://api.thecatapi.com/v1/images/search?limit=10`, {
-        //     headers: {
-        //         'x-api-key': '{{env("API_KEY")}}'
-        //     }
-        // }).then(res => res.json())
-        // .then(res => {
-        //     if(res.length > 0){
-        //         res.forEach(cat => {
-        //             $('.school-image').append(`<div> <img src="${cat.url}" style=width:100% height:100vh /> </div>`);
-        //         });
-
-        //         $(document).ready(function() {
-        //             $('.school-image').slick({
-        //                 autoplay: true,
-        //                 infinite: true,
-        //                 speed: 8000,
-        //                 fade: true,
-        //                 cssEase: 'linear',
-        //                 arrows: false,
-        //             });
-        //         });
-        //     }
-        // })
-    </script>
-
 
     <script>
 

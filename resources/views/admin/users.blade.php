@@ -115,13 +115,15 @@
                         @endif
                     </div>
 
-                    <div class="btn-group-toggle my-3" data-toggle="buttons">
-                        <label class="btn btn-success active">
-                          <input type="radio" name="role" id="option1" autocomplete="off" checked value="0" required>Regular User
-                        </label>
-                        <label class="btn btn-primary mx-3">
-                          <input type="radio" name="role" id="option2" autocomplete="off" value="1" required>Admin
-                        </label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-secondary text-light" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select col-4" name="role" id="inputGroupSelect01">
+                          <option value="1">Admin</option>
+                          <option value="0">Regular user</option>
+                        </select>
                     </div>
 
                     <div class="d-grid mx-auto">

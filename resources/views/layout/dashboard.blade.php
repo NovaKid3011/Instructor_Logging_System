@@ -7,8 +7,8 @@
 
 <div class="m-5 bg-white text-dark">Welcome back!</div>
 
-{{--
-    <script>
+
+    {{-- <script>
         fetch(`https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100`, {
             headers: {
                 'x-api-key': '{{env('API_KEY')}}'

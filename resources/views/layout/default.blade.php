@@ -12,32 +12,63 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <!-- Add this in the <head> or before your script that uses $ -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>MLGCL Instructor Logging</title>
 
 
 </head>
 
 <style>
-    .school_image{
-        position: fixed;
-        top: 0;
-        left: 0;
+    .bg-cover img{
         width: 100%;
-        height: 100%;
-        background: url('{{ asset('/images/school.png') }}') no-repeat center center fixed;
-        background-size: cover;
-        z-index: -1;
-        -webkit-filter: blur(1px) brightness(0.5);
-        -moz-filter: blur(1px) brightness(0.5);
-        -ms-filter: blur(1px) brightness(0.5);
-        -o-filter: blur(1px) brightness(0.5);
-        filter: blur(3px) brightness(0.5);
+        height: 200px;
+        object-fit: cover;
     }
-    .login_form{
-        z-index: 3;
+    main{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
     }
-    .login_card{
-        background-color: #ffffff51;
-        border-radius: 10px
+    .loginForm{
+        border-left: 1px solid #818181;
+        padding-left: 30px;
+    }
+    .logo{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        padding-right: 30px;
+        margin-bottom: 50px
+    }
+    .formInput{
+        width: 300px;
+    }
+
+    @media(max-width: 600px) {
+        .bg-cover img{
+            width: 100vw;
+            height: 100px;
+            object-fit: cover;
+        }
+        main{
+            gap: 25px;
+        }
+        .login_form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo{
+            margin: 10px;
+            padding: 0px;
+        }
+        .logo img{
+            width: 180px;
+        }
+        .loginForm{
+            border: none;
+            padding: 0;
+        }
     }
 
 </style>
