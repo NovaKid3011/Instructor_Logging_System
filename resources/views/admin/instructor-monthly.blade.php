@@ -39,55 +39,6 @@
         <div class="table-container ">
             @if ($attendances->isEmpty())
                 <p class="d-flex justify-content-center text-secondary">No record available for this month.</p>
-            @elseif ($attendances)
-                <div>
-                @foreach ($attendances->groupBy(function ($att) {
-                    return $att->first_name . ' ' . $att->last_name;
-                    }) as $fullName => $userAttendances)
-                    <div class="containner d-flex justify-content-between">
-                        <div>
-                            <p>{{ $userAttendances->first()->created_at->format('F Y') }}</p>
-                        </div>
-                        <form action="{{ route('instructor.monthly_report', ['month' => request('month'), 'instructor_id' => request('id')]) }}" id="filterForm" class="d-flex justify-content-end mb-2" method="GET">
-                            <input type="hidden" name="month" value="{{ request('month') }}">
-                            <input type="hidden" name="instructor_id" value="{{ request('id') }}">
-                            <select name="download" id="download" style="padding: 5px; border: 1px solid #bebebe; border-radius: 5px 0 0 5px" class="search_form">
-                                <option value="" disabled selected>Export Option</option>
-                                <option value="1" {{request('download') == 1 ? 'selected' : ''}}>Download CSV</option>
-                                <option value="2" {{request('download') == 2 ? 'selected' : ''}}>PDF File</option>
-                                <option value="3" {{request('download') == 3 ? 'selected' : ''}}>Print</option>
-                            </select>
-                            <div class="form-outline">
-                                <input id="download-type" type="search" placeholder="Search instructor..." value="{{ request('search') }}" name="search" class="form-control p-1" style="font-size: small" hidden>
-                            </div>
-                            <button type="submit" class="btn btn-primary px-3 py-1" style="font-size: small; border-radius: 0 5px 5px 0">
-                                <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
-                            </button>
-                        </form>
-                        {{-- <form action="{{ route('instructor.monthly_report', ['month' => request('month'),  'instructor_id' => request('id')]) }}">
-                            <div class="input-group" style="width:230px">
-                                <button type="submit" class="btn btn-primary px-2 py-1" style="font-size: small">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="22"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-                                </button>
-                                <select class="form-select" id="inputGroupSelect01">
-                                <option selected disabled>Download Option</option>
-                                <option value="1">
-                                    <a class="print "
-                                        href="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="2">
-                                            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-                                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                                            <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
-                                        </svg>
-                                        Download CSV
-                                    </a>
-                                </option>
-                                <option value="2">PDF File</option>
-                                <option value="3">Print</option>
-                                </select>
-                            </div>
-                        </form> --}}
-                    </div>
             @else
                 <div class="containner d-flex justify-content-between align-items-center">
                     <div>
@@ -193,62 +144,12 @@
     function exportForm() {
         var option = document.getElementById('download').value;
         if(option === '') {
-            alert('Please select an export method');
+            alert('Please select an export method.');
             event.preventDefault();
         }
-        // else{
-        //     // setTimeout(() => {
-        //     //    alert('Exported successfully');
-        //     // }, 1000);
-        //     // return true;
-        // }
     }
 </script>
 
-{{-- <script>
-    document.getElementById('filterForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const month = document.getElementById('month-select').value;
-        const search = document.getElementById('search-input').value;
-        const urlParams = new URLSearchParams(window.location.search);
-
-        if (month) {
-            urlParams.set('month', month);
-        } else {
-            urlParams.delete('month');
-        }
-
-        window.location.search = urlParams.toString();
-    });
-</script> --}}
-
-{{-- <script>
-    document.getElementById('filterForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const month = document.getElementById('month-select').value;
-        const search = document.getElementById('search-input').value;
-        const urlParams = new URLSearchParams(window.location.search);
-
-        if (month) {
-            urlParams.set('month', month);
-        } else {
-            urlParams.delete('month');
-        }
-
-        if (search) {
-            urlParams.set('search', search);
-        } else {
-            urlParams.delete('search');
-        }
-
-        // // Update the download link with the current URL parameters
-        // const downloadLink = document.getElementById('download-csv-link');
-        // const baseDownloadUrl = downloadLink.getAttribute('href').split('?')[0];
-        // downloadLink.href = `${baseDownloadUrl}?${urlParams.toString()}`;
-
-        // window.location.search = urlParams.toString();
-    });
-</script> --}}
 
 
 @endsection

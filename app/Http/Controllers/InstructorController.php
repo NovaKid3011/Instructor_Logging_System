@@ -17,13 +17,11 @@ class InstructorController extends Controller
         if(Auth::user()->role == 1) {
             $response = Http::withHeaders([
                 'x-api-key' => env('API_KEY'),
-                'Origin' => 'https://instructor-logging.webactivities.online'
+                'Origin' => 'http://instructor-logging.test'
             ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
             if($response->successful()) {
-
                 $data = $response->json()['data'] ?? [];
-
                 $selectedIds = DB::table('instructors')->pluck('employee_id')->toArray();
 
                 foreach($data as &$item) {
@@ -33,7 +31,6 @@ class InstructorController extends Controller
             }else{
                 return view('admin.instructor')->with('error', 'cannot fetch data');
             }
-
         }
         return redirect(route('dashboard'))->with('error', 'You are not authorized in this page!');
     }
@@ -44,7 +41,7 @@ class InstructorController extends Controller
 
         $response = Http::withHeaders([
             'x-api-key' => env('API_KEY'),
-            'Origin' => 'https://instructor-logging.webactivities.online'
+            'Origin' => 'http://instructor-logging.test'
         ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
 
         if($response->successful()) {
@@ -60,12 +57,9 @@ class InstructorController extends Controller
             }
 
             $attendanceQuery = Attendance::where('instructor_id', $id);
-
-            // Filter by month
             if ($month) {
                 $attendanceQuery->whereMonth('created_at', $month);
             }
-            // Paginate the results
             $attendances = $attendanceQuery->paginate(10);
             return view('admin.instructor-monthly', compact('attendances', 'month'))->with(['data' => $data]);
         }
@@ -74,24 +68,20 @@ class InstructorController extends Controller
 
     public function monthlyReport(Request $request)
     {
-
         $month = $request->input('month');
         $instructorId = $request->input('instructor_id'); // Get instructor_id from the URL
 
         if(!$month) {
             $month = date('m');
         }
-
         if (!$month || !$instructorId) {
             return redirect()->back()->with('error', 'Month and instructor selection are required.');
         }
 
-        // Fetch attendance data based on the month, instructor, and optional search term
         $attendances = Attendance::query()
             ->whereMonth('created_at', $month)
             ->where('instructor_id', $instructorId)
             ->get();
-
         if ($attendances->isEmpty()) {
             return redirect()->back()->with('error', 'No attendance record found.');
         }
@@ -120,20 +110,16 @@ class InstructorController extends Controller
                 'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
             ]);
         }elseif($request->input('download') == 2) {
+            $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
             $response = Http::withHeaders([
                 'x-api-key' => env('API_KEY'),
-                'Origin' => 'https://instructor-logging.webactivities.online'
+                'Origin' => 'http://instructor-logging.test'
             ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
-
-            $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
-
             $data = $response->json()['data'] ?? [];
             $employee = array_filter($data, function ($item) use ($instructorId) {
                 return $item['id'] == $instructorId;
             });
-
             $employee = reset($employee);
-
             $fileName = 'Attendance_Report_' . $month . '.pdf';
             $dompdf = Pdf::loadView('layout.partials.pdf', compact('instructorAtt', 'employee'));
             $dompdf->render();
@@ -149,31 +135,27 @@ class InstructorController extends Controller
             ]);
 
         }elseif($request->input('download') == 3) {
-            dd('print ni');
+            $response = Http::withHeaders([
+                'x-api-key' => env('API_KEY'),
+                'Origin' => 'http://instructor-logging.test'
+            ])->get('https://api-portal.mlgcl.edu.ph/api/external/employees?limit=100');
+            $data = $response->json()['data'] ?? [];
+            $instructorAtt = Attendance::where('instructor_id', $instructorId)->get();
+            $employee = array_filter($data, function ($item) use ($instructorId) {
+                return $item['id'] == $instructorId;
+            });
+            $employee = reset($employee);
+
+            return view('layout.partials.print', compact('employee', 'instructorAtt'));
         }
     }
 
-
-
-
-//     public function showByLetter($alpha)
-// {
-//     // Debugging
-// //    dd($alpha);
-
-//     return view('user.letter')->with('alpha', $alpha);
-// }
-//     public function schedule($id)
-// {
-
-//         return view('user.schedule', compact('instructor'));
-// }
-public function showByLetter($alpha)
+    public function showByLetter($alpha)
     {
         $api_key = env('API_KEY');
         $response = Http::withHeaders([
             'x-api-key' => $api_key,
-            'Origin' => 'https://instructor-logging.webactivities.online'
+            'Origin' => 'http://instructor-logging.test'
         ])->get("https://api-portal.mlgcl.edu.ph/api/external/employees", [
             'last_name' => strtoupper($alpha)
         ]);

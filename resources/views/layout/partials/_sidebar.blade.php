@@ -1,10 +1,6 @@
 
 
-<nav id="sidebar" class="px-1 sidebar" style="            
-            position: sticky;
-            top: 0;
-            min-height: 100vh;
-            width: 240px;">
+<nav id="sidebar" class="px-1 sidebar">
     <a href="" class="logo d-flex justify-content-center">
         <img src="{{asset('images/logo.png')}}" width="140px" height="auto" class="py-2" alt="photo">
     </a>
@@ -30,7 +26,7 @@
                 </a>
             </div>
         </li>
-        <li class="{{Request::is('admin/dashboard/report') ? 'active' : ''}} p-3">
+        <li class="{{Request::is('admin/report') ? 'active' : ''}} p-3">
             <div class="">
                 <a href="{{route('report')}}" class="nav_btns text-white" style="text-decoration: none">Reports
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" stroke-width="2"> <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path> <path d="M9 12h6"></path> <path d="M9 16h6"></path> </svg>                 </a>
